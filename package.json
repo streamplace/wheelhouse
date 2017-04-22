@@ -1,0 +1,22 @@
+{
+  "name": "wheelhouse",
+  "version": "0.0.1",
+  "description": "Swiss Army knife for Javascript + Kubernetes",
+  "main": "package.json",
+  "scripts": {
+    "test": "lerna run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/streamplace/wheelhouse.git"
+  },
+  "keywords": [
+    "Kubernetes"
+  ],
+  "author": "Streamplace",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/streamplace/wheelhouse/issues"
+  },
+  "homepage": "https://github.com/streamplace/wheelhouse#readme"
+}
