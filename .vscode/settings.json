@@ -1,0 +1,15 @@
+// Place your settings in this file to overwrite the default settings
+{
+    "editor.tabSize": 2,
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.wordWrapColumn": 100,
+    "editor.formatOnType": true,
+    "eslint.autoFixOnSave": true,
+    "files.insertFinalNewline": true,
+    "search.useIgnoreFilesByDefault": true,
+    "[markdown]": {
+        "editor.wordWrap": "wordWrapColumn",
+        "editor.quickSuggestions": false
+    },
+    "files.trimTrailingWhitespace": true
+}
