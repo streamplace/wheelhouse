@@ -5,7 +5,9 @@
   "main": "package.json",
   "scripts": {
     "test": "lerna run test",
-    "postinstall": "lerna bootstrap"
+    "postinstall": "lerna bootstrap",
+    "lint": "eslint .",
+    "precommit": "npm run lint"
   },
   "repository": {
     "type": "git",
@@ -25,6 +27,8 @@
     "babel-core": "^6.24.1",
     "babel-preset-env": "^1.4.0",
     "eslint": "^3.19.0",
+    "eslint-plugin-react": "^6.10.3",
+    "husky": "^0.13.3",
     "lerna": "2.0.0-beta.37"
   }
 }
