@@ -1,18 +1,18 @@
 {
-  "name": "wheelhouse",
+  "name": "wheelhouse-store",
   "version": "0.0.1",
-  "description": "Swiss Army knife for Javascript + Kubernetes",
-  "main": "package.json",
+  "description": "Redux store for Wheelhouse",
+  "main": "dist/wheelhouse-store.js",
   "scripts": {
-    "test": "lerna run test",
-    "postinstall": "lerna bootstrap"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/streamplace/wheelhouse.git"
   },
   "keywords": [
-    "Kubernetes"
+    "Kubernetes",
+    "Wheelhouse"
   ],
   "author": "Streamplace",
   "license": "MIT",
@@ -20,11 +20,7 @@
     "url": "https://github.com/streamplace/wheelhouse/issues"
   },
   "homepage": "https://github.com/streamplace/wheelhouse#readme",
-  "devDependencies": {
-    "babel-cli": "^6.24.1",
-    "babel-core": "^6.24.1",
-    "babel-preset-env": "^1.4.0",
-    "eslint": "^3.19.0",
-    "lerna": "2.0.0-beta.37"
+  "dependencies": {
+    "jest": "^19.0.2"
   }
 }
