@@ -4,7 +4,7 @@
   "description": "Swiss Army knife for Javascript + Kubernetes",
   "main": "package.json",
   "scripts": {
-    "test": "lerna run test",
+    "test": "npm run lint && lerna run test",
     "postinstall": "lerna bootstrap",
     "lint": "eslint .",
     "precommit": "npm run lint"
