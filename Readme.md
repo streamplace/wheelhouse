@@ -1,6 +1,8 @@
 
 # Wheelhouse
 
+[![Build Status](https://travis-ci.org/streamplace/wheelhouse.svg?branch=master)](https://travis-ci.org/streamplace/wheelhouse)
+
 Wheelhouse is a tool for managing sophisticated Javascript projects that target Kubernetes using
 [Helm](https://github.com/kubernetes/helm).
 
