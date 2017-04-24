@@ -14,6 +14,9 @@
     "type": "git",
     "url": "git+ssh://git@github.com/streamplace/wheelhouse.git"
   },
+  "jest": {
+    "testPathIgnorePatterns": ["/node_modules/", "/dist/"]
+  },
   "keywords": [
     "Streamplace",
     "Kubernetes",
