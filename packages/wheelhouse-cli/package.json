@@ -4,7 +4,11 @@
   "description": "Wheelhouse command line interface and all that",
   "main": "dist/wheelhouse-cli.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "dev": "babel -s -d dist -w src"
+  },
+  "bin": {
+    "wheelhouse": "dist/wheelhouse-cli.js"
   },
   "repository": {
     "type": "git",
@@ -25,6 +29,9 @@
     "wheelhouse-core": "^0.0.1"
   },
   "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.24.1",
+    "babel-preset-env": "^1.4.0",
     "jest": "^19.0.2"
   }
 }
