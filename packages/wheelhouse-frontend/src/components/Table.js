@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import "./App.css";
+import "../Table.css";
 
-class App extends Component {
+class Table extends Component {
   render() {
     return (
      <table className="reusable-table">
@@ -32,4 +32,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Table;

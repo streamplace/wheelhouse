@@ -1,4 +1,5 @@
 .reusable-table {
   width: 80%; 
-  margin: 10px auto;
+  float: right;
+  margin: 20px; 
 }
