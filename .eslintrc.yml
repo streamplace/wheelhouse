@@ -17,7 +17,10 @@ plugins:
 rules:
   indent:
     - error
-    - 4
+    - 2
+  space-before-function-paren:
+    - warn
+    - never
   linebreak-style:
     - error
     - unix
