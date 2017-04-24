@@ -1,0 +1,27 @@
+{
+  "name": "wheelhouse-cli",
+  "version": "0.0.1",
+  "description": "Wheelhouse command line interface and all that",
+  "main": "dist/wheelhouse-cli.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/streamplace/wheelhouse.git"
+  },
+  "keywords": [
+    "Streamplace",
+    "Kubernetes",
+    "Wheelhouse"
+  ],
+  "author": "Streamplace",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/streamplace/wheelhouse/issues"
+  },
+  "homepage": "https://github.com/streamplace/wheelhouse#readme",
+  "dependencies": {
+    "wheelhouse-core": "^0.0.1"
+  }
+}

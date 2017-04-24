@@ -1,8 +1,8 @@
 {
-  "name": "wheelhouse-store",
+  "name": "wheelhouse-core",
   "version": "0.0.1",
-  "description": "Redux store for Wheelhouse",
-  "main": "dist/wheelhouse-store.js",
+  "description": "The brains of Wheelhouse live here",
+  "main": "dist/wheelhouse-core.js",
   "scripts": {
     "test": "jest"
   },
@@ -20,7 +20,7 @@
     "url": "https://github.com/streamplace/wheelhouse/issues"
   },
   "homepage": "https://github.com/streamplace/wheelhouse#readme",
-  "dependencies": {
+  "devDependencies": {
     "jest": "^19.0.2"
   }
 }
