@@ -23,5 +23,8 @@
   "homepage": "https://github.com/streamplace/wheelhouse#readme",
   "dependencies": {
     "wheelhouse-core": "^0.0.1"
+  },
+  "devDependencies": {
+    "jest": "^19.0.2"
   }
 }
