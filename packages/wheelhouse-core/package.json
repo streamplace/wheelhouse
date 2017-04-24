@@ -1,0 +1,26 @@
+{
+  "name": "wheelhouse-core",
+  "version": "0.0.1",
+  "description": "The brains of Wheelhouse live here",
+  "main": "dist/wheelhouse-core.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/streamplace/wheelhouse.git"
+  },
+  "keywords": [
+    "Kubernetes",
+    "Wheelhouse"
+  ],
+  "author": "Streamplace",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/streamplace/wheelhouse/issues"
+  },
+  "homepage": "https://github.com/streamplace/wheelhouse#readme",
+  "devDependencies": {
+    "jest": "^19.0.2"
+  }
+}

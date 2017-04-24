@@ -11,5 +11,11 @@
         "editor.wordWrap": "wordWrapColumn",
         "editor.quickSuggestions": false
     },
-    "files.trimTrailingWhitespace": true
+    "files.trimTrailingWhitespace": true,
+    "files.exclude": {
+        "**/.git": true,
+        "**/.DS_Store": true,
+        "**/node_modules": true,
+        "**/dist": true
+    }
 }

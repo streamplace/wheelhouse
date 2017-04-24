@@ -6,7 +6,10 @@ env:
   commonjs: true
   es6: true
   node: true
-extends: 'eslint:recommended'
+  jest: true
+extends:
+  - "eslint:recommended"
+  - "plugin:react/recommended"
 parserOptions:
   ecmaFeatures:
     experimentalObjectRestSpread: true
@@ -17,7 +20,10 @@ plugins:
 rules:
   indent:
     - error
-    - 4
+    - 2
+  space-before-function-paren:
+    - warn
+    - never
   linebreak-style:
     - error
     - unix

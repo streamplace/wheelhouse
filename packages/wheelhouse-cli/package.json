@@ -1,8 +1,8 @@
 {
-  "name": "wheelhouse-store",
+  "name": "wheelhouse-cli",
   "version": "0.0.1",
-  "description": "Redux store for Wheelhouse",
-  "main": "dist/wheelhouse-store.js",
+  "description": "Wheelhouse command line interface and all that",
+  "main": "dist/wheelhouse-cli.js",
   "scripts": {
     "test": "jest"
   },
@@ -11,6 +11,7 @@
     "url": "git+ssh://git@github.com/streamplace/wheelhouse.git"
   },
   "keywords": [
+    "Streamplace",
     "Kubernetes",
     "Wheelhouse"
   ],
@@ -21,6 +22,9 @@
   },
   "homepage": "https://github.com/streamplace/wheelhouse#readme",
   "dependencies": {
+    "wheelhouse-core": "^0.0.1"
+  },
+  "devDependencies": {
     "jest": "^19.0.2"
   }
 }
