@@ -2,7 +2,7 @@
   "name": "wheelhouse-core",
   "version": "0.0.1",
   "description": "The brains of Wheelhouse live here",
-  "main": "package.json",
+  "main": "dummy.js",
   "scripts": {
     "test": "jest"
   },
