@@ -14,6 +14,12 @@
     "type": "git",
     "url": "git+ssh://git@github.com/streamplace/wheelhouse.git"
   },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/dist/"
+    ]
+  },
   "keywords": [
     "Streamplace",
     "Kubernetes",
@@ -26,7 +32,9 @@
   },
   "homepage": "https://github.com/streamplace/wheelhouse#readme",
   "dependencies": {
-    "wheelhouse-core": "^0.0.1"
+    "babel-jest": "^19.0.0",
+    "wheelhouse-core": "^0.0.1",
+    "yargs": "^7.1.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
