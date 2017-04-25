@@ -33,7 +33,8 @@
   "homepage": "https://github.com/streamplace/wheelhouse#readme",
   "dependencies": {
     "babel-jest": "^19.0.0",
-    "wheelhouse-core": "^0.0.1"
+    "wheelhouse-core": "^0.0.1",
+    "yargs": "^7.1.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
