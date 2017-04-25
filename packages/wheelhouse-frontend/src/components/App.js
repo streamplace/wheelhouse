@@ -1,21 +1,59 @@
-// import React, { Component } from "react";
-// import { Router, Route, hashHistory } from "react-router";
-// import Table from "./Table"; 
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import Sidebar from "./Sidebar"; 
+import Table from "./Table"; 
 
-// // const Home = () => <h1>Hello from Home!</h1>;
-// const Address = () => <h1>We are located at 555 Jackson St.</h1>;
+const populateTableHeaders = (array) => {
+  return array.map((header, idx) => {
+    return (
+      <th key={idx}>{header}</th>
+    );
+  });
+};
 
-// class App extends Component {
-//   render() {
-//     return (
-//       <Table />
-//     );
-//   }
-// }
+const populateTableDescriptions = (array) => {
+  return array.map((description, idx) => {
+    return (
+      <tr key={idx}>
+        <td key={idx}>{description}</td>
+      </tr>
+    );
+  });
+};
 
-// export default App;
+class App extends Component {
+  render() { 
+    
+    const { pods } = this.props;
+    const appNames = pods.items.map((item, idx) => {
+      return item.metadata.generateName; 
+    }).filter(name => name !== undefined);
 
-// // <Router history={hashHistory}>
-// //         <Route path='/' component={Home} />
-// //         <Route path='/address' component={Address} />
-// //       </Router>;
+    const importedDescriptions = populateTableDescriptions(appNames);
+    const importedHeaders = populateTableHeaders(["Name/Node"]); 
+
+    return (
+      <div>
+        <h1 className="app-header">Wheelhouse</h1>
+        <div className="container">
+          <div className="row">
+            <div className="column"><Sidebar /></div>
+            <div className="column column-75">
+              <Table 
+                headers={importedHeaders}
+                descriptions={importedDescriptions} />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    pods: state.pods
+  };
+};
+
+export default connect(mapStateToProps)(App);

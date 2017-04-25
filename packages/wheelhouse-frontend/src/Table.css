@@ -1,5 +1,26 @@
+/*Container*/
+
+.container {
+  max-width: 130rem;
+}
+
+/*Header*/
+
+.app-header {
+  text-align: center;
+  margin: 20px; 
+}
+/*Sidebar*/
+
+.sidebar-container {
+  margin: 20px; 
+}
+
+/*Table*/
+
+.table {
+  width: 95%;
+}
 .reusable-table {
-  width: 80%; 
-  float: right;
   margin: 20px; 
 }
