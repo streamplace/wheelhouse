@@ -21,14 +21,13 @@ const populateTableDescriptions = (array) => {
   });
 };
 
+/*eslint-disable react/prop-types*/
 class App extends Component {
-  render() { 
-    
+  render() {     
     const { pods } = this.props;
     const appNames = pods.items.map((item, idx) => {
       return item.metadata.generateName; 
     }).filter(name => name !== undefined);
-
     const importedDescriptions = populateTableDescriptions(appNames);
     const importedHeaders = populateTableHeaders(["Name/Node"]); 
 

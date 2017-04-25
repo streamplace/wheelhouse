@@ -1,6 +1,7 @@
 import React from "react";
 import "../Table.css";
 
+/*eslint-disable react/prop-types*/
 const Table = (props) => {
   return (
     <table className="reusable-table">
