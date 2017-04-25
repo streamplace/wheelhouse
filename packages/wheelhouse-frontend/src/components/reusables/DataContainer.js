@@ -4,11 +4,11 @@ import React from "react";
 const DataContainer = (props) => {
   return (
     <div className="container">
-      <div className="row">
-        <div className="column">{props.name}</div>
-        <div className="column">{props.status}</div>
+      <div className="row container-row">
+        <div className="column text-column">{props.name}</div>
+        <div className="column text-column">{props.status}</div>
         <div className="column">
-          <button onClick={props.changeButtonStatus}>
+          <button className={props.buttonClass} onClick={props.changeButtonStatus}>
             {props.startStop}
           </button>
         </div>

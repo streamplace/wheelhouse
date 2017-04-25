@@ -23,12 +23,14 @@ class DevelopmentDataDisplay extends Component {
     const { packages } = this.props;
     const data = packages.map((app, idx) => {
       let buttonLabel = app.active ? "Stop" : "Start";
+      let buttonColor = buttonLabel === "Stop" ?  "red" : "green";
       return (
         <DataContainer 
           key={idx}
           name={app.name}
           status={app.status}
           startStop={buttonLabel}
+          buttonClass={buttonColor}
           changeButtonStatus={() => this.changeButtonStatus(app.name)}
         />
       );

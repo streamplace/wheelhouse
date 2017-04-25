@@ -9,6 +9,10 @@ body {
   margin: 20px; 
 }
 
-.container {
-  max-width: 130rem;
+button {
+  min-width: 130px;
+}
+
+button:hover {
+  opacity: 0.8;
 }
