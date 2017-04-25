@@ -1,0 +1,14 @@
+.header-container {
+  width: 25%;
+  margin: 0 auto;
+}
+
+.app-header {
+  margin: 20px 0 5px 0;
+  text-align: center; 
+}
+
+.icon {
+  width: 55px;
+  margin-top: 18px;
+}
