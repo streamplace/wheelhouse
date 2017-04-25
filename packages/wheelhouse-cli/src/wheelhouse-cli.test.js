@@ -1,9 +1,8 @@
 
-var core = require("wheelhouse-core");
-core.build = jest.fn();
-import runCli from "./wheelhouse-cli";
-
 jest.mock("wheelhouse-core");
+
+import core from "wheelhouse-core";
+import runCli from "./wheelhouse-cli";
 
 const run = (str) => {
   return runCli([].concat(str.split(" ").filter(s => !!s)));

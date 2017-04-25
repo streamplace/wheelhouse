@@ -5,7 +5,8 @@
   "dependencies": {
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
-    "wheelhouse-core": "^0.0.1"
+    "wheelhouse-core": "^0.0.1",
+    "yargs": "^7.1.0"
   },
   "devDependencies": {
     "react-scripts": "0.9.5"
