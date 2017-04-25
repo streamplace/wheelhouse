@@ -1,5 +1,25 @@
+// import update from "immutability-helper";
+import * as handlers from "./handlers/reducer-handlers"; 
+import * as actions from "./actions/actions";
 
 const stateReducer = (state = {
+  packages: [
+    {
+      name: "Maestro",
+      status: "RUNNING",
+      active: true,
+    },
+    {
+      name: "Mendoza",
+      status: "STOPPED",
+      active: false,
+    },
+    {
+      name: "Mendoza",
+      status: "ERRORED",
+      active: true,
+    },
+  ],
   pods: {
     "apiVersion": "v1",
     "items": [
@@ -4140,6 +4160,12 @@ const stateReducer = (state = {
   } 
 }, action) => {
   switch (action.type) {
+ /*eslint-disable no-case-declarations*/
+  case actions.CHANGE_BUTTON_STATUS:
+    let packagesCopy = [...state.packages]; 
+    packagesCopy = handlers.updateActiveStatus(packagesCopy, action.name);
+    return Object.assign({}, state, { packages: packagesCopy }); 
+
   default: 
     return state; 
   }
