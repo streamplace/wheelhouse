@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Sidebar from "./Sidebar"; 
-import Table from "./Table"; 
+import Header from "../reusables/Header"; 
+import Sidebar from "../reusables/Sidebar"; 
+import Table from "../reusables/Table"; 
 
 const populateTableHeaders = (array) => {
   return array.map((header, idx) => {
@@ -22,7 +23,7 @@ const populateTableDescriptions = (array) => {
 };
 
 /*eslint-disable react/prop-types*/
-class App extends Component {
+class PodsDataDisplay extends Component {
   render() {     
     const { pods } = this.props;
     const appNames = pods.items.map((item, idx) => {
@@ -33,7 +34,7 @@ class App extends Component {
 
     return (
       <div>
-        <h1 className="app-header">Wheelhouse</h1>
+        <Header />
         <div className="container">
           <div className="row">
             <div className="column"><Sidebar /></div>
@@ -55,4 +56,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps)(PodsDataDisplay);

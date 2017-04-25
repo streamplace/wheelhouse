@@ -1,26 +1,5 @@
-/*Container*/
-
-.container {
-  max-width: 130rem;
-}
-
-/*Header*/
-
-.app-header {
-  text-align: center;
-  margin: 20px; 
-}
-/*Sidebar*/
-
-.sidebar-container {
-  margin: 20px; 
-}
-
-/*Table*/
-
 .table {
   width: 95%;
-}
-.reusable-table {
   margin: 20px; 
 }
+

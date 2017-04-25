@@ -1,4 +1,3 @@
-/*.sidebar-container {
-  width: 20%; 
-  border: 1px solid lightgray; 
-}*/
+.sidebar-container {
+  margin: 30px 0 0 15px; 
+}

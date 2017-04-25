@@ -2,8 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { HashRouter as Router, Route } from "react-router-dom";
 import { Provider } from "react-redux";
-import App from "./components/App"; 
-import Table from "./components/Table";
+import DevelopmentDataDisplay from "./components/development-data/DevelopmentDataDisplay"; 
+import PodsDataDisplay from "./components/kubectl-data/PodsDataDisplay"; 
 import store from "./store";
 import "./index.css";
 
@@ -11,8 +11,8 @@ const routes = (
   <Provider store={store}>
     <Router>
       <div>
-        <Route path='/home' component={App} />
-        <Route path='/pods' component={Table} />
+        <Route path='/development' component={DevelopmentDataDisplay} />
+        <Route path='/pods' component={PodsDataDisplay} />
       </div>
     </Router>
   </Provider>
