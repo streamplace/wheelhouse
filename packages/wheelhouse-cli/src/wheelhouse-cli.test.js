@@ -49,4 +49,4 @@ describe("wheelhouse-cli", function() {
 
   });
 
-}); 
+});

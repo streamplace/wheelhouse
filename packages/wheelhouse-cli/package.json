@@ -15,7 +15,10 @@
     "url": "git+ssh://git@github.com/streamplace/wheelhouse.git"
   },
   "jest": {
-    "testPathIgnorePatterns": ["/node_modules/", "/dist/"]
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/dist/"
+    ]
   },
   "keywords": [
     "Streamplace",
@@ -29,6 +32,7 @@
   },
   "homepage": "https://github.com/streamplace/wheelhouse#readme",
   "dependencies": {
+    "babel-jest": "^19.0.0",
     "wheelhouse-core": "^0.0.1"
   },
   "devDependencies": {
