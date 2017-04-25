@@ -10,27 +10,37 @@ import "../../DevelopmentData.css";
 /*eslint-disable no-console*/
 class DevelopmentDataDisplay extends Component {
 
-  changeButtonStatus() {
-    this.props.dispatch(actions.changeButtonStatus("Maestro"));
+  construtor() {
+    this.changeButtonStatus = this.changeButtonStatus.bind(this); 
+  }
+
+  changeButtonStatus(appName) {
+    this.props.dispatch(actions.changeButtonStatus(appName));
   }
 
   render() {
+
     const { packages } = this.props;
-    let buttonLabel = packages[0].active ? "Stop" : "Start"; 
+    const data = packages.map((app, idx) => {
+      let buttonLabel = app.active ? "Stop" : "Start";
+      return (
+        <DataContainer 
+          key={idx}
+          name={app.name}
+          status={app.status}
+          startStop={buttonLabel}
+          changeButtonStatus={() => this.changeButtonStatus(app.name)}
+        />
+      );
+    });
+
     return (
       <div>
         <Header />
         <div className="container">
           <div className="row">
             <div className="column column-20"><Sidebar /></div>
-            <div className="development-data-container column column-80">
-              <DataContainer
-                name={packages[0].name}
-                status={packages[0].status}
-                startStop={buttonLabel}
-                changeButtonStatus={this.changeButtonStatus.bind(this)}
-               />
-            </div>
+            <div className="development-data-container column column-80">{data}</div>
           </div>
         </div>
       </div>

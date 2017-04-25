@@ -15,7 +15,7 @@ const stateReducer = (state = {
       active: false,
     },
     {
-      name: "Mendoza",
+      name: "Clydesdale",
       status: "ERRORED",
       active: true,
     },
