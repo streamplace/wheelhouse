@@ -1,5 +1,5 @@
 import React from "react"; 
-import "../../Header.css";
+import "./Header.css";
 // import icon from "../../../public/wheelhouse-icon.png";
 
 const Header = () => {

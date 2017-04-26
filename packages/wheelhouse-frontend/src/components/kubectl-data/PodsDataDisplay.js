@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Header from "../reusables/Header"; 
 import Sidebar from "../reusables/Sidebar"; 
 import Table from "../reusables/Table"; 
 
@@ -22,7 +21,6 @@ const populateTableDescriptions = (array) => {
   });
 };
 
-/*eslint-disable react/prop-types*/
 class PodsDataDisplay extends Component {
   render() {     
     const { pods } = this.props;
@@ -34,7 +32,6 @@ class PodsDataDisplay extends Component {
 
     return (
       <div>
-        <Header />
         <div className="container">
           <div className="row">
             <div className="column"><Sidebar /></div>

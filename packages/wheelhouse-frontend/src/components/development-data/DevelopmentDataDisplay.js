@@ -1,15 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import update from "immutability-helper";
 import DataContainer from "../reusables/DataContainer"; 
-import Header from "../reusables/Header";
 import Logs from "../reusables/Logs";
 import Sidebar from "../reusables/Sidebar";
 import * as actions from "../../actions/actions";
-import "../../DevelopmentData.css"; 
+import "./DevelopmentData.css"; 
 
-/*eslint-disable react/prop-types*/
-/*eslint-disable no-console*/
 class DevelopmentDataDisplay extends Component {
 
   constructor(props) {
@@ -26,9 +22,11 @@ class DevelopmentDataDisplay extends Component {
   }
 
   showLogs(appName) {
-    const updatedLogs = update(this.state.showLogs, {$merge: {[appName]: !this.state.showLogs[appName]}});
     this.setState({
-      showLogs: updatedLogs
+      showLogs: {
+        ...this.state.showLogs,
+        [appName]: !this.state.showLogs[appName]
+      }
     });
   }
 
@@ -58,7 +56,6 @@ class DevelopmentDataDisplay extends Component {
 
     return (
       <div>
-        <Header />
         <div className="container">
           <div className="row">
             <div className="column column-20"><Sidebar /></div>

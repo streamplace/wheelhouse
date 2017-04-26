@@ -1,7 +1,6 @@
 import React from "react"; 
-import "../../Logs.css";
+import "./Logs.css";
 
-/*eslint-disable react/prop-types*/
 const Logs = (props) => {
   return (
     <div className={props.visibility}>
