@@ -1,0 +1,41 @@
+.container-row {
+  padding-top: 1.0rem;
+  border-bottom: 1px solid lightgray;
+}
+
+.development-data-container {
+  margin-top: 30px;
+}
+
+.green {
+  background-color: #449d44;
+  border: 0.1rem solid #449d44;
+}
+
+.green:hover, .green:focus {
+  background-color: #449d44;
+  border: 0.1rem solid #449d44;
+}
+
+.hide {
+  display: none;
+}
+
+.red {
+  background-color: #c9302c;
+  border: 0.1rem solid #c9302c;
+}
+
+.red:hover, .red:focus {
+  background-color: #c9302c;
+  border: 0.1rem solid #c9302c;
+}
+
+.show {
+  display: block !important;
+}
+
+.text-column {
+  padding-top: 10px !important;
+}
+
