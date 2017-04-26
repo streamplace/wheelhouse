@@ -4,24 +4,6 @@ body {
   font-family: sans-serif;
 }
 
-/*.header-container {
-  width: 25%;
-  margin: 0 auto;
-}
-
-.app-header {
-  text-align: center;
-  margin: 20px 0 5px 0; 
-  float: left;
-}
-
-.icon {
-  width: 70px;
-  float: right;
-  display: inline-block;
-  margin-top: 15px;
-}
-*/
 a {
   color: #1a65ab;
 }

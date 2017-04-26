@@ -6,7 +6,6 @@ import Header from "../reusables/Header";
 import Logs from "../reusables/Logs";
 import Sidebar from "../reusables/Sidebar";
 import * as actions from "../../actions/actions";
-
 import "../../DevelopmentData.css"; 
 
 /*eslint-disable react/prop-types*/
@@ -27,7 +26,7 @@ class DevelopmentDataDisplay extends Component {
   }
 
   showLogs(appName) {
-    const updatedLogs = update(this.state.showLogs, {$merge: { [appName]: !this.state.showLogs[appName]}});
+    const updatedLogs = update(this.state.showLogs, {$merge: {[appName]: !this.state.showLogs[appName]}});
     this.setState({
       showLogs: updatedLogs
     });
@@ -40,9 +39,8 @@ class DevelopmentDataDisplay extends Component {
       let buttonColor = buttonLabel === "Stop" ?  "red" : "green";
       let showOrHide = this.state.showLogs[app.name] ? "show" : "hide";
       return (
-        <div>
+        <div key={idx}>
           <DataContainer 
-            key={idx}
             name={app.name}
             status={app.status}
             startStop={buttonLabel}

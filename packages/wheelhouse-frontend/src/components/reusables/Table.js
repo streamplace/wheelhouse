@@ -6,11 +6,11 @@ const Table = (props) => {
   return (
     <table className="reusable-table">
       <thead>
-        <tr> { props.headers } </tr>
+        <tr>{props.headers}</tr>
       </thead>
       <tbody>
-        <tr> { props.descriptions } </tr>
-      </tbody>p
+        <tr>{props.descriptions}</tr>
+      </tbody>
     </table>
   );
 };
