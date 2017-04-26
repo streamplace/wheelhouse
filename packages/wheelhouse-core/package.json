@@ -2,9 +2,16 @@
   "name": "wheelhouse-core",
   "version": "0.0.1",
   "description": "The brains of Wheelhouse live here",
-  "main": "dummy.js",
+  "main": "dist/wheelhouse-core.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "dev": "babel -w -s -d dist src"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/dist/"
+    ]
   },
   "repository": {
     "type": "git",
@@ -21,6 +28,18 @@
   },
   "homepage": "https://github.com/streamplace/wheelhouse#readme",
   "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.24.1",
     "jest": "^19.0.2"
+  },
+  "dependencies": {
+    "babel-jest": "^19.0.0",
+    "babel-preset-streamplace": "^0.0.3",
+    "debug": "^2.6.4",
+    "find-up": "^2.1.0",
+    "js-yaml": "^3.8.3",
+    "mz": "^2.6.0",
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.2.0"
   }
 }

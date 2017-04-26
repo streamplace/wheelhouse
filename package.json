@@ -5,9 +5,10 @@
   "main": "package.json",
   "scripts": {
     "test": "npm run lint && lerna run test",
-    "postinstall": "lerna bootstrap",
+    "postinstall": "lerna exec --concurrency=999 --no-sort yarn install && lerna bootstrap",
     "lint": "eslint .",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "dev": "lerna exec --concurrency=999 --no-sort yarn run dev"
   },
   "lint-staged": {
     "*.js": "eslint"
