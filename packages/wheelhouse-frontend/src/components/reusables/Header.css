@@ -1,6 +1,7 @@
 .app-header {
-  margin: 20px 0 5px 0;
-  text-align: center; 
+  width: 20%;
+  font-size: 28px; 
+  font-family: 'Pacifico', cursive;
 }
 
 .header-container {

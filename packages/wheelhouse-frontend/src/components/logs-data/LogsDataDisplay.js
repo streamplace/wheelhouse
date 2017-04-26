@@ -23,12 +23,21 @@ function hashCode(str) {
   return hash;
 } 
 
+function makeBrighter(hex) {
+  hex = hex.split(""); 
+  hex[1] = "F"; 
+  return hex.join("");
+}
+
 function intToRGB(i){
+  var offLimits = /[0-9a-e]/ig;
   var c = (i & 0x00FFFFFF)
         .toString(16)
         .toUpperCase();
-
-  return "#" + "00000".substring(0, 6 - c.length) + c;
+ 
+  c = "#" +"00000".substring(0, 6 - c.length) + c;
+  return c[1].match(offLimits) ? makeBrighter(c) : c; 
+    
 }
 
 class LogsDataDisplay extends Component {
@@ -56,8 +65,8 @@ class LogsDataDisplay extends Component {
     return (
       <div className="container">
         <div className="row">
-          <div className="column column-20"><Sidebar /></div>
-          <div className="column column-80 logs-container">{lines}</div>
+          <div className="sidebar-container"><Sidebar /></div>
+          <div className="content-container logs-container">{lines}</div>
         </div>
       </div>
     );

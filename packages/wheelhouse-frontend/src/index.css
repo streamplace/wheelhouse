@@ -16,6 +16,12 @@ button:hover {
   opacity: 0.8;
 }
 
+.content-container {
+  min-width: 80%;
+  margin-left: 10px;
+}
+
 .container {
   max-width: 120rem;
+  padding: 0;
 }

@@ -34,8 +34,8 @@ class PodsDataDisplay extends Component {
       <div>
         <div className="container">
           <div className="row">
-            <div className="column column-20"><Sidebar /></div>
-            <div className="column column-80">
+            <div className="sidebar-container"><Sidebar /></div>
+            <div className="content-container">
               <Table 
                 headers={importedHeaders}
                 descriptions={importedDescriptions} />

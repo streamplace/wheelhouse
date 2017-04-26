@@ -58,8 +58,8 @@ class DevelopmentDataDisplay extends Component {
       <div>
         <div className="container">
           <div className="row">
-            <div className="column column-20"><Sidebar /></div>
-            <div className="development-data-container column column-80">{data}</div>
+            <div className="sidebar-container"><Sidebar /></div>
+            <div className="development-data-container content-container">{data}</div>
           </div>
         </div>
       </div>
