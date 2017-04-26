@@ -15,18 +15,29 @@ function timeConverter() {
   return `${month} ${date} ${hour}:${min}:${sec}`;
 }
 
-const getRandomColor = () => {
-  return "#" + (function co(lor){   return (lor +=
-  [0,1,2,3,4,5,6,7,8,9,"a","b","c","d","e","f"][Math.floor(Math.random()*16)])
-  && (lor.length == 6) ?  lor : co(lor); })("");
-};
+function hashCode(str) { 
+  var hash = 0;
+  for (var i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return hash;
+} 
+
+function intToRGB(i){
+  var c = (i & 0x00FFFFFF)
+        .toString(16)
+        .toUpperCase();
+
+  return "#" + "00000".substring(0, 6 - c.length) + c;
+}
 
 class LogsDataDisplay extends Component {
   render() {
     const { logsData } = this.props;
     let lines = logsData.map((line, idx) => {
       let time = timeConverter();
-      let randomColor = getRandomColor(); 
+      let hashed = hashCode(line.appName);
+      let randomColor = intToRGB(hashed); 
       const divStyle = {
         color: randomColor
       };

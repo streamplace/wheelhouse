@@ -39,3 +39,7 @@
   border: 1px solid lightgray;
   border-radius: 2px;
 }
+
+.nowrap {
+  white-space: nowrap;
+}
