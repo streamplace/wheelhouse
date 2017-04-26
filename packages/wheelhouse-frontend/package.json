@@ -20,6 +20,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "prepublish": "npm run build",
     "test": "CI=true react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "dev": "react-scripts start | cat"
