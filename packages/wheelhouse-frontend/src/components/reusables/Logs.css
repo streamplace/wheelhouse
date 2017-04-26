@@ -1,3 +1,34 @@
+
+.logs-container {
+  background-color: black;
+  padding: 0 5px !important;
+  margin-top: 30px;
+}
+
+.log-line-column {
+  padding-right: 10px;
+  letter-spacing: -0.6px;
+}
+
+.log-line-container {
+  background-color: black;
+  color: white;
+  font-family:'Inconsolata', monospace;
+  padding: 0;
+}
+
+.log-line-app-name {
+  color: #62C370;
+}
+
+.log-line-app-server {
+  color: #61E8E1;
+}
+
+.log-line-row {
+  display: flex;
+}
+
 .logs {
   height: 200px;
   margin: 10px;

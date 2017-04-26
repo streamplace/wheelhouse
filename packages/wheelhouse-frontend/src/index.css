@@ -15,3 +15,12 @@ button {
 button:hover {
   opacity: 0.8;
 }
+
+.container {
+  max-width: 120rem;
+}
+
+
+.row, .column {
+  padding: 0;
+}
