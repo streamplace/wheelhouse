@@ -5,7 +5,7 @@ export const updateActiveStatus = (packagesCopy, name) => {
       copy.active = !copy.active; 
       if (copy.active) {
         copy.status = "STARTING";
-        setTimeout(function(status){ status = "RUNNING"; }, 2000, copy.status);
+        setTimeout(function(status) { return function() { copy.status = "RUNNING"; }; }(copy.status), 1000);
       } else {
         copy.status = "STOPPED"; 
       }
