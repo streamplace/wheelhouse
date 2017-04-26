@@ -7,7 +7,7 @@ const stateReducer = (state = {
     {
       "appName": "Maestro", 
       "serverStatus": "k85_sp-dev-certs.8cffccc.kube-apiserver",
-      "expectedAction": "[17.015ms] About to convert to expected version"
+      "expectedAction": "[17.015ms] About to convert to expected version  [17.015ms] About to convert to expected version[17.015ms] About to convert to expected version[17.015ms] About to convert to expected version[17.015ms] About to convert to expected version[17.015ms] About to convert to expected version[17.015ms] About to convert to expected version[17.015ms] About to convert to expected version[17.015ms] About to convert to expected version"
     },
     {
       "appName": "Mendoza", 
