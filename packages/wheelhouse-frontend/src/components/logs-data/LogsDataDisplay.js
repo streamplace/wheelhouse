@@ -1,4 +1,5 @@
 import React, {Component} from "react"; 
+import { connect } from "react-redux";
 import LogLine from "./LogLine";
 import Sidebar from "../reusables/Sidebar";
 import "../reusables/Logs.css";
@@ -14,27 +15,9 @@ function timeConverter() {
   return `${month} ${date} ${hour}:${min}:${sec}`;
 }
 
-const logsData = [
-  {
-    "appName": "Maestro", 
-    "serverStatus": "k85_sp-dev-certs.8cffccc.kube-apiserver",
-    "expectedAction": "[17.015ms] About to convert to expected version"
-  },
-  {
-    "appName": "Mendoza", 
-    "serverStatus": "k85_sp-dev-certs.8cffccc.kube-apiserver",
-    "expectedAction": "[17.015ms] About to convert to expected version"
-  },
-  {
-    "appName": "Clydesdale", 
-    "serverStatus": "k85_sp-dev-certs.8cffccc.kube-apiserver",
-    "expectedAction": "[17.015ms] About to convert to expected version"
-  }
-];
-
-
 class LogsDataDisplay extends Component {
   render() {
+    const { logsData } = this.props;
     let lines = logsData.map((line, idx) => {
       let time = timeConverter(); 
       return (
@@ -59,4 +42,11 @@ class LogsDataDisplay extends Component {
   }
 }
 
-export default LogsDataDisplay; 
+
+const mapStateToProps = state => {
+  return {
+    logsData: state.logsData
+  };
+};
+
+export default connect(mapStateToProps)(LogsDataDisplay);

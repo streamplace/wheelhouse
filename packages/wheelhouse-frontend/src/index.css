@@ -19,8 +19,3 @@ button:hover {
 .container {
   max-width: 120rem;
 }
-
-
-.row, .column {
-  padding: 0;
-}

@@ -3,11 +3,13 @@
   background-color: black;
   padding: 0 5px !important;
   margin-top: 30px;
+  min-height: 80vh;
 }
 
 .log-line-column {
   padding-right: 10px;
-  letter-spacing: -0.6px;
+  letter-spacing: -0.5px;
+  word-spacing: -3px;
 }
 
 .log-line-container {
