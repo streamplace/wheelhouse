@@ -21,11 +21,6 @@ if (!global._babelPolyfill) {
 
 const runCli = async function(argv) {
   yargs
-    // .command("build", "build wheelhouse", yargs => yargs
-    // , function(argv) {
-    //   attemptAction(configLoad);
-    // })
-  // dev
   .command({
     command: "dev",
     describe: "Run your local development with Wheelhouse",

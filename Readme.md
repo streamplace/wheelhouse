@@ -17,8 +17,6 @@ yarn install
 yarn run dev
 ```
 
-It
-
 ## Credits
 
 Wheelhouse is being jointly developed by [Streamplace](https://stream.place) and [C-SATS](https://www.csats.com).

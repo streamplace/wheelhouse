@@ -1,5 +1,5 @@
 
-import { CONFIG_LOADED } from "./configActions";
+import { CONFIG_LOADED } from "./configConstants";
 import configReducer from "./configReducer";
 
 describe("configReducer", function() {

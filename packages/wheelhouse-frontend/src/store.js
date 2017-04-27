@@ -7,13 +7,6 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 // Create WebSocket connection.
 const socket = new WebSocket(`ws://${window.location.host}/api`);
 
-// Connection opened
-// let open = false;
-
-// socket.addEventListener("open", function(event) {
-//   open = true;
-// });
-
 const sendToServer = store => next => action => {
   // If the action came from the client, not the server, send it up there!
   if (!action._fromServer) {
