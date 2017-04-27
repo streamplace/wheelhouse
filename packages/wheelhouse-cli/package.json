@@ -1,11 +1,12 @@
 {
   "name": "wheelhouse-cli",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Wheelhouse command line interface and all that",
   "main": "dist/wheelhouse-cli.js",
   "scripts": {
     "test": "jest",
-    "dev": "babel -s -d dist -w src"
+    "prepublish": "babel -d dist src",
+    "dev": "npm run prepublish && npm link && babel -s -d dist -w src"
   },
   "bin": {
     "wheelhouse": "dist/wheelhouse-cli.js"
@@ -33,13 +34,13 @@
   "homepage": "https://github.com/streamplace/wheelhouse#readme",
   "dependencies": {
     "babel-jest": "^19.0.0",
-    "wheelhouse-core": "^0.0.1",
+    "babel-preset-streamplace": "^0.0.3",
+    "wheelhouse-core": "^0.0.2",
     "yargs": "^7.1.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
-    "babel-preset-env": "^1.4.0",
     "jest": "^19.0.2"
   }
 }

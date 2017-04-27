@@ -8,7 +8,7 @@ const run = (str) => {
   return runCli([].concat(str.split(" ").filter(s => !!s)));
 };
 
-describe("wheelhouse-cli", function() {
+xdescribe("wheelhouse-cli", function() {
 
   beforeEach(function() {
     core.build.mockClear();
