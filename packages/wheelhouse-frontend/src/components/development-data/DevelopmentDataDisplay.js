@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import DataContainer from "../reusables/DataContainer"; 
+import DataContainer from "../reusables/DataContainer";
 import Logs from "../reusables/Logs";
 import Sidebar from "../reusables/Sidebar";
 import * as actions from "../../actions/actions";
-import "./DevelopmentData.css"; 
+import "./DevelopmentData.css";
 
 class DevelopmentDataDisplay extends Component {
 
@@ -13,8 +13,8 @@ class DevelopmentDataDisplay extends Component {
     this.state = {
       showLogs: {}
     };
-    this.changeButtonStatus = this.changeButtonStatus.bind(this); 
-    this.showLogs = this.showLogs.bind(this); 
+    this.changeButtonStatus = this.changeButtonStatus.bind(this);
+    this.showLogs = this.showLogs.bind(this);
   }
 
   changeButtonStatus(appName) {
@@ -38,7 +38,7 @@ class DevelopmentDataDisplay extends Component {
       let showOrHide = this.state.showLogs[app.name] ? "show" : "hide";
       return (
         <div key={idx}>
-          <DataContainer 
+          <DataContainer
             name={app.name}
             status={app.status}
             startStop={buttonLabel}
@@ -63,13 +63,13 @@ class DevelopmentDataDisplay extends Component {
           </div>
         </div>
       </div>
-    ); 
+    );
   }
 }
 
 const mapStateToProps = state => {
   return {
-    packages: state.packages
+    packages: state.development.packages
   };
 };
 

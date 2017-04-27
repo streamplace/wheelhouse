@@ -2,10 +2,8 @@
 /*eslint-disable no-console*/
 
 import yargs from "yargs";
-import {
-  store,
-  configLoad,
-} from "wheelhouse-core";
+import { store } from "wheelhouse-core/dist/store";
+import {developmentStart} from "wheelhouse-core/dist/development/developmentActions";
 
 const attemptAction = async function(action, ...args) {
   try {
@@ -17,12 +15,23 @@ const attemptAction = async function(action, ...args) {
   }
 };
 
+if (!global._babelPolyfill) {
+  require("babel-polyfill");
+}
+
 const runCli = async function(argv) {
   yargs
-  .command("build", "build wheelhouse", function(yargs) {
-    return yargs;
-  }, function(argv) {
-    attemptAction(configLoad);
+    // .command("build", "build wheelhouse", yargs => yargs
+    // , function(argv) {
+    //   attemptAction(configLoad);
+    // })
+  // dev
+  .command({
+    command: "dev",
+    describe: "Run your local development with Wheelhouse",
+    handler: (argv) => {
+      attemptAction(developmentStart);
+    }
   })
   .help()
   .strict()

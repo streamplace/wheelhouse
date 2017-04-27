@@ -37,10 +37,14 @@
     "babel-jest": "^19.0.0",
     "babel-preset-streamplace": "^0.0.3",
     "debug": "^2.6.4",
+    "express": "^4.15.2",
     "find-up": "^2.1.0",
+    "http-proxy-middleware": "^0.17.4",
     "js-yaml": "^3.8.3",
     "mz": "^2.6.0",
+    "opn": "^4.0.2",
     "redux": "^3.6.0",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "ws": "^2.3.1"
   }
 }
