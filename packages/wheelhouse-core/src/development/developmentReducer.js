@@ -1,4 +1,6 @@
 
+import { CHANGE_BUTTON_STATUS } from "./developmentConstants";
+
 const initialState = {
   packages: [
     {
@@ -20,7 +22,7 @@ const initialState = {
 };
 
 export default function(state = initialState, action) {
-  if (action.type === "CHANGE_BUTTON_STATUS") {
+  if (action.type === CHANGE_BUTTON_STATUS) {
     const newPackages = state.packages.map((pkg) => {
       if (pkg.name === action.name) {
         return {

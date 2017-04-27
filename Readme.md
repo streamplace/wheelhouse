@@ -8,6 +8,17 @@ Wheelhouse is a tool for managing sophisticated Javascript projects that target 
 
 It draws heavy inspiration from the one-command development processes in projects like [Meteor](https://www.meteor.com/) and [create-react-app](https://github.com/facebookincubator/create-react-app) and builds upon the dependency model from [Lerna](https://lernajs.io/).
 
+## Development
+
+Clone the repo, and then:
+
+```
+yarn install
+yarn run dev
+```
+
+It
+
 ## Credits
 
 Wheelhouse is being jointly developed by [Streamplace](https://stream.place) and [C-SATS](https://www.csats.com).

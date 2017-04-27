@@ -20,6 +20,8 @@ const serverListen = function(server, port) {
   });
 };
 
+const clients = [];
+
 export const serverStart = () => async (dispatch, getState) => {
   await dispatch(configLoad());
   const port = getState().config.port;
@@ -30,7 +32,6 @@ export const serverStart = () => async (dispatch, getState) => {
   // use the wheelhouse API port. So we first make a secondary random-port server for websockets.
 
   const websocketServer = http.createServer();
-  const clients = []; // hack hack hack no
   const wss = new WebSocket.Server({ server: websocketServer });
   wss.on("connection", function connection(ws) {
     clients.push(ws);
@@ -38,10 +39,13 @@ export const serverStart = () => async (dispatch, getState) => {
     ws.on("message", function incoming(message) {
       log(`Client says: ${message}`);
       const action = JSON.parse(message);
+      action._fromClient = true;
       dispatch(action);
-      clients.forEach((client) => {
-        client.send(message);
-      });
+    });
+
+    ws.on("close", function() {
+      const index = clients.indexOf(ws);
+      clients.splice(index, 1);
     });
 
     ws.on("error", (err) => {
@@ -69,4 +73,11 @@ export const serverStart = () => async (dispatch, getState) => {
   }));
 
   return await serverListen(server, port);
+};
+
+export const serverSendAction = (action) => {
+  const message = JSON.stringify(action);
+  clients.forEach((client) => {
+    client.send(message);
+  });
 };

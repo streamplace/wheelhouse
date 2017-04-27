@@ -2,6 +2,8 @@ import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import { SERVER_SYNC_STATE, reducer } from "wheelhouse-core";
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 // Create WebSocket connection.
 const socket = new WebSocket(`ws://${window.location.host}/api`);
 
@@ -22,7 +24,6 @@ const sendToServer = store => next => action => {
   return next(action);
 };
 
-
 export default new Promise((resolve, reject) => {
 
   let store;
@@ -31,7 +32,7 @@ export default new Promise((resolve, reject) => {
     const action = JSON.parse(event.data);
     // Special initialization action that runs at the start.
     if (action.type === SERVER_SYNC_STATE) {
-      store = createStore(reducer, action.state, compose(
+      store = createStore(reducer, action.state, composeEnhancers(
         applyMiddleware(thunk),
         applyMiddleware(sendToServer)
       ));

@@ -8,7 +8,7 @@
     "postinstall": "lerna exec --concurrency=1 --no-sort yarn install && lerna bootstrap",
     "lint": "eslint .",
     "precommit": "lint-staged",
-    "dev": "lerna exec --concurrency=999 --no-sort yarn run dev"
+    "dev": "DEBUG='wheelhouse:*' lerna exec --concurrency=999 --no-sort yarn run dev"
   },
   "lint-staged": {
     "*.js": "eslint"
