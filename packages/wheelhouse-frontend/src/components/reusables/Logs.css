@@ -6,6 +6,7 @@
   min-height: 50vh;
   overflow: auto;
   max-height:90vh;
+  padding-bottom: 30px !important;
 }
 
 .log-line-column {

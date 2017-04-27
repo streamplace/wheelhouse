@@ -5060,16 +5060,17 @@ const stateReducer = (state = {
 }, action) => {
   switch (action.type) {
  /*eslint-disable no-case-declarations*/
-  case actions.CHANGE_BUTTON_STATUS:
-    let packagesCopy = [...state.packages]; 
-    packagesCopy = handlers.updateActiveStatus(packagesCopy, action.name);
-    return Object.assign({}, state, { packages: packagesCopy }); 
 
   case actions.ADD_LOG: 
     const newObject = { appName: "Mendoza",
       serverStatus: "k85_sp-dev-certs.8cffccc.kube-apiserver",
       expectedAction: "[17.015ms] About to convert to expected version" };
     return Object.assign({}, state, {logsData: [...state.logsData, newObject]});
+    
+  case actions.CHANGE_BUTTON_STATUS:
+    let packagesCopy = [...state.packages]; 
+    packagesCopy = handlers.updateActiveStatus(packagesCopy, action.name);
+    return Object.assign({}, state, { packages: packagesCopy }); 
     
   default: 
     return state; 
