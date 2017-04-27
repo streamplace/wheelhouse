@@ -1,0 +1,5 @@
+
+port: 3999
+packages:
+  - fake-meteor
+  - fake-package

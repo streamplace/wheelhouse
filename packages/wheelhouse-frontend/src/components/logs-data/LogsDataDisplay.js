@@ -1,6 +1,6 @@
 import React, {Component} from "react"; 
 import { connect } from "react-redux";
-import * as actions from "../../actions/actions";
+import { DEVELOPMENT_LOG } from "wheelhouse-core"; 
 import LogLine from "./LogLine";
 import * as logHandlers from "../../handlers/component-handlers/log-handlers";
 import Sidebar from "../reusables/Sidebar";
@@ -12,13 +12,15 @@ class LogsDataDisplay extends Component {
     setInterval(this.addLogData.bind(this), 3000);
   }
   
-  addLogData(logsData) {
-    this.props.dispatch(actions.addLog());
+  addLogData() {
+    this.props.dispatch({
+      type: DEVELOPMENT_LOG
+    });
   }
 
   render() {
-    const { logsData } = this.props;
-    const lines = logsData.map((line, idx) => {
+    const { logs } = this.props;
+    const lines = logs.map((line, idx) => {
       const time = logHandlers.timeConverter();
       const hashed = logHandlers.hashCode(line.appName);
       const randomColor = logHandlers.intToRGB(hashed); 
@@ -50,7 +52,7 @@ class LogsDataDisplay extends Component {
 
 const mapStateToProps = state => {
   return {
-    logsData: state.logsData
+    logs: state.development.logs
   };
 };
 
