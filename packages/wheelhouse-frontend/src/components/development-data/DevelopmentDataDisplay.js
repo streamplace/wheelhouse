@@ -62,8 +62,8 @@ class DevelopmentDataDisplay extends Component {
         <button onClick={() => this.props.dispatch({type: CONFIG_LOAD})}>Reload Config</button>
         <div className="container">
           <div className="row">
-            <div className="column column-20"><Sidebar /></div>
-            <div className="development-data-container column column-80">{data}</div>
+            <div className="sidebar-container"><Sidebar /></div>
+            <div className="development-data-container content-container">{data}</div>
           </div>
         </div>
       </div>

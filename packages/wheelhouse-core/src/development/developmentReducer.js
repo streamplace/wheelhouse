@@ -1,8 +1,9 @@
 
-import { CHANGE_BUTTON_STATUS } from "./developmentConstants";
+import { CHANGE_BUTTON_STATUS, DEVELOPMENT_LOG } from "./developmentConstants";
 import { CONFIG_LOADED } from "../config/configConstants";
 
 const initialState = {
+  logs: [],
   packages: []
 };
 
@@ -43,6 +44,13 @@ export default function(state = initialState, action) {
       ...state,
       packages: newPackages,
     };
+  }
+
+  if (action.type === DEVELOPMENT_LOG)  {
+    const newObject = { appName: "Mendoza",
+      serverStatus: "k85_sp-dev-certs.8cffccc.kube-apiserver",
+      expectedAction: "[17.015ms] About to convert to expected version" };
+    return Object.assign({}, state, {logs: [...state.logs, newObject]});
   }
 
   return state;

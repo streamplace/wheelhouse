@@ -1,6 +1,48 @@
+/*!imporant flags added to override default styling from Milligram */
+
+.logs-container {
+  background-color: black;
+  padding: 0 5px !important;
+  margin-top: 30px;
+  min-height: 50vh;
+  overflow: auto;
+  max-height:90vh;
+  padding-bottom: 30px !important;
+}
+
+.log-line-column {
+  padding-right: 10px;
+  letter-spacing: -0.5px;
+  word-spacing: -3px;
+  line-height: 20px;
+}
+
+.log-line-container {
+  background-color: black;
+  color: white;
+  font-family:'Inconsolata', monospace;
+  padding: 0;
+}
+
+.log-line-app-name {
+  color: #62C370;
+}
+
+.log-line-app-server {
+  color: #61E8E1;
+}
+
+.log-line-row {
+  display: flex;
+}
+
 .logs {
   height: 200px;
   margin: 10px;
   border: 1px solid lightgray;
   border-radius: 2px;
+}
+
+.nowrap {
+  white-space: nowrap;
 }
