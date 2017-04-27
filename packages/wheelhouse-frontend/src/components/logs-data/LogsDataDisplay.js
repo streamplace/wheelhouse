@@ -1,5 +1,6 @@
 import React, {Component} from "react"; 
 import { connect } from "react-redux";
+import * as actions from "../../actions/actions";
 import LogLine from "./LogLine";
 import Sidebar from "../reusables/Sidebar";
 import "../reusables/Logs.css";
@@ -41,6 +42,30 @@ function intToRGB(i){
 }
 
 class LogsDataDisplay extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      logsData: [ { appName: "Mendoza",
+        serverStatus: "k85_sp-dev-certs.8cffccc.kube-apiserver",
+        expectedAction: "[17.015ms] About to convert to expected version" },
+      { appName: "Clydesdale",
+        serverStatus: "k85_sp-dev-certs.8cffccc.kube-apiserver",
+        expectedAction: "[17.015ms] About to convert to expected version" },
+      { appName: "Maestro",
+        serverStatus: "k85_sp-dev-certs.8cffccc.kube-apiserver",
+        expectedAction: "[17.015ms] About to convert to expected version" }]
+    };
+  }
+
+  componentDidMount() {
+    setInterval(this.addLogData.bind(this), 3000);
+  }
+  
+  addLogData(logsData) {
+    this.props.dispatch(actions.addLog());
+  }
+
   render() {
     const { logsData } = this.props;
     let lines = logsData.map((line, idx) => {

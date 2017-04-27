@@ -5,6 +5,7 @@
   margin-top: 30px;
   min-height: 50vh;
   overflow: auto;
+  max-height:90vh;
 }
 
 .log-line-column {
