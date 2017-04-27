@@ -1,6 +1,6 @@
 {
   "name": "wheelhouse-cli",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Wheelhouse command line interface and all that",
   "main": "dist/wheelhouse-cli.js",
   "scripts": {
@@ -35,7 +35,7 @@
   "dependencies": {
     "babel-jest": "^19.0.0",
     "babel-preset-streamplace": "^0.0.3",
-    "wheelhouse-core": "^0.0.2",
+    "wheelhouse-core": "^0.0.3",
     "yargs": "^7.1.0"
   },
   "devDependencies": {
