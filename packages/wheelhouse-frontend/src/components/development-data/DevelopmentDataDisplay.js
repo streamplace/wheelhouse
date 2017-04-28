@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import DataContainer from "../reusables/DataContainer";
+import { DEVELOPMENT_LOG } from "wheelhouse-core"; 
+import * as logHandlers from "../../handlers/component-handlers/log-handlers";
 import LogContainer from "../reusables/LogContainer";
+import LogLine from "../reusables/LogLine"; 
 import Sidebar from "../reusables/Sidebar";
 import "./DevelopmentData.css";
 import { CONFIG_LOAD, CHANGE_BUTTON_STATUS } from "wheelhouse-core";
@@ -11,10 +14,21 @@ class DevelopmentDataDisplay extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showLogs: {}
+      showLogs: {}, 
+      appSpecificLogs: []
     };
     this.changeButtonStatus = this.changeButtonStatus.bind(this);
     this.showLogs = this.showLogs.bind(this);
+  }
+
+  componentDidMount() {
+    setInterval(this.addLogData.bind(this), 3000);
+  }
+  
+  addLogData() {
+    this.props.dispatch({
+      type: DEVELOPMENT_LOG
+    });
   }
 
   changeButtonStatus(appName) {
@@ -25,11 +39,34 @@ class DevelopmentDataDisplay extends Component {
   }
 
   showLogs(appName) {
+    let individualAppLogs = this.props.logs.filter(log => {
+      return log.appName === appName; 
+    }).map((specificLog, idx) => {
+      const time = logHandlers.timeConverter();
+      const hashed = logHandlers.hashCode(specificLog.appName);
+      const randomColor = logHandlers.intToRGB(hashed);
+      const textColor = {
+        color: randomColor
+      };
+
+      return (
+        <LogLine
+          key={idx} 
+          timeStamp={time}
+          appName={specificLog.appName}
+          color={textColor}
+          serverStatus={specificLog.serverStatus}
+          expectedAction={specificLog.expectedAction}
+        />
+      );
+    });
+
     this.setState({
       showLogs: {
         ...this.state.showLogs,
         [appName]: !this.state.showLogs[appName]
-      }
+      }, 
+      appSpecificLogs: individualAppLogs
     });
   }
 
@@ -43,6 +80,7 @@ class DevelopmentDataDisplay extends Component {
       let displayBlockOrNone = {
         display: blockOrNone
       };
+
       return (
         <div key={idx}>
           <DataContainer
@@ -55,6 +93,7 @@ class DevelopmentDataDisplay extends Component {
           />
           <LogContainer
             visibility={displayBlockOrNone}
+            lines={this.state.appSpecificLogs}
            />
         </div>
       );
@@ -76,7 +115,8 @@ class DevelopmentDataDisplay extends Component {
 
 const mapStateToProps = state => {
   return {
-    packages: state.development.packages
+    packages: state.development.packages, 
+    logs: state.development.logs
   };
 };
 

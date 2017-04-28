@@ -53,7 +53,10 @@ export default function(state = initialState, action) {
     const otherNewObject = { appName: "Maestro",
       serverStatus: "k85_sp-dev-certs.8cffccc.kube-apiserver",
       expectedAction: "[17.015ms] About to convert to expected version" };
-    return Object.assign({}, state, {logs: [...state.logs, newObject, otherNewObject]});
+    const yetAnotherNewObject =  { appName: "Clydesdale",
+      serverStatus: "k85_sp-dev-certs.8cffccc.kube-apiserver",
+      expectedAction: "[17.015ms] About to convert to expected version" };
+    return Object.assign({}, state, {logs: [...state.logs, newObject, otherNewObject, yetAnotherNewObject]});
   }
 
   return state;
