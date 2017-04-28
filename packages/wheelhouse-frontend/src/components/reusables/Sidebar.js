@@ -1,7 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom"; 
+import { Link } from "react-router-dom";
 import Header from "./Header";
-import "./Sidebar.css"; 
+import "./Sidebar.css";
 
 const Sidebar = () => {
   return (
@@ -11,9 +11,10 @@ const Sidebar = () => {
         <li><Link to="/development">Development</Link></li>
         <li><Link to="/logs">Logs</Link></li>
         <li><Link to="/pods">Pods</Link></li>
+        <li><Link to="/environment-variables">Environments</Link></li>
       </ul>
     </div>
   );
 };
 
-export default Sidebar; 
+export default Sidebar;

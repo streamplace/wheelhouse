@@ -1,4 +1,4 @@
-import React from "react"; 
+import React from "react";
 
 const DataContainer = (props) => {
   return (
@@ -10,14 +10,14 @@ const DataContainer = (props) => {
           <a onClick={props.showLogs}>See logs</a>
         </div>
         <div className="column">
-          <button className={props.buttonClass} 
+          <button className={props.buttonClass}
             onClick={props.changeButtonStatus}>
             {props.startStop}
           </button>
         </div>
       </div>
     </div>
-  ); 
+  );
 };
 
-export default DataContainer; 
+export default DataContainer;
