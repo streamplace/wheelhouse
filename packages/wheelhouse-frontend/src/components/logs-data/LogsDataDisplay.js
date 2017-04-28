@@ -1,8 +1,9 @@
 import React, {Component} from "react"; 
 import { connect } from "react-redux";
 import { DEVELOPMENT_LOG } from "wheelhouse-core"; 
-import LogLine from "./LogLine";
 import * as logHandlers from "../../handlers/component-handlers/log-handlers";
+import LogContainer from "../reusables/LogContainer";
+import LogLine from "../reusables/LogLine";
 import Sidebar from "../reusables/Sidebar";
 import "../reusables/Logs.css";
 
@@ -59,20 +60,10 @@ class LogsDataDisplay extends Component {
     });
   }
 
-  hideAllApps() {
+  toggleAllApps(bool) {
     let showLogsCopy = Object.assign({}, this.state.showLogs);
     for (let key in showLogsCopy) {
-      showLogsCopy[key] = false; 
-    }
-    this.setState({
-      showLogs: showLogsCopy 
-    });
-  }
-
-  showAllApps() {
-    let showLogsCopy = Object.assign({}, this.state.showLogs);
-    for (let key in showLogsCopy) {
-      showLogsCopy[key] = true; 
+      showLogsCopy[key] = bool; 
     }
     this.setState({
       showLogs: showLogsCopy 
@@ -136,13 +127,18 @@ class LogsDataDisplay extends Component {
             <Sidebar />
             <div className="log-filter-container">
               <ul className="log-filter-list">
-                <button onClick={this.showAllApps.bind(this)} className="button-clear">Show all</button>
-                <button onClick={this.hideAllApps.bind(this)}className="button-clear">Hide all</button>
+                <div className="show-all-hide-all-container">
+                  <button className="button-clear toggle-all-apps-button show-all-button" 
+                    onClick={() => { this.toggleAllApps(true).bind(this); }}>Show all</button>
+                  <button className="button-clear toggle-all-apps-button" 
+                    onClick={() => { this.toggleAllApps(false).bind(this); }}>Hide all</button>
+                </div>
                 {logButtons()}
               </ul>
             </div>
           </div>
-          <div className="content-container logs-container">{lines}</div>
+          <LogContainer
+            lines={lines} />
         </div>
       </div>
     );

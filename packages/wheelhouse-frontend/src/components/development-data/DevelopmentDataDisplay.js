@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import DataContainer from "../reusables/DataContainer";
-import Logs from "../reusables/Logs";
+import LogContainer from "../reusables/LogContainer";
 import Sidebar from "../reusables/Sidebar";
 import "./DevelopmentData.css";
 import { CONFIG_LOAD, CHANGE_BUTTON_STATUS } from "wheelhouse-core";
@@ -38,7 +38,11 @@ class DevelopmentDataDisplay extends Component {
     const data = packages.map((app, idx) => {
       let buttonLabel = app.active ? "Stop" : "Start";
       let buttonColor = buttonLabel === "Stop" ?  "red" : "green";
-      let showOrHide = this.state.showLogs[app.name] ? "show" : "hide";
+      let blockOrNone;  
+      !this.state.showLogs[app.name]  ? blockOrNone = "none" : blockOrNone = null;
+      let displayBlockOrNone = {
+        display: blockOrNone
+      };
       return (
         <div key={idx}>
           <DataContainer
@@ -49,9 +53,8 @@ class DevelopmentDataDisplay extends Component {
             changeButtonStatus={() => this.changeButtonStatus(app.name)}
             showLogs={() => this.showLogs(app.name)}
           />
-          <Logs
-            name={app.name}
-            visibility={showOrHide}
+          <LogContainer
+            visibility={displayBlockOrNone}
            />
         </div>
       );

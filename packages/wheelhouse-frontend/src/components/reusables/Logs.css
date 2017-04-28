@@ -5,7 +5,9 @@
 }
 
 .log-filter-button {
-  min-width: 130px;
+  min-width: 100px;
+  font-size: 10px;
+  padding: 0;
   background-color: #1a65ab;
   border-color: #1a65ab;
 }
@@ -17,8 +19,8 @@
 
 .log-filter-container ul {
   list-style: none;
-  width: 80%;
-  padding-left: 10px;
+  display: flex;
+  flex-direction: column;
 }
 
 .log-filter-container ul li {
@@ -40,7 +42,7 @@
   margin-top: 30px;
   min-height: 50vh;
   overflow: auto;
-  height:90vh;
+  height: 90vh;
   padding-bottom: 30px !important;
 }
 
@@ -71,4 +73,11 @@
 
 .nowrap {
   white-space: nowrap;
+}
+
+.toggle-all-apps-button {
+  color: #1a65ab !important;
+  padding: 0;
+  margin-bottom: 0;
+  display: block;
 }
