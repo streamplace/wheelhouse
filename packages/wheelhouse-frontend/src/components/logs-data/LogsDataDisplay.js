@@ -4,7 +4,6 @@ import { DEVELOPMENT_LOG } from "wheelhouse-core";
 import LogLine from "./LogLine";
 import * as logHandlers from "../../handlers/component-handlers/log-handlers";
 import Sidebar from "../reusables/Sidebar";
-import ToggleButton from "react-toggle-button";
 import "../reusables/Logs.css";
 
 class LogsDataDisplay extends Component {
@@ -14,7 +13,7 @@ class LogsDataDisplay extends Component {
     this.state = {
       showLogs: {}
     }; 
-    this.toggleButton = this.toggleButton.bind(this);
+    this.toggleIndivApp = this.toggleIndivApp.bind(this);
   }
 
   componentWillMount() {
@@ -29,18 +28,17 @@ class LogsDataDisplay extends Component {
     });
   }
 
-  // componentDidUpdate() {
-  //   this.props.logs.map(log => {
-  //     if (this.state.showLogs[log.appName] === undefined) {
-  //       this.setState({
-  //         showLogs: {
-  //           ...this.state.showLogs,
-  //           [log.appName]: true
-  //         } 
-  //       });
-  //     }
-  //   });
-  // }
+  componentDidUpdate() {
+    // let showLogsCopy = Object.assign({}, this.state.showLogs);
+    // this.props.logs.forEach(log => {
+    //   if (showLogsCopy[log.appName] === undefined) {
+    //     showLogsCopy[log.appName] = true; 
+    //   }
+    // });
+    // this.setState({
+    //   showLogs: showLogsCopy
+    // });
+  }
 
   componentDidMount() {
     setInterval(this.addLogData.bind(this), 3000);
@@ -52,12 +50,32 @@ class LogsDataDisplay extends Component {
     });
   }
 
-  toggleButton(appName) {
+  toggleIndivApp(appName) {
     this.setState({
       showLogs: {
         ...this.state.showLogs, 
         [appName]: !this.state.showLogs[appName]
       }
+    });
+  }
+
+  hideAllApps() {
+    let showLogsCopy = Object.assign({}, this.state.showLogs);
+    for (let key in showLogsCopy) {
+      showLogsCopy[key] = false; 
+    }
+    this.setState({
+      showLogs: showLogsCopy 
+    });
+  }
+
+  showAllApps() {
+    let showLogsCopy = Object.assign({}, this.state.showLogs);
+    for (let key in showLogsCopy) {
+      showLogsCopy[key] = true; 
+    }
+    this.setState({
+      showLogs: showLogsCopy 
     });
   }
 
@@ -95,14 +113,16 @@ class LogsDataDisplay extends Component {
 
     const logButtons = () => {
       const buttons = []; 
+
       for (let key in this.state.showLogs) {
+        let buttonClass= !this.state.showLogs[key] ? "button-outline hide-log-button log-filter-button" : "log-filter-button";
         buttons.push(
             <li key={key}>
-              {key} 
-              <ToggleButton
-                value={this.state.showLogs[key]}
-                onToggle={() => {this.toggleButton(key); }}
-              />
+              <button 
+                onClick={() => {this.toggleIndivApp(key); }}
+                className={buttonClass}>
+                {key}
+              </button>
             </li>
           ); 
       }
@@ -116,6 +136,8 @@ class LogsDataDisplay extends Component {
             <Sidebar />
             <div className="log-filter-container">
               <ul className="log-filter-list">
+                <button onClick={this.showAllApps.bind(this)} className="button-clear">Show all</button>
+                <button onClick={this.hideAllApps.bind(this)}className="button-clear">Hide all</button>
                 {logButtons()}
               </ul>
             </div>

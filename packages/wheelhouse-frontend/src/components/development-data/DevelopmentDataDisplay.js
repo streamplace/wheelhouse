@@ -59,7 +59,7 @@ class DevelopmentDataDisplay extends Component {
 
     return (
       <div>
-        <button onClick={() => this.props.dispatch({type: CONFIG_LOAD})}>Reload Config</button>
+        <button className="start-stop-button"onClick={() => this.props.dispatch({type: CONFIG_LOAD})}>Reload Config</button>
         <div className="container">
           <div className="row">
             <div className="sidebar-container"><Sidebar /></div>

@@ -38,6 +38,10 @@
   display: block !important;
 }
 
+.start-stop-button {
+  min-width: 130px;
+}
+
 .text-column {
   padding-top: 10px !important;
 }

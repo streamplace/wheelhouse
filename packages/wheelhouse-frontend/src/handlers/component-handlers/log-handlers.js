@@ -22,6 +22,19 @@ export const intToRGB = (i) => {
   return c[1].match(offLimits) ? _makeBrighter(c) : c;    
 };
 
+
+export const recordAppNamesInState = () => {
+  let showLogsCopy = Object.assign({}, this.state.showLogs);
+  this.props.logs.forEach(log => {
+    if (showLogsCopy[log.appName] === undefined) {
+      showLogsCopy[log.appName] = true; 
+    }
+  });
+  this.setState({
+    showLogs: showLogsCopy
+  });
+};
+
 export const timeConverter = () => {
   const a = new Date();
   const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];

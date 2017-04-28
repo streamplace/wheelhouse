@@ -1,4 +1,19 @@
 /*!imporant flags added to override default styling from Milligram */
+.hide-log-button {
+  color: gray !important;
+  border-color: gray !important;
+}
+
+.log-filter-button {
+  min-width: 130px;
+  background-color: #1a65ab;
+  border-color: #1a65ab;
+}
+
+.log-filter-button:hover, .log-filter-button:focus {
+  background-color: #1a65ab;
+  border-color: #1a65ab;
+}
 
 .log-filter-container ul {
   list-style: none;
