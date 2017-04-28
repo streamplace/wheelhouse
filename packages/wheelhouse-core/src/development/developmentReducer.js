@@ -1,5 +1,5 @@
 
-import { CHANGE_BUTTON_STATUS, DEVELOPMENT_LOG } from "./developmentConstants";
+import { CHANGE_BUTTON_STATUS, DEVELOPMENT_LOG, DEVELOPMENT_ENV_CHANGE } from "./developmentConstants";
 import { CONFIG_LOADED } from "../config/configConstants";
 
 const initialState = {
@@ -40,6 +40,7 @@ const initialState = {
 };
 
 export default function(state = initialState, action) {
+
   if (action.type === CHANGE_BUTTON_STATUS) {
     const newPackages = state.packages.map((pkg) => {
       if (pkg.name === action.name) {
@@ -84,6 +85,31 @@ export default function(state = initialState, action) {
       expectedAction: "[17.015ms] About to convert to expected version" };
     return Object.assign({}, state, {logs: [...state.logs, newObject]});
   }
+  if (action.type === DEVELOPMENT_ENV_CHANGE) {
+    const { variableName, currentValue } = action;
+    //object destructuring for action
 
+    // Old way:
+    // const newEnv = { ...state.env };
+    // const newEnvField = { ...newEnv[variableName] };
+    // newEnvField.currentValue = currentValue;
+    // newEnv[variableName] = newEnvField;
+    // return {
+    //   ...state,
+    //   env: newEnv
+    // };
+    return {
+      ...state,
+      env: {
+        ...state.env,
+        //make a copy of the env
+        [variableName]: {
+          ...state.env[variableName],
+          //make a copy of one variable's object
+          currentValue: currentValue
+        }
+      }
+    };
+  }
   return state;
 }

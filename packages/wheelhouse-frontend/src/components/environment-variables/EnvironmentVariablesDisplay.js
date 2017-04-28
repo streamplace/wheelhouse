@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Sidebar from "../reusables/Sidebar";
-//import * as actions from "../../actions/actions";
 import "./EnvironmentVariablesDisplay.css";
+import { DEVELOPMENT_ENV_CHANGE } from "wheelhouse-core";
 
 class EnvironmentVariablesDisplay extends Component {
 
@@ -10,21 +10,23 @@ class EnvironmentVariablesDisplay extends Component {
     super(props);
     this.state = {};
   }
-//currentValue set as state?
 
-  // buttonClick() {
-  //   this.setState({currentValue: ""});
-  // }
-  //set currentValue (for correct variable) to bound "this"
-  //bind obj.value as this onClick
+  buttonClick(name, selectedValue) {
+    this.props.dispatch({
+      type: DEVELOPMENT_ENV_CHANGE,
+      variableName: name,
+      currentValue: selectedValue
+    });
+  }
+
   render() {
     const { env } = this.props;
     const variable = Object.keys(env).map((name) => {
       const data = env[name];
       const presetValues = data.presetValues;
-      const reformattedArray = presetValues.map(function(obj) {
+      const reformattedArray = presetValues.map((obj) => {
         return (
-          <button className="button" >
+          <button className="button" onClick={this.buttonClick.bind(this, name, obj.value)}>
             <div className="buttonText">
               {obj.name}: {obj.value}
             </div>
@@ -60,4 +62,3 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps)(EnvironmentVariablesDisplay);
 
-//onClick={addCheckmark}
