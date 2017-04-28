@@ -4,7 +4,39 @@ import { CONFIG_LOADED } from "../config/configConstants";
 
 const initialState = {
   logs: [],
-  packages: []
+  packages: [],
+  env: {
+    CSATS_DB_URL: {
+      currentValue: "mongo://localhost/stage",
+      presetValues: [
+        {
+          name: "dev",
+          value: "mongo://localhost/dev"
+        },
+        {
+          name: "stage",
+          value: "mongo://localhost/stage"
+        }
+      ]
+    },
+    STREAMPLACE_API_SERVER: {
+      currentValue: "https://butt.fish",
+      presetValues: [
+        {
+          name: "dev",
+          value: "https://test.sp-dev.club"
+        },
+        {
+          name: "local",
+          value: "http://localhost"
+        },
+        {
+          name: "prod",
+          value: "https://stream.place"
+        }
+      ]
+    }
+  },
 };
 
 export default function(state = initialState, action) {

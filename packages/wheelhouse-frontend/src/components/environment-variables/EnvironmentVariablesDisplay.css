@@ -1,0 +1,26 @@
+.container-row {
+  padding-top: 1.0rem;
+  border-bottom: 1px solid lightgray;
+}
+
+.environment-variable-container {
+  margin-top: 30px;
+}
+
+.show {
+  display: block !important;
+}
+
+.text-column {
+  padding-top: 10px !important;
+}
+.buttonTest {
+  color: black;
+}
+.button {
+  background-color: white;
+  border: 2px solid black;
+}
+.button:hover {
+
+}
