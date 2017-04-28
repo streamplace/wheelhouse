@@ -12,11 +12,35 @@ class LogsDataDisplay extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showLogs: {Maestro: true, Mendoza: true},
-      value: false
+      showLogs: {}
     }; 
     this.toggleButton = this.toggleButton.bind(this);
   }
+
+  componentWillMount() {
+    let showLogsCopy = Object.assign({}, this.state.showLogs);
+    this.props.logs.forEach(log => {
+      if (showLogsCopy[log.appName] === undefined) {
+        showLogsCopy[log.appName] = true; 
+      }
+    });
+    this.setState({
+      showLogs: showLogsCopy
+    });
+  }
+
+  // componentDidUpdate() {
+  //   this.props.logs.map(log => {
+  //     if (this.state.showLogs[log.appName] === undefined) {
+  //       this.setState({
+  //         showLogs: {
+  //           ...this.state.showLogs,
+  //           [log.appName]: true
+  //         } 
+  //       });
+  //     }
+  //   });
+  // }
 
   componentDidMount() {
     setInterval(this.addLogData.bind(this), 3000);
@@ -29,39 +53,33 @@ class LogsDataDisplay extends Component {
   }
 
   toggleButton(appName) {
-    let showLogsCopy = [...this.state.showLogs];
-    showLogsCopy.forEach(log => {
-      if (log.name === appName) {
-        log.show = !log.show; 
-      }
-    });
     this.setState({
-      showLogs: showLogsCopy
+      showLogs: {
+        ...this.state.showLogs, 
+        [appName]: !this.state.showLogs[appName]
+      }
     });
   }
 
   render() {
-
     const { logs } = this.props;
     const lines = logs.map((line, idx) => {
+
       const time = logHandlers.timeConverter();
       const hashed = logHandlers.hashCode(line.appName);
-      const randomColor = logHandlers.intToRGB(hashed); 
-      // let displayOrHide;  
-      // this.state.showLogs.forEach(log => {
-      //   if (log.name === line.appName && log.show) {
-      //     displayOrHide = "visible";
-      //   } 
-      //   else {
-      //     displayOrHide = "hidden";
-      //   }
-      // });
+      const randomColor = logHandlers.intToRGB(hashed);
+
+      let blockOrNone;
+      this.state.showLogs[line.appName] ? blockOrNone = null : blockOrNone = "none";
+
       const textColor = {
         color: randomColor
       };
-      const showOrNot = {
-        visibility: "visible"
+
+      const displayBlockOrNone = {
+        display: blockOrNone
       };
+
       return (
         <LogLine
           key={idx} 
@@ -70,7 +88,7 @@ class LogsDataDisplay extends Component {
           color={textColor}
           serverStatus={line.serverStatus}
           expectedAction={line.expectedAction}
-          filter={showOrNot}
+          display={displayBlockOrNone}
         />
       );
     });
