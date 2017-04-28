@@ -1,12 +1,13 @@
 
 import { DEVELOPMENT_LOG, DEVELOPMENT_ENV_CHANGE } from "./developmentConstants";
-import { PACKAGES_START, PACKAGES_STOP } from "../packages/packagesConstants";
-import { PACKAGES_LOADED } from "../packages/packagesConstants";
+import { PACKAGES_START, PACKAGES_STOP, PACKAGES_LOADED } from "../packages/packagesConstants";
 import { getColor } from "../util/colors";
+import { CONFIG_LOADED } from "../config/configConstants";
 
 const initialState = {
   packages: [],
   logs: [],
+  env: {}
 };
 
 export default function(state = initialState, action) {
@@ -18,6 +19,7 @@ export default function(state = initialState, action) {
       return state;
     }
     // Otherwise, add it to development controls.
+
     return {
       ...state,
       packages: [
@@ -60,6 +62,15 @@ export default function(state = initialState, action) {
         }
         return pkg;
       })
+    };
+  }
+
+  if (action.type === CONFIG_LOADED) {
+    return {
+      ...state,
+      env: {
+        ...action.configData.env,
+      },
     };
   }
 
