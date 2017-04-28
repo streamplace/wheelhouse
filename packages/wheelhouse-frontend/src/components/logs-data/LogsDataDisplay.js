@@ -100,8 +100,8 @@ class LogsDataDisplay extends Component {
             <li key={key}>
               {key} 
               <ToggleButton
-              value={this.state.showLogs[key]}
-              onToggle={() => {this.toggleButton(key); }}
+                value={this.state.showLogs[key]}
+                onToggle={() => {this.toggleButton(key); }}
               />
             </li>
           ); 

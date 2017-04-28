@@ -1,5 +1,24 @@
 /*!imporant flags added to override default styling from Milligram */
 
+.log-filter-container ul {
+  list-style: none;
+  width: 80%;
+  padding-left: 10px;
+}
+
+.log-filter-container ul li {
+  display: flex;
+  justify-content: space-between;
+}
+
+.log-line-app-name {
+  color: #62C370;
+}
+
+.log-line-app-server {
+  color: #61E8E1;
+}
+
 .logs-container {
   background-color: black;
   padding: 0 5px !important;
@@ -22,18 +41,6 @@
   color: white;
   font-family:'Inconsolata', monospace;
   padding: 0;
-}
-
-.log-line-app-name {
-  color: #62C370;
-}
-
-.log-line-app-server {
-  color: #61E8E1;
-}
-
-.log-filter-list {
-  list-style: none;
 }
 
 .log-line-row {
