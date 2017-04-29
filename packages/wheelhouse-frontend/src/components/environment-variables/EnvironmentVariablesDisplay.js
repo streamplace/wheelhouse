@@ -54,7 +54,7 @@ class EnvironmentVariablesDisplay extends Component {
       const reformattedArray = presetValues.map((obj) => {
         let button = obj.value;
         let checked;
-        if (button == this.state.current) {
+        if (button === this.state.current) {
           checked = <span className="checkmark">  ✔️</span>;
         } else {
           checked = <span></span>;
@@ -73,7 +73,7 @@ class EnvironmentVariablesDisplay extends Component {
       return (
         <div className="variable-container">
           <span className="variable-name">{name}</span>
-          <ul> {reformattedArray} </ul>
+          <ul className="envContainer"> {reformattedArray} </ul>
           {newInput}
         </div>
       );

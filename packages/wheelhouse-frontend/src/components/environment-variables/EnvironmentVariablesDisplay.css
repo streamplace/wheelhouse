@@ -1,6 +1,7 @@
 
 .environment-variable-container {
   margin-top: 30px;
+  margin-left: 0px;
 }
 .buttonText {
   color: black;
@@ -14,10 +15,12 @@
   border: 1px;
 
 }
-
+.envContainer {
+  margin-bottom: .4em;
+}
 .customInput {
-  width: 30em;
-  margin: .4em;
+  width: 30em !important;
+  margin-left: 0;
   border: 1px black;
 }
 
