@@ -15,7 +15,6 @@ class DevelopmentDataDisplay extends Component {
     super(props);
     this.state = {
       showLogs: {}, 
-      appSpecificLogs: []
     };
     this.changeButtonStatus = this.changeButtonStatus.bind(this);
     this.showLogs = this.showLogs.bind(this);
@@ -61,12 +60,13 @@ class DevelopmentDataDisplay extends Component {
       );
     });
 
+    let key = `logsFor${appName}`;
     this.setState({
       showLogs: {
         ...this.state.showLogs,
         [appName]: !this.state.showLogs[appName]
       }, 
-      appSpecificLogs: individualAppLogs
+      [key]: individualAppLogs
     });
   }
 
@@ -80,7 +80,7 @@ class DevelopmentDataDisplay extends Component {
       let displayBlockOrNone = {
         display: blockOrNone
       };
-
+      let stateKey = `logsFor${app.name}`;
       return (
         <div key={idx}>
           <DataContainer
@@ -93,7 +93,7 @@ class DevelopmentDataDisplay extends Component {
           />
           <LogContainer
             visibility={displayBlockOrNone}
-            lines={this.state.appSpecificLogs}
+            lines={this.state[stateKey]}
            />
         </div>
       );
