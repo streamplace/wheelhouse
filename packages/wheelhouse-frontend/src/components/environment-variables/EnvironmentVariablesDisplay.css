@@ -1,26 +1,35 @@
-.container-row {
-  padding-top: 1.0rem;
-  border-bottom: 1px solid lightgray;
-}
 
 .environment-variable-container {
   margin-top: 30px;
 }
-
-.show {
-  display: block !important;
-}
-
-.text-column {
-  padding-top: 10px !important;
-}
-.buttonTest {
+.buttonText {
   color: black;
 }
+.variable-container {
+  border: 1px black;
+}
+.variable-name {
+  color: black;
+  text-align: left;
+  border: 1px;
+
+}
+
+.customInput {
+  width: 30em;
+  margin: .4em;
+  border: 1px black;
+}
+
 .button {
-  background-color: white;
-  border: 2px solid black;
+  background-color: lightcyan;
+  border: 1px solid black;
+  width: 30em;
+  margin: .4em;
 }
 .button:hover {
-
+  background-color: #80ffff;
+}
+.button:focus {
+  background-color: lightcyan;
 }
