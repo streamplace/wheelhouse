@@ -5,8 +5,7 @@
 }
 
 .log-filter-button {
-  min-width: 100px;
-  font-size: 10px;
+  min-width: 145px;
   padding: 0;
   background-color: #1a65ab;
   border-color: #1a65ab;
@@ -17,10 +16,24 @@
   border-color: #1a65ab;
 }
 
+.log-filter-container {
+  display: flex;
+  flex-direction: column;
+  margin-right: 15px;
+  margin-top: 0;
+}
+
+.log-filter-container h4 {
+  font-size: 18px;
+  margin: 0 0 2px 8px;
+  font-weight: 400;
+}
+
 .log-filter-container ul {
   list-style: none;
   display: flex;
   flex-direction: column;
+  margin-left: 10px;
 }
 
 .log-filter-container ul li {
@@ -34,16 +47,6 @@
 
 .log-line-app-server {
   color: #61E8E1;
-}
-
-.logs-container {
-  background-color: black;
-  padding: 0 5px !important;
-  margin-top: 30px;
-  min-height: 50vh;
-  overflow: auto;
-  height: 90vh;
-  padding-bottom: 30px !important;
 }
 
 .log-line-column {
@@ -64,20 +67,27 @@
   display: flex;
 }
 
-.logs {
-  height: 200px;
-  margin: 10px;
-  border: 1px solid lightgray;
-  border-radius: 2px;
+.logs-container {
+  background-color: black;
+  padding: 0 5px !important;
+  margin-top: 30px;
+  min-height: 50vh;
+  overflow: auto;
+  height: 90vh;
+  padding-bottom: 30px !important;
 }
 
 .nowrap {
   white-space: nowrap;
 }
 
+.show-all-hide-all-container {
+  display: flex;
+  justify-content: space-around;
+}
+
 .toggle-all-apps-button {
   color: #1a65ab !important;
   padding: 0;
-  margin-bottom: 0;
   display: block;
 }
