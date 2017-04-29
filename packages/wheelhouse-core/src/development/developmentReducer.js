@@ -87,25 +87,13 @@ export default function(state = initialState, action) {
   }
   if (action.type === DEVELOPMENT_ENV_CHANGE) {
     const { variableName, currentValue } = action;
-    //object destructuring for action
 
-    // Old way:
-    // const newEnv = { ...state.env };
-    // const newEnvField = { ...newEnv[variableName] };
-    // newEnvField.currentValue = currentValue;
-    // newEnv[variableName] = newEnvField;
-    // return {
-    //   ...state,
-    //   env: newEnv
-    // };
     return {
       ...state,
       env: {
         ...state.env,
-        //make a copy of the env
         [variableName]: {
           ...state.env[variableName],
-          //make a copy of one variable's object
           currentValue: currentValue
         }
       }
