@@ -23,7 +23,7 @@ class DevelopmentDataDisplay extends Component {
   componentDidMount() {
     setInterval(this.addLogData.bind(this), 3000);
   }
-  
+
   addLogData() {
     this.props.dispatch({
       type: DEVELOPMENT_LOG
@@ -38,49 +38,52 @@ class DevelopmentDataDisplay extends Component {
   }
 
   showLogs(appName) {
-    let individualAppLogs = this.props.logs.filter(log => {
-      return log.appName === appName; 
-    }).map((specificLog, idx) => {
-      const time = logHandlers.timeConverter();
-      const hashed = logHandlers.hashCode(specificLog.appName);
-      const randomColor = logHandlers.intToRGB(hashed);
-      const textColor = {
-        color: randomColor
-      };
-
-      return (
-        <LogLine
-          key={idx} 
-          timeStamp={time}
-          appName={specificLog.appName}
-          color={textColor}
-          serverStatus={specificLog.serverStatus}
-          expectedAction={specificLog.expectedAction}
-        />
-      );
-    });
-
-    let key = `logsFor${appName}`;
     this.setState({
       showLogs: {
         ...this.state.showLogs,
         [appName]: !this.state.showLogs[appName]
-      }, 
-      [key]: individualAppLogs
+      }
     });
+    return appName;
   }
 
   render() {
-    const { packages } = this.props;
+
+    const { packages, logs } = this.props;
+
+    const grabIndividualAppLogs = (appName) => {
+      return logs.filter(log => {
+        return log.appName === appName; 
+      }).map((specificLog, idx) => {
+        const time = logHandlers.timeConverter();
+        const hashed = logHandlers.hashCode(specificLog.appName);
+        const randomColor = logHandlers.intToRGB(hashed);
+        const textColor = {
+          color: randomColor
+        };
+        return (
+          <LogLine
+            key={idx} 
+            timeStamp={time}
+            appName={specificLog.appName}
+            color={textColor}
+            serverStatus={specificLog.serverStatus}
+            expectedAction={specificLog.expectedAction}
+          />
+        );
+      });
+    };
+
     const data = packages.map((app, idx) => {
+      
       let buttonLabel = app.active ? "Stop" : "Start";
       let buttonColor = buttonLabel === "Stop" ?  "red" : "green";
-      let blockOrNone;  
-      !this.state.showLogs[app.name]  ? blockOrNone = "none" : blockOrNone = null;
+      let blockOrNone = !this.state.showLogs[app.name]  ? "none" : null;
+      let seeOrCloseLogs = !this.state.showLogs[app.name] ? "See logs" : "Close logs";
       let displayBlockOrNone = {
         display: blockOrNone
       };
-      let stateKey = `logsFor${app.name}`;
+
       return (
         <div key={idx}>
           <DataContainer
@@ -89,11 +92,12 @@ class DevelopmentDataDisplay extends Component {
             startStop={buttonLabel}
             buttonClass={buttonColor}
             changeButtonStatus={() => this.changeButtonStatus(app.name)}
-            showLogs={() => this.showLogs(app.name)}
+            showLogsAction={() => this.showLogs(app.name)}
+            showLogsText={seeOrCloseLogs}
           />
           <LogContainer
             visibility={displayBlockOrNone}
-            lines={this.state[stateKey]}
+            lines={grabIndividualAppLogs(app.name)}
            />
         </div>
       );

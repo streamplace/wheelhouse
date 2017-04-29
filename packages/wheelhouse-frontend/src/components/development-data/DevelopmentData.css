@@ -20,6 +20,10 @@
   border: 0.1rem solid #449d44;
 }
 
+.green, .green:hover, .green:focus, .red, .red:hover, .red:focus {
+  min-width:  105px;
+}
+
 .hide {
   display: none;
 }
