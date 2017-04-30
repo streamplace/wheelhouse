@@ -1,4 +1,5 @@
-import * as handlers from "./handlers/reducer-handlers"; 
+
+import * as handlers from "./handlers/reducer-handlers";
 import * as actions from "./actions/actions";
 
 const stateReducer = (state = {
@@ -902,6 +903,38 @@ const stateReducer = (state = {
   { appName: "Clydesdale",
     serverStatus: "k85_sp-dev-certs.8cffccc.kube-apiserver",
     expectedAction: "[17.015ms] About to convert to expected version" } ],
+  env: {
+    CSATS_DB_URL: {
+      currentValue: "mongo://localhost/stage",
+      presetValues: [
+        {
+          name: "dev",
+          value: "mongo://localhost/dev"
+        },
+        {
+          name: "stage",
+          value: "mongo://localhost/stage"
+        }
+      ]
+    },
+    STREAMPLACE_API_SERVER: {
+      currentValue: "https://butt.fish",
+      presetValues: [
+        {
+          name: "dev",
+          value: "https://test.sp-dev.club"
+        },
+        {
+          name: "local",
+          value: "http://localhost"
+        },
+        {
+          name: "prod",
+          value: "https://stream.place"
+        }
+      ]
+    }
+  },
   packages: [
     {
       name: "Maestro",
@@ -5056,25 +5089,26 @@ const stateReducer = (state = {
     "metadata": {},
     "resourceVersion": "",
     "selfLink": ""
-  } 
+  }
 }, action) => {
   switch (action.type) {
  /*eslint-disable no-case-declarations*/
 
-  case actions.ADD_LOG: 
+  case actions.ADD_LOG:
     const newObject = { appName: "Mendoza",
       serverStatus: "k85_sp-dev-certs.8cffccc.kube-apiserver",
       expectedAction: "[17.015ms] About to convert to expected version" };
     return Object.assign({}, state, {logsData: [...state.logsData, newObject]});
-    
+
   case actions.CHANGE_BUTTON_STATUS:
-    let packagesCopy = [...state.packages]; 
+    let packagesCopy = [...state.packages];
     packagesCopy = handlers.updateActiveStatus(packagesCopy, action.name);
-    return Object.assign({}, state, { packages: packagesCopy }); 
-    
-  default: 
-    return state; 
+    return Object.assign({}, state, { packages: packagesCopy });
+
+  default:
+    return state;
   }
 };
 
-export default stateReducer; 
+export default stateReducer;
+

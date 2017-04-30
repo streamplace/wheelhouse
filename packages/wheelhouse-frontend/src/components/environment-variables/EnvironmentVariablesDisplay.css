@@ -1,0 +1,37 @@
+
+.environment-variable-container {
+  margin-top: 30px;
+  margin-left: 0px;
+}
+.buttonText {
+  color: black;
+}
+.variable-container {
+  border: 1px black;
+}
+.variable-name {
+  color: black;
+  text-align: left;
+  border: 1px;
+}
+.envContainer {
+  margin-bottom: .4em;
+}
+.customInput {
+  width: 30em !important;
+  margin-left: 0;
+  border: 1px black;
+}
+
+.button {
+  background-color: lightcyan;
+  border: 1px solid black;
+  width: 30em;
+  margin: .4em;
+}
+.button:hover {
+  background-color: #80ffff;
+}
+.button:focus {
+  background-color: lightcyan;
+}

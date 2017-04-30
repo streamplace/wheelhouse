@@ -1,13 +1,46 @@
 
-import { CHANGE_BUTTON_STATUS, DEVELOPMENT_LOG } from "./developmentConstants";
+import { CHANGE_BUTTON_STATUS, DEVELOPMENT_LOG, DEVELOPMENT_ENV_CHANGE } from "./developmentConstants";
 import { CONFIG_LOADED } from "../config/configConstants";
 
 const initialState = {
   logs: [],
-  packages: []
+  packages: [],
+  env: {
+    CSATS_DB_URL: {
+      currentValue: "mongo://localhost/stage",
+      presetValues: [
+        {
+          name: "dev",
+          value: "mongo://localhost/dev"
+        },
+        {
+          name: "stage",
+          value: "mongo://localhost/stage"
+        }
+      ]
+    },
+    STREAMPLACE_API_SERVER: {
+      currentValue: "https://butt.fish",
+      presetValues: [
+        {
+          name: "dev",
+          value: "https://test.sp-dev.club"
+        },
+        {
+          name: "local",
+          value: "http://localhost"
+        },
+        {
+          name: "prod",
+          value: "https://stream.place"
+        }
+      ]
+    }
+  },
 };
 
 export default function(state = initialState, action) {
+
   if (action.type === CHANGE_BUTTON_STATUS) {
     const newPackages = state.packages.map((pkg) => {
       if (pkg.name === action.name) {
@@ -52,6 +85,19 @@ export default function(state = initialState, action) {
       expectedAction: "[17.015ms] About to convert to expected version" };
     return Object.assign({}, state, {logs: [...state.logs, newObject]});
   }
+  if (action.type === DEVELOPMENT_ENV_CHANGE) {
+    const { variableName, currentValue } = action;
 
+    return {
+      ...state,
+      env: {
+        ...state.env,
+        [variableName]: {
+          ...state.env[variableName],
+          currentValue: currentValue
+        }
+      }
+    };
+  }
   return state;
 }
