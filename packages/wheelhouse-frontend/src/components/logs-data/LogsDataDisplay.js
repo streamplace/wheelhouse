@@ -17,6 +17,9 @@ class LogsDataDisplay extends Component {
     this.toggleIndivApp = this.toggleIndivApp.bind(this);
   }
 
+  //need a way to export the two actions in componentWillMount and componentDidUpdate
+  // while still perserving the context of this
+
   componentWillMount() {
     let showLogsCopy = Object.assign({}, this.state.showLogs);
     this.props.logs.forEach(log => {
@@ -29,17 +32,17 @@ class LogsDataDisplay extends Component {
     });
   }
 
-  componentDidUpdate() {
-    // let showLogsCopy = Object.assign({}, this.state.showLogs);
-    // this.props.logs.forEach(log => {
-    //   if (showLogsCopy[log.appName] === undefined) {
-    //     showLogsCopy[log.appName] = true; 
-    //   }
-    // });
-    // this.setState({
-    //   showLogs: showLogsCopy
-    // });
-  }
+  // componentDidUpdate() {
+  //   let showLogsCopy = Object.assign({}, this.state.showLogs);
+  //   this.props.logs.forEach(log => {
+  //     if (showLogsCopy[log.appName] === undefined) {
+  //       showLogsCopy[log.appName] = true; 
+  //     }
+  //   });
+  //   this.setState({
+  //     showLogs: showLogsCopy
+  //   });
+  // }
 
   componentDidMount() {
     setInterval(this.addLogData.bind(this), 3000);
@@ -119,20 +122,21 @@ class LogsDataDisplay extends Component {
       }
       return buttons;
     };
-
+    //log-filter-container should be it's own reusable component, but it loses the ability to call
+    //logButtons when it's being called as a prop
     return (
       <div className="container">
         <div className="row">
           <div className="sidebar-container">
             <Sidebar />
             <div className="log-filter-container">
+              <div className="show-all-hide-all-container">
+                <button className="button-clear toggle-all-apps-button show-all-button" 
+                  onClick={() => { this.toggleAllApps(true).bind(this); }}>Show all</button>
+                <button className="button-clear toggle-all-apps-button" 
+                  onClick={() => { this.toggleAllApps(false).bind(this); }}>Hide all</button>
+              </div>
               <ul className="log-filter-list">
-                <div className="show-all-hide-all-container">
-                  <button className="button-clear toggle-all-apps-button show-all-button" 
-                    onClick={() => { this.toggleAllApps(true).bind(this); }}>Show all</button>
-                  <button className="button-clear toggle-all-apps-button" 
-                    onClick={() => { this.toggleAllApps(false).bind(this); }}>Hide all</button>
-                </div>
                 {logButtons()}
               </ul>
             </div>
