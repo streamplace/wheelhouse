@@ -49,7 +49,7 @@ class PodsDataDisplay extends Component {
 
 const mapStateToProps = state => {
   return {
-    pods: state.pods
+    pods: state.development.pods
   };
 };
 
