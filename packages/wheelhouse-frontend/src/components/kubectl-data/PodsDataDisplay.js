@@ -4,27 +4,6 @@ import Sidebar from "../reusables/Sidebar";
 import Table from "../reusables/Table"; 
 import * as podHandlers from "../../handlers/component-handlers/pod-handlers";
 
-const populateTableHeaders = (array) => {
-  return array.map((header, idx) => {
-    return (
-      <th key={idx}>{header}</th>
-    );
-  });
-};
-
-const populateTableDescriptions = (array) => {
-  let results = []; 
-  for (let i = 0; i<array.length; i++) {
-    results.push(<tr key={i}></tr>);
-    for (let j = 0; j<array[i].length; j++) {
-      let description = array[i][j];
-      results.push(<td>{description}</td>);
-    }
-  }
-  return results;
-};
-
-
 class PodsDataDisplay extends Component {
   render() {     
     const { pods } = this.props;
@@ -32,11 +11,11 @@ class PodsDataDisplay extends Component {
     let results = [];
     pods.items.forEach((item, idx) => {
       let temp = []; 
-      if (!item.metadata.labels) {
-        appName = "n/a";
+      if (!item.metadata.generateName) {
+        appName = "None given";
       } 
       else {
-        appName = item.metadata.labels.app;
+        appName = item.metadata.generateName;
       }
       ready = podHandlers.countReadyContainers(item.status.containerStatuses);
       status = item.status.phase;
@@ -48,8 +27,8 @@ class PodsDataDisplay extends Component {
       results.push(temp);  
     });
 
-    const importedDescriptions = populateTableDescriptions(results);
-    const importedHeaders = populateTableHeaders(["Name", "Ready", "Status", "Restarts", "Age", "IP", "Node"]); 
+    const importedDescriptions = podHandlers.populateTableDescriptions(results);
+    const importedHeaders = podHandlers.populateTableHeaders(["Name", "Ready", "Status", "Restarts", "Age", "IP", "Node"]); 
 
     return (
       <div>

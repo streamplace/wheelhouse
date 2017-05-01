@@ -1,3 +1,4 @@
+import React from "react";
 
 export const countReadyContainers = containers => {
   let readyCount = 0; 
@@ -27,3 +28,24 @@ export const getContainerAge = container => {
   return Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay))) + " days";
 
 };
+
+export const populateTableHeaders = (array) => {
+  return array.map((header, idx) => {
+    return (
+      <th key={idx}>{header}</th>
+    );
+  });
+};
+
+export const populateTableDescriptions = (array) => {
+  let results = []; 
+  for (let i = 0; i<array.length; i++) {
+    results.push(<tr key={i}></tr>);
+    for (let j = 0; j<array[i].length; j++) {
+      let description = array[i][j];
+      results.push(<td>{description}</td>);
+    }
+  }
+  return results;
+};
+
