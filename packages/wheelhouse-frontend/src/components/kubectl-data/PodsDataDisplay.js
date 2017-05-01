@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Sidebar from "../reusables/Sidebar"; 
 import Table from "../reusables/Table"; 
+import * as podHandlers from "../../handlers/component-handlers/pod-handlers";
 
 const populateTableHeaders = (array) => {
   return array.map((header, idx) => {
@@ -12,23 +13,43 @@ const populateTableHeaders = (array) => {
 };
 
 const populateTableDescriptions = (array) => {
-  return array.map((description, idx) => {
-    return (
-      <tr key={idx}>
-        <td key={idx}>{description}</td>
-      </tr>
-    );
-  });
+  let results = []; 
+  for (let i = 0; i<array.length; i++) {
+    results.push(<tr key={i}></tr>);
+    for (let j = 0; j<array[i].length; j++) {
+      let description = array[i][j];
+      results.push(<td>{description}</td>);
+    }
+  }
+  return results;
 };
+
 
 class PodsDataDisplay extends Component {
   render() {     
     const { pods } = this.props;
-    const appNames = pods.items.map((item, idx) => {
-      return item.metadata.generateName; 
-    }).filter(name => name !== undefined);
-    const importedDescriptions = populateTableDescriptions(appNames);
-    const importedHeaders = populateTableHeaders(["Name/Node"]); 
+    let appName, ready, status, restarts, age, ipAddress, node; 
+    let results = [];
+    pods.items.forEach((item, idx) => {
+      let temp = []; 
+      if (!item.metadata.labels) {
+        appName = "n/a";
+      } 
+      else {
+        appName = item.metadata.labels.app;
+      }
+      ready = podHandlers.countReadyContainers(item.status.containerStatuses);
+      status = item.status.phase;
+      restarts = item.status.containerStatuses[0].restartCount;
+      age = podHandlers.getContainerAge(item);
+      ipAddress = item.status.hostIP;
+      node= item.spec.nodeName;
+      temp = [appName, ready, status, restarts, age, ipAddress, node];
+      results.push(temp);  
+    });
+
+    const importedDescriptions = populateTableDescriptions(results);
+    const importedHeaders = populateTableHeaders(["Name", "Ready", "Status", "Restarts", "Age", "IP", "Node"]); 
 
     return (
       <div>
