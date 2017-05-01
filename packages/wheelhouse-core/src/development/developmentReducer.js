@@ -1,5 +1,5 @@
 
-import { CHANGE_BUTTON_STATUS, DEVELOPMENT_LOG } from "./developmentConstants";
+import { CHANGE_BUTTON_STATUS, DEVELOPMENT_LOG, ADD_UPDATED_LOG } from "./developmentConstants";
 import { CONFIG_LOADED } from "../config/configConstants";
 
 const initialState = {
@@ -57,6 +57,13 @@ export default function(state = initialState, action) {
       serverStatus: "k85_sp-dev-certs.8cffccc.kube-apiserver",
       expectedAction: "[17.015ms] About to convert to expected version" };
     return Object.assign({}, state, {logs: [...state.logs, newObject, otherNewObject, yetAnotherNewObject]});
+  }
+
+  if (action.type === ADD_UPDATED_LOG) {
+    const updatedLog = { appName: "Meteor",
+      serverStatus: "k85_sp-dev-certs.8cffccc.kube-apiserver",
+      expectedAction: "[17.015ms] About to convert to expected version" };
+    return Object.assign({}, state, {logs: [...state.logs, updatedLog]});
   }
 
   return state;
