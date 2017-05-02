@@ -25,3 +25,5 @@ export const developmentLog = (pkgName, text) => dispatch => {
   term.styleReset();
   term(` ${text}\n`);
 };
+
+

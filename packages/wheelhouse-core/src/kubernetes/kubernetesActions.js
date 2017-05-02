@@ -1,4 +1,3 @@
-
 import { KUBERNETES_DATA } from "./kubernetesConstants";
 import { resolve, dirname } from "path";
 
@@ -31,4 +30,3 @@ export const kubernetesData = (action, resource) => dispatch => {
     }
   });
 };
-
