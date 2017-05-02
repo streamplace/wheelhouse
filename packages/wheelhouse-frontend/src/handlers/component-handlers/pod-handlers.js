@@ -4,6 +4,8 @@ export const countReadyContainers = containers => {
   let readyCount = 0; 
   let containerLength = containers.length; 
   containers.forEach(container => {
+    /*eslint-disable no-unused-expressions*/
+    //should we disable this rule or fix this expression?
     container.ready ? readyCount++ : null;
   });
   
@@ -22,11 +24,25 @@ export const getContainerAge = container => {
   const endingIndex = containerCreationDate.indexOf("T"); 
   containerCreationDate = containerCreationDate.slice(0, endingIndex).split("-").join(",");
 
-  const oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+  const oneDay = 24*60*60*1000;
   const firstDate = new Date(containerCreationDate);
   const secondDate = new Date(now);
   return Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay))) + " days";
 
+};
+
+export const populateTableDescriptions = array => {
+  return array.map((row, i) => {
+    return (
+    <tr key={i}>
+      {row.map((col, j) => { 
+        /*eslint-disable semi*/
+        //linter requires a semi colon here, but it was removed because
+        //it renders in the table and throws errors
+        return <td key={j}>{col}</td> })}
+     </tr>
+    );
+  });
 };
 
 export const populateTableHeaders = (array) => {
@@ -37,15 +53,4 @@ export const populateTableHeaders = (array) => {
   });
 };
 
-export const populateTableDescriptions = (array) => {
-  let results = []; 
-  for (let i = 0; i<array.length; i++) {
-    results.push(<tr key={i}></tr>);
-    for (let j = 0; j<array[i].length; j++) {
-      let description = array[i][j];
-      results.push(<td>{description}</td>);
-    }
-  }
-  return results;
-};
 
