@@ -1,8 +1,9 @@
-import React, {Component} from "react"; 
+import React, {Component} from "react";
 import { connect } from "react-redux";
-import { ADD_UPDATED_LOG, DEVELOPMENT_LOG } from "wheelhouse-core"; 
+import { ADD_UPDATED_LOG, DEVELOPMENT_LOG } from "wheelhouse-core";
 import * as logHandlers from "../../handlers/component-handlers/log-handlers";
 import LogContainer from "../reusables/LogContainer";
+import LogFilterContainer  from "../reusables/LogFilterContainer";
 import LogLine from "../reusables/LogLine";
 import Sidebar from "../reusables/Sidebar";
 import "../reusables/Logs.css";
@@ -13,7 +14,7 @@ class LogsDataDisplay extends Component {
     super(props);
     this.state = {
       showLogs: {}
-    }; 
+    };
     this.toggleIndivApp = this.toggleIndivApp.bind(this);
   }
 
@@ -21,7 +22,7 @@ class LogsDataDisplay extends Component {
     let showLogsCopy = Object.assign({}, this.state.showLogs);
     this.props.logs.forEach(log => {
       if (showLogsCopy[log.appName] === undefined) {
-        showLogsCopy[log.appName] = true; 
+        showLogsCopy[log.appName] = true;
       }
     });
     this.setState({
@@ -33,7 +34,7 @@ class LogsDataDisplay extends Component {
     setInterval(this.addLogData.bind(this), 3000);
     setInterval(this.addUpdatedLog.bind(this), 15000);
   }
-  
+
   addLogData() {
     this.props.dispatch({
       type: DEVELOPMENT_LOG
@@ -49,7 +50,7 @@ class LogsDataDisplay extends Component {
   toggleIndivApp(appName) {
     this.setState({
       showLogs: {
-        ...this.state.showLogs, 
+        ...this.state.showLogs,
         [appName]: !this.state.showLogs[appName]
       }
     });
@@ -58,10 +59,10 @@ class LogsDataDisplay extends Component {
   toggleAllApps(bool) {
     let showLogsCopy = Object.assign({}, this.state.showLogs);
     for (let key in showLogsCopy) {
-      showLogsCopy[key] = bool; 
+      showLogsCopy[key] = bool;
     }
     this.setState({
-      showLogs: showLogsCopy 
+      showLogs: showLogsCopy
     });
   }
 
@@ -86,7 +87,7 @@ class LogsDataDisplay extends Component {
 
       return (
         <LogLine
-          key={idx} 
+          key={idx}
           timeStamp={time}
           appName={line.appName}
           color={textColor}
@@ -98,43 +99,39 @@ class LogsDataDisplay extends Component {
     });
 
     const logButtons = () => {
-      const buttons = []; 
+      const buttons = [];
 
       for (let key in this.state.showLogs) {
-        let buttonClass= !this.state.showLogs[key] ? "button-outline hide-log-button log-filter-button" : "log-filter-button";
+        let buttonClass= !this.state.showLogs[key] ?
+        "button-outline hide-log-button log-filter-button" :
+        "log-filter-button";
         buttons.push(
             <li key={key}>
-              <button 
+              <button
                 onClick={() => {this.toggleIndivApp(key); }}
                 className={buttonClass}>
                 {key}
               </button>
             </li>
-          ); 
+          );
       }
       return buttons;
     };
-    //log-filter-container should be it's own reusable component, but it loses the ability to call
-    //logButtons when it's being called as a prop
+
     return (
       <div className="container">
         <div className="row">
           <div className="sidebar-container">
             <Sidebar />
-            <div className="log-filter-container">
-              <div className="show-all-hide-all-container">
-                <button className="button-clear toggle-all-apps-button show-all-button" 
-                  onClick={() => { this.toggleAllApps(true).bind(this); }}>Show all</button>
-                <button className="button-clear toggle-all-apps-button" 
-                  onClick={() => { this.toggleAllApps(false).bind(this); }}>Hide all</button>
-              </div>
-              <ul className="log-filter-list">
-                {logButtons()}
-              </ul>
-            </div>
+            <LogFilterContainer
+              logButtons={logButtons()}
+              showAll={this.toggleAllApps.bind(this, true)}
+              hideAll={this.toggleAllApps.bind(this, false)}
+            />
           </div>
           <LogContainer
-            lines={lines} />
+            lines={lines}
+          />
         </div>
       </div>
     );
