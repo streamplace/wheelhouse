@@ -24,9 +24,12 @@ export const kubernetesData = (action, resource) => dispatch => {
   /*eslint-disable no-console*/
   kubectl.on("close", (code) => {
     output = JSON.parse(output);
-    dispatch({ type: KUBERNETES_DATA, output });
+    dispatch({ type: KUBERNETES_DATA,
+      output });
     if (code !== 0) {
       console.error("errored output", errorOutput);
     }
   });
+
 };
+
