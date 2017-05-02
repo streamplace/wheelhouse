@@ -44,7 +44,7 @@ class PodsDataDisplay extends Component {
 
 const mapStateToProps = state => {
   return {
-    pods: state.development.pods
+    pods: state.kubernetes.pods
   };
 };
 

@@ -1,4 +1,4 @@
-// import { KUBERNETES_DATA } from "./kubernetesConstants";
+import { KUBERNETES_DATA } from "./kubernetesConstants";
 
 export const kubernetesStartPullingData = () => dispatch => {
   setInterval(() => {dispatch(kubernetesData("get", "pods"));}, 5000);
@@ -8,24 +8,25 @@ export const kubernetesData = (action, resource) => dispatch => {
   const spawn = require("child_process").spawn;
   const ls = spawn("kubectl", [action, resource, "-o", "json"]);
 
-  // let output = "";
-  // let errorOutput = "";
+  let output = "";
+  let errorOutput = "";
 
   ls.stdout.on("data", (data) => {
-    // output += data;
-    // console.log(`stdout: ${output}`);
+    output += data;
   });
 
   ls.stderr.on("data", (data) => {
-    // errorOutput += data;
-    // console.log(`stderr: ${errorOutput}`);
+    errorOutput += data;
   });
 
-  ls.on("close", (code) => dispatch => {
-    // console.log(`output ${output}`);
-    // dispatch({ KUBERNETES_DATA});
-    //dispatch the redux action
-    //if it exits with a code that's not zero, log the error
-    // console.log(`child process exited with code ${code}`);
+  /*eslint-disable no-console*/
+  ls.on("close", (code) => {
+    output = JSON.parse(output);
+    dispatch({ type: KUBERNETES_DATA,
+      output });
+    if (code !== 0) {
+      console.error("errored output", errorOutput);
+    }
   });
 };
+

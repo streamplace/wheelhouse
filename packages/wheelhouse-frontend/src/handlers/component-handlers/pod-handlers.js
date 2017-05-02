@@ -1,27 +1,27 @@
 import React from "react";
 
 export const countReadyContainers = containers => {
-  let readyCount = 0; 
-  let containerLength = containers.length; 
+  let readyCount = 0;
+  let containerLength = containers.length;
   containers.forEach(container => {
     if (container.ready) {
       readyCount++;
     }
   });
-  
+
   return `${readyCount}/${containerLength}`;
 };
 
 export const getContainerAge = container => {
-  
+
   let now = new Date();
   const year = now.getFullYear();
   const month = now.getMonth()+1;
   const date = now.getDate();
-  now = `${year},${month},${date}`; 
-  
+  now = `${year},${month},${date}`;
+
   let containerCreationDate = container.metadata.creationTimestamp;
-  const endingIndex = containerCreationDate.indexOf("T"); 
+  const endingIndex = containerCreationDate.indexOf("T");
   containerCreationDate = containerCreationDate.slice(0, endingIndex).split("-").join(",");
 
 
@@ -29,7 +29,7 @@ export const getContainerAge = container => {
 
   const firstDate = new Date(containerCreationDate);
   const secondDate = new Date(now);
-  return Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay))) + " days";
+  return Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay))) + "d";
 
 };
 
@@ -37,7 +37,7 @@ export const populateTableDescriptions = array => {
   return array.map((row, i) => {
     return (
     <tr key={i}>
-      {row.map((col, j) => { 
+      {row.map((col, j) => {
         /*eslint-disable semi*/
         //linter requires a semi colon here, but it was removed because
         //it renders in the table and throws errors
