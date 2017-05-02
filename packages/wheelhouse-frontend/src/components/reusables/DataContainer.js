@@ -7,7 +7,7 @@ const DataContainer = (props) => {
         <div className="column text-column">{props.name}</div>
         <div className="column text-column">{props.status}</div>
         <div className="column text-column">
-          <a onClick={props.showLogs}>See logs</a>
+          <a onClick={props.showLogsAction}>{props.showLogsText}</a>
         </div>
         <div className="column">
           <button className={props.buttonClass}

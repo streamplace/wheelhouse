@@ -1,5 +1,5 @@
 
-import { CHANGE_BUTTON_STATUS, DEVELOPMENT_LOG, DEVELOPMENT_ENV_CHANGE } from "./developmentConstants";
+import { ADD_UPDATED_LOG, CHANGE_BUTTON_STATUS, DEVELOPMENT_LOG, DEVELOPMENT_ENV_CHANGE } from "./developmentConstants";
 import { CONFIG_LOADED } from "../config/configConstants";
 
 const initialState = {
@@ -4221,7 +4221,20 @@ export default function(state = initialState, action) {
     const newObject = { appName: "Mendoza",
       serverStatus: "k85_sp-dev-certs.8cffccc.kube-apiserver",
       expectedAction: "[17.015ms] About to convert to expected version" };
-    return Object.assign({}, state, {logs: [...state.logs, newObject]});
+    const otherNewObject = { appName: "Maestro",
+      serverStatus: "k85_sp-dev-certs.8cffccc.kube-apiserver",
+      expectedAction: "[17.015ms] About to convert to expected version" };
+    const yetAnotherNewObject =  { appName: "Clydesdale",
+      serverStatus: "k85_sp-dev-certs.8cffccc.kube-apiserver",
+      expectedAction: "[17.015ms] About to convert to expected version" };
+    return Object.assign({}, state, {logs: [...state.logs, newObject, otherNewObject, yetAnotherNewObject]});
+  }
+
+  if (action.type === ADD_UPDATED_LOG) {
+    const updatedLog = { appName: "Meteor",
+      serverStatus: "k85_sp-dev-certs.8cffccc.kube-apiserver",
+      expectedAction: "[17.015ms] About to convert to expected version" };
+    return Object.assign({}, state, {logs: [...state.logs, updatedLog]});
   }
   if (action.type === DEVELOPMENT_ENV_CHANGE) {
     const { variableName, currentValue } = action;

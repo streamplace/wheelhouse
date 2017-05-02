@@ -4,9 +4,9 @@ export const countReadyContainers = containers => {
   let readyCount = 0; 
   let containerLength = containers.length; 
   containers.forEach(container => {
-    /*eslint-disable no-unused-expressions*/
-    //should we disable this rule or fix this expression?
-    container.ready ? readyCount++ : null;
+    if (container.ready) {
+      readyCount++;
+    }
   });
   
   return `${readyCount}/${containerLength}`;
@@ -24,7 +24,9 @@ export const getContainerAge = container => {
   const endingIndex = containerCreationDate.indexOf("T"); 
   containerCreationDate = containerCreationDate.slice(0, endingIndex).split("-").join(",");
 
+
   const oneDay = 24*60*60*1000;
+
   const firstDate = new Date(containerCreationDate);
   const secondDate = new Date(now);
   return Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay))) + " days";

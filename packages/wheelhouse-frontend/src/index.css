@@ -8,10 +8,6 @@ a {
   color: #1a65ab;
 }
 
-button {
-  min-width: 130px;
-}
-
 button:hover {
   opacity: 0.8;
 }
