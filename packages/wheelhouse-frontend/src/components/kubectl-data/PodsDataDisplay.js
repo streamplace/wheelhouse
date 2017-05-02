@@ -1,22 +1,17 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Sidebar from "../reusables/Sidebar"; 
-import Table from "../reusables/Table"; 
+import Sidebar from "../reusables/Sidebar";
+import Table from "../reusables/Table";
 import * as podHandlers from "../../handlers/component-handlers/pod-handlers";
 
 class PodsDataDisplay extends Component {
-  render() {     
+  render() {
     const { pods } = this.props;
-    let appName, ready, status, restarts, age, ipAddress, node; 
-    let results = [];
+    let appName, ready, status, restarts, age, ipAddress, node;
+    let descriptions = [];
     pods.items.forEach((item, idx) => {
-      let temp = []; 
-      if (!item.metadata.generateName) {
-        appName = "None given";
-      } 
-      else {
-        appName = item.metadata.generateName;
-      }
+      let temp = [];
+      appName = item.metadata.name;
       ready = podHandlers.countReadyContainers(item.status.containerStatuses);
       status = item.status.phase;
       restarts = item.status.containerStatuses[0].restartCount;
@@ -24,11 +19,11 @@ class PodsDataDisplay extends Component {
       ipAddress = item.status.hostIP;
       node= item.spec.nodeName;
       temp = [appName, ready, status, restarts, age, ipAddress, node];
-      results.push(temp);  
+      descriptions.push(temp);
     });
 
-    const importedDescriptions = podHandlers.populateTableDescriptions(results);
-    const importedHeaders = podHandlers.populateTableHeaders(["Name", "Ready", "Status", "Restarts", "Age", "IP", "Node"]); 
+    const importedDescriptions = podHandlers.populateTableDescriptions(descriptions);
+    const importedHeaders = podHandlers.populateTableHeaders(["Name", "Ready", "Status", "Restarts", "Age", "IP", "Node"]);
 
     return (
       <div>
@@ -36,7 +31,7 @@ class PodsDataDisplay extends Component {
           <div className="row">
             <div className="sidebar-container"><Sidebar /></div>
             <div className="content-container">
-              <Table 
+              <Table
                 headers={importedHeaders}
                 descriptions={importedDescriptions} />
             </div>
