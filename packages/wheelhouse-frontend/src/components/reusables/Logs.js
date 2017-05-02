@@ -1,4 +1,4 @@
-import React from "react"; 
+import React from "react";
 import "./Logs.css";
 
 const Logs = (props) => {
@@ -13,4 +13,4 @@ const Logs = (props) => {
   );
 };
 
-export default Logs; 
+export default Logs;

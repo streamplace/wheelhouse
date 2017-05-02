@@ -2,33 +2,33 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Sidebar from "../reusables/Sidebar"; 
 import Table from "../reusables/Table"; 
-
-const populateTableHeaders = (array) => {
-  return array.map((header, idx) => {
-    return (
-      <th key={idx}>{header}</th>
-    );
-  });
-};
-
-const populateTableDescriptions = (array) => {
-  return array.map((description, idx) => {
-    return (
-      <tr key={idx}>
-        <td key={idx}>{description}</td>
-      </tr>
-    );
-  });
-};
+import * as podHandlers from "../../handlers/component-handlers/pod-handlers";
 
 class PodsDataDisplay extends Component {
   render() {     
     const { pods } = this.props;
-    const appNames = pods.items.map((item, idx) => {
-      return item.metadata.generateName; 
-    }).filter(name => name !== undefined);
-    const importedDescriptions = populateTableDescriptions(appNames);
-    const importedHeaders = populateTableHeaders(["Name/Node"]); 
+    let appName, ready, status, restarts, age, ipAddress, node; 
+    let results = [];
+    pods.items.forEach((item, idx) => {
+      let temp = []; 
+      if (!item.metadata.generateName) {
+        appName = "None given";
+      } 
+      else {
+        appName = item.metadata.generateName;
+      }
+      ready = podHandlers.countReadyContainers(item.status.containerStatuses);
+      status = item.status.phase;
+      restarts = item.status.containerStatuses[0].restartCount;
+      age = podHandlers.getContainerAge(item);
+      ipAddress = item.status.hostIP;
+      node= item.spec.nodeName;
+      temp = [appName, ready, status, restarts, age, ipAddress, node];
+      results.push(temp);  
+    });
+
+    const importedDescriptions = podHandlers.populateTableDescriptions(results);
+    const importedHeaders = podHandlers.populateTableHeaders(["Name", "Ready", "Status", "Restarts", "Age", "IP", "Node"]); 
 
     return (
       <div>
@@ -49,7 +49,7 @@ class PodsDataDisplay extends Component {
 
 const mapStateToProps = state => {
   return {
-    pods: state.pods
+    pods: state.development.pods
   };
 };
 
