@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import Dropdown from "../reusables/Dropdown";
 import Sidebar from "../reusables/Sidebar";
 import Table from "../reusables/Table";
 import * as podHandlers from "../../handlers/component-handlers/pod-handlers";
@@ -18,12 +19,12 @@ class PodsDataDisplay extends Component {
       age = podHandlers.getContainerAge(item);
       ipAddress = item.status.hostIP;
       node= item.spec.nodeName;
-      temp = [appName, ready, status, restarts, age, ipAddress, node];
+      temp = [appName, ready, status, restarts, age, ipAddress, node, <Dropdown />];
       descriptions.push(temp);
     });
 
     const importedDescriptions = podHandlers.populateTableDescriptions(descriptions);
-    const importedHeaders = podHandlers.populateTableHeaders(["Name", "Ready", "Status", "Restarts", "Age", "IP", "Node"]);
+    const importedHeaders = podHandlers.populateTableHeaders(["Name", "Ready", "Status", "Restarts", "Age", "IP", "Node", "Actions"]);
 
     return (
       <div>
