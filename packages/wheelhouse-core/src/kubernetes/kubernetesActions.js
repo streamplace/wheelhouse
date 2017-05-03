@@ -1,6 +1,7 @@
 import { KUBERNETES_DATA } from "./kubernetesConstants";
 import { resolve, dirname } from "path";
 
+
 export const kubernetesStartPullingData = () => dispatch => {
   setInterval(() => {dispatch(kubernetesData("get", "pods"));}, 5000);
 };
