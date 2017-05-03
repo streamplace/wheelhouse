@@ -6,9 +6,23 @@ import Table from "../reusables/Table";
 import * as podHandlers from "../../handlers/component-handlers/pod-handlers";
 
 class PodsDataDisplay extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state={
+      selectedValue: "select"
+    };
+  }
+
+  deletePod(appName) {
+    console.log(`deleting ${appName}`);
+
+  }
+
   render() {
+    console.log("this.state", this.state);
     const { pods } = this.props;
-    let appName, ready, status, restarts, age, ipAddress, node;
+    let appName, ready, status, restarts, age, ipAddress, node, action;
     let descriptions = [];
     pods.items.forEach((item, idx) => {
       let temp = [];
@@ -19,10 +33,12 @@ class PodsDataDisplay extends Component {
       age = podHandlers.getContainerAge(item);
       ipAddress = item.status.hostIP;
       node= item.spec.nodeName;
-      temp = [appName, ready, status, restarts, age, ipAddress, node, <Dropdown />];
+      action = <Dropdown
+        children={<button onClick={this.deletePod.bind(this, appName)}>Delete</button>}
+        />;
+      temp = [appName, ready, status, restarts, age, ipAddress, node, action];
       descriptions.push(temp);
     });
-
     const importedDescriptions = podHandlers.populateTableDescriptions(descriptions);
     const importedHeaders = podHandlers.populateTableHeaders(["Name", "Ready", "Status", "Restarts", "Age", "IP", "Node", "Actions"]);
 
