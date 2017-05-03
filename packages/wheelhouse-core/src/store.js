@@ -2,16 +2,18 @@
 import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import reducer from "./reducer";
-
 import { CONFIG_LOAD } from "./config/configConstants";
 import { configLoad } from "./config/configActions";
 import { PACKAGES_RUN } from "./packages/packagesConstants";
 import { packagesRun } from "./packages/packagesActions";
+import { KUBERNETES_DELETE_POD } from "./kubernetes/kubernetesConstants";
+import { kubernetesDeletePod } from "./kubernetes/kubernetesActions";
 import { serverSendAction } from "./server/serverActions";
 
 const receiveFromClient = otherStore => next => action => {
 
   if (action._fromClient) {
+
     if (action.type === CONFIG_LOAD) {
       store.dispatch(configLoad());
       return;
@@ -19,6 +21,9 @@ const receiveFromClient = otherStore => next => action => {
 
     if (action.type === PACKAGES_RUN) {
       store.dispatch(packagesRun(action.package, action.status));
+
+    if (action.type === KUBERNETES_DELETE_POD) {
+      store.dispatch(kubernetesDeletePod(action.appName));
       return;
     }
   }

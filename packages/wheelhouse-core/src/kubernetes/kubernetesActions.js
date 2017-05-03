@@ -33,3 +33,23 @@ export const kubernetesData = (action, resource) => dispatch => {
 
 };
 
+export const kubernetesDeletePod = (appName) => {
+  const spawn = require("child_process").spawn;
+  const kubectlDelete = spawn("kubectl", ["delete", "pod", appName]);
+
+  kubectlDelete.stdout.on("data", (data) => {
+    console.log("stdout data:", data);
+  });
+
+  kubectlDelete.stderr.on("data", (data) => {
+    console.log("stderr data:", data);
+  });
+
+  /*eslint-disable no-console*/
+  kubectlDelete.on("close", (code) => {
+    console.log(`closing with code ${code}`);
+  });
+
+};
+
+

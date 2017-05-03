@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { KUBERNETES_DELETE_POD } from "wheelhouse-core";
 import Dropdown from "../reusables/Dropdown";
 import Sidebar from "../reusables/Sidebar";
 import Table from "../reusables/Table";
@@ -15,7 +16,10 @@ class PodsDataDisplay extends Component {
   }
 
   deletePod(appName) {
-
+    this.props.dispatch({
+      type: KUBERNETES_DELETE_POD,
+      appName
+    });
   }
 
   render() {
