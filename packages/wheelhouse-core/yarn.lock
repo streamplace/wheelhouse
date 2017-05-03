@@ -1814,6 +1814,10 @@ kind-of@^3.0.2:
   dependencies:
     is-buffer "^1.0.2"
 
+kubectl-cli@^1.6.2:
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/kubectl-cli/-/kubectl-cli-1.6.2.tgz#3e4932ee9184251e5fbb0c03e42eb643a66cf576"
+
 lazy-cache@^1.0.3:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/lazy-cache/-/lazy-cache-1.0.4.tgz#a1d78fc3a50474cb80845d3b3b6e1da49a446e8e"

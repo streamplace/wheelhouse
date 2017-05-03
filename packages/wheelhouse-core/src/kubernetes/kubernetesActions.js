@@ -6,24 +6,23 @@ export const kubernetesStartPullingData = () => dispatch => {
 
 export const kubernetesData = (action, resource) => dispatch => {
   const spawn = require("child_process").spawn;
-  const ls = spawn("kubectl", [action, resource, "-o", "json"]);
+  const kubectl = spawn("kubectl", [action, resource, "-o", "json"]);
 
   let output = "";
   let errorOutput = "";
 
-  ls.stdout.on("data", (data) => {
+  kubectl.stdout.on("data", (data) => {
     output += data;
   });
 
-  ls.stderr.on("data", (data) => {
+  kubectl.stderr.on("data", (data) => {
     errorOutput += data;
   });
 
   /*eslint-disable no-console*/
-  ls.on("close", (code) => {
+  kubectl.on("close", (code) => {
     output = JSON.parse(output);
-    dispatch({ type: KUBERNETES_DATA,
-      output });
+    dispatch({ type: KUBERNETES_DATA, output });
     if (code !== 0) {
       console.error("errored output", errorOutput);
     }
