@@ -15,12 +15,10 @@ class PodsDataDisplay extends Component {
   }
 
   deletePod(appName) {
-    console.log(`deleting ${appName}`);
 
   }
 
   render() {
-    console.log("this.state", this.state);
     const { pods } = this.props;
     let appName, ready, status, restarts, age, ipAddress, node, action;
     let descriptions = [];

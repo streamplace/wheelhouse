@@ -11,7 +11,6 @@ class Dropdown extends Component {
   componentDidMount() {
     this.listener = (e) => {
       window.evt1 = e;
-      console.log("made it to the top");
       this.setState({show: false});
     };
     document.body.addEventListener("click", this.listener);
@@ -25,7 +24,6 @@ class Dropdown extends Component {
     e.preventDefault();
     e.stopPropagation();
     window.evt2 = e.nativeEvent;
-    console.log(`Running toggle, current state is: ${this.state.show}`);
     this.setState({show: !this.state.show});
   }
 
