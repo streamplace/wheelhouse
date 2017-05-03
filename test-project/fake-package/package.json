@@ -1,0 +1,7 @@
+{
+  "name": "fake-package",
+  "version": "1.0.0",
+  "description": "I am a fake package.",
+  "main": "fake-package.js",
+  "license": "MIT"
+}

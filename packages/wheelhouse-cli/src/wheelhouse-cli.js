@@ -41,3 +41,11 @@ if (!module.parent) {
     console.error(err);
   });
 }
+
+// Make unhandled promise rejections fatal
+process.on("unhandledRejection", function(reason, p){
+  console.log("Unhandled promise rejection, exiting. Details:");
+  console.log(reason);
+  process.exit(1);
+    // application specific logging here
+});

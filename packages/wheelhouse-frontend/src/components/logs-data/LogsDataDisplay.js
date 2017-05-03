@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import { connect } from "react-redux";
-import { ADD_UPDATED_LOG, DEVELOPMENT_LOG } from "wheelhouse-core";
 import * as logHandlers from "../../handlers/component-handlers/log-handlers";
 import LogContainer from "../reusables/LogContainer";
 import LogFilterContainer  from "../reusables/LogFilterContainer";
@@ -18,6 +17,10 @@ class LogsDataDisplay extends Component {
     this.toggleIndivApp = this.toggleIndivApp.bind(this);
   }
 
+  componentDidMount() {
+    this.componentWillReceiveProps();
+  }
+
   componentWillReceiveProps() {
     let showLogsCopy = Object.assign({}, this.state.showLogs);
     this.props.logs.forEach(log => {
@@ -27,23 +30,6 @@ class LogsDataDisplay extends Component {
     });
     this.setState({
       showLogs: showLogsCopy
-    });
-  }
-
-  componentDidMount() {
-    setInterval(this.addLogData.bind(this), 3000);
-    setInterval(this.addUpdatedLog.bind(this), 15000);
-  }
-
-  addLogData() {
-    this.props.dispatch({
-      type: DEVELOPMENT_LOG
-    });
-  }
-
-  addUpdatedLog() {
-    this.props.dispatch({
-      type: ADD_UPDATED_LOG
     });
   }
 
@@ -70,7 +56,7 @@ class LogsDataDisplay extends Component {
     const { logs } = this.props;
     const lines = logs.map((line, idx) => {
 
-      const time = logHandlers.timeConverter();
+      const time = logHandlers.timeConverter(line.date);
       const hashed = logHandlers.hashCode(line.appName);
       const randomColor = logHandlers.intToRGB(hashed);
 

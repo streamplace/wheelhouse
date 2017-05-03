@@ -6,4 +6,4 @@ const LogContainer = (props) => {
   );
 };
 
-export default LogContainer; 
+export default LogContainer;

@@ -1,4 +1,6 @@
+
 import { KUBERNETES_DATA } from "./kubernetesConstants";
+import { resolve, dirname } from "path";
 
 export const kubernetesStartPullingData = () => dispatch => {
   setInterval(() => {dispatch(kubernetesData("get", "pods"));}, 5000);
@@ -6,7 +8,8 @@ export const kubernetesStartPullingData = () => dispatch => {
 
 export const kubernetesData = (action, resource) => dispatch => {
   const spawn = require("child_process").spawn;
-  const kubectl = spawn("kubectl", [action, resource, "-o", "json"]);
+  const kubectlPath = resolve(dirname(require.resolve("kubectl-cli")), "kubectl");
+  const kubectl = spawn(kubectlPath, [action, resource, "-o", "json"]);
 
   let output = "";
   let errorOutput = "";
