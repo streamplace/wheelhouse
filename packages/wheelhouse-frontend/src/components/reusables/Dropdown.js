@@ -8,6 +8,7 @@ class Dropdown extends Component {
       show: false,
     };
   }
+
   componentDidMount() {
     this.listener = (e) => {
       window.evt1 = e;
