@@ -16,6 +16,7 @@
         "**/.git": true,
         "**/.DS_Store": true,
         "**/node_modules": true,
-        "**/dist": true
+        "**/dist": true,
+        "**/.meteor/**": true
     }
 }

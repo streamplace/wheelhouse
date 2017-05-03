@@ -1,0 +1,11 @@
+{
+  "name": "fake-meteor",
+  "private": true,
+  "scripts": {
+    "dev": "meteor run --port 3334"
+  },
+  "dependencies": {
+    "babel-runtime": "^6.20.0",
+    "meteor-node-stubs": "~0.2.4"
+  }
+}

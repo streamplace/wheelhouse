@@ -2,8 +2,10 @@
 import findUp from "find-up";
 import debug from "debug";
 import { safeLoad as parseYaml } from "js-yaml";
+import path from "path";
 import fs from "mz/fs";
-import { CONFIG_LOADED } from "./configConstants";
+import { CONFIG_LOADED, CONFIG_ROOT_FOUND } from "./configConstants";
+import { packagesLoad } from "../packages/packagesActions";
 
 const CONFIG_NAME = "wheelhouse.yaml";
 
@@ -19,11 +21,16 @@ export const configLoad = () => async dispatch => {
   if (!configPath) {
     throw new Error(`Unable to locate ${CONFIG_NAME} in parent directories of ${process.cwd()}`);
   }
+  await dispatch(configRootFound(path.dirname(configPath)));
 
   const yamlStr = await fs.readFile(configPath, "utf8");
   const configData = parseYaml(yamlStr);
-  dispatch(configLoaded(configData));
+  await dispatch(configLoaded(configData));
+  await Promise.all(configData.packages.map(pkgName => dispatch(packagesLoad(pkgName))));
 };
+
+export const configRootFound = (rootDir) => ({ type: CONFIG_ROOT_FOUND, rootDir });
+
 
 /**
  * Fires when the config file is loaded.

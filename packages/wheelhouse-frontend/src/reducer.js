@@ -3,7 +3,7 @@ import * as handlers from "./handlers/reducer-handlers";
 import * as actions from "./actions/actions";
 
 const stateReducer = (state = {
-  logsData:[ 
+  logsData:[
     { appName: "Clydesdale",
       serverStatus: "k85_sp-dev-certs.8cffccc.kube-apiserver",
       expectedAction: "[17.015ms] About to convert to expected version" },
