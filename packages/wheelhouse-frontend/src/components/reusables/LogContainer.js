@@ -21,7 +21,6 @@ class LogContainer extends Component {
           shouldStick: true,
           atTheBottom: true
         });
-        console.log("they scrolled to the bottom");
         this.stickToBottom();
       }
       return;
@@ -43,14 +42,12 @@ class LogContainer extends Component {
         shouldStick: true,
         atTheBottom: true
       });
-      console.log("app scrolled");
     }
     else {
       this.setState({
         shouldStick: false,
         atTheBottom: false
       });
-      console.log("user scrolled");
     }
   }
 
