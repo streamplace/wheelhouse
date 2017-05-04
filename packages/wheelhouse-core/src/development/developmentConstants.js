@@ -1,5 +1,4 @@
-
-export const ADD_UPDATED_LOG= "ADD_UPDATED_LOG";
+export const ADD_UPDATED_LOG = "ADD_UPDATED_LOG";
 
 export const CHANGE_BUTTON_STATUS = "CHANGE_BUTTON_STATUS";
 

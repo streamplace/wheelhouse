@@ -1,4 +1,3 @@
-
 import { serverStart } from "../server/serverActions";
 import opn from "opn";
 import { terminal as term } from "terminal-kit";

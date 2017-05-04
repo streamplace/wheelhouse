@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import LogLine from "./LogLine";
 import { timeConverter } from "../../handlers/component-handlers/log-handlers";
@@ -7,7 +7,6 @@ import { getColor } from "wheelhouse-core";
 class LogContainer extends Component {
   constructor(props) {
     super(props);
-
   }
 
   render() {
@@ -30,7 +29,12 @@ class LogContainer extends Component {
     });
 
     return (
-      <div style={this.props.visibility} className="content-container logs-container">{lines}</div>
+      <div
+        style={this.props.visibility}
+        className="content-container logs-container"
+      >
+        {lines}
+      </div>
     );
   }
 }
@@ -39,7 +43,7 @@ const mapStateToProps = (state, props) => {
   return {
     logs: state.development.logs.filter(line => {
       return props.filter[line.appName] === true;
-    }),
+    })
   };
 };
 

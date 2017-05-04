@@ -1,24 +1,29 @@
-
 import fs from "mz/fs";
 import debug from "debug";
 import { resolve } from "path";
-import { PACKAGES_LOADED, PACKAGES_START, PACKAGES_STOP } from "./packagesConstants";
+import {
+  PACKAGES_LOADED,
+  PACKAGES_START,
+  PACKAGES_STOP
+} from "./packagesConstants";
 import { spawn } from "mz/child_process";
 import split from "split";
 import { developmentLog } from "../development/developmentActions";
 
 const log = debug("wheelhouse:packagesActions");
 
-export const packagesLoad = (pkgPath) => async (dispatch, getState) => {
+export const packagesLoad = pkgPath => async (dispatch, getState) => {
   log(`Loading ${pkgPath}`);
   const { rootDir } = getState().config;
   const pkgJsonPath = resolve(rootDir, pkgPath, "package.json");
   const pkgJson = await fs.readFile(pkgJsonPath, "utf8");
   const pkg = JSON.parse(pkgJson);
-  dispatch(packagesLoaded({
-    packageJson: pkg,
-    path: resolve(pkgPath),
-  }));
+  dispatch(
+    packagesLoaded({
+      packageJson: pkg,
+      path: resolve(pkgPath)
+    })
+  );
 };
 
 export const packagesLoaded = ({ packageJson, path }) => {
@@ -46,7 +51,9 @@ export const packagesRun = (pkgName, status) => async (dispatch, getState) => {
   pkg = getState().packages[pkgName];
   const devScript = pkg.packageJson.scripts.dev;
   if (!devScript) {
-    throw new Error(`Package ${pkgName} doesn't have a dev script, can't start`);
+    throw new Error(
+      `Package ${pkgName} doesn't have a dev script, can't start`
+    );
   }
 
   const proc = spawn("bash", ["-c", devScript], {
@@ -55,15 +62,15 @@ export const packagesRun = (pkgName, status) => async (dispatch, getState) => {
 
   procs[pkgName] = proc;
 
-  proc.stdout.pipe(split()).on("data", (text) => {
+  proc.stdout.pipe(split()).on("data", text => {
     dispatch(developmentLog(pkgName, text));
   });
 
-  proc.stderr.pipe(split()).on("data", (text) => {
+  proc.stderr.pipe(split()).on("data", text => {
     dispatch(developmentLog(pkgName, text));
   });
 
-  proc.on("close", (code) => {
+  proc.on("close", code => {
     dispatch(developmentLog(pkgName, `process exited with code ${code}`));
   });
 

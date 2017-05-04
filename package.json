@@ -11,7 +11,11 @@
     "dev": "DEBUG='wheelhouse:*' lerna exec --concurrency=999 --no-sort yarn run dev"
   },
   "lint-staged": {
-    "*.js": "eslint"
+    "*.js": [
+      "prettier --write",
+      "git add",
+      "eslint"
+    ]
   },
   "repository": {
     "type": "git",
@@ -37,6 +41,7 @@
     "lint-staged": "^3.4.0"
   },
   "dependencies": {
-    "milligram": "^1.3.0"
+    "milligram": "^1.3.0",
+    "prettier": "^1.3.1"
   }
 }

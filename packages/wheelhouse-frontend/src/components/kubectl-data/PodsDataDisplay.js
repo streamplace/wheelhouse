@@ -17,13 +17,23 @@ class PodsDataDisplay extends Component {
       restarts = item.status.containerStatuses[0].restartCount;
       age = podHandlers.getContainerAge(item);
       ipAddress = item.status.hostIP;
-      node= item.spec.nodeName;
+      node = item.spec.nodeName;
       temp = [appName, ready, status, restarts, age, ipAddress, node];
       descriptions.push(temp);
     });
 
-    const importedDescriptions = podHandlers.populateTableDescriptions(descriptions);
-    const importedHeaders = podHandlers.populateTableHeaders(["Name", "Ready", "Status", "Restarts", "Age", "IP", "Node"]);
+    const importedDescriptions = podHandlers.populateTableDescriptions(
+      descriptions
+    );
+    const importedHeaders = podHandlers.populateTableHeaders([
+      "Name",
+      "Ready",
+      "Status",
+      "Restarts",
+      "Age",
+      "IP",
+      "Node"
+    ]);
 
     return (
       <div>
@@ -33,7 +43,8 @@ class PodsDataDisplay extends Component {
             <div className="content-container">
               <Table
                 headers={importedHeaders}
-                descriptions={importedDescriptions} />
+                descriptions={importedDescriptions}
+              />
             </div>
           </div>
         </div>

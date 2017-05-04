@@ -1,4 +1,3 @@
-
 import leftPad from "left-pad";
 
 export const recordAppNamesInState = () => {
@@ -13,9 +12,22 @@ export const recordAppNamesInState = () => {
   });
 };
 
-export const timeConverter = (a) => {
+export const timeConverter = a => {
   a = new Date(a);
-  const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
+  ];
   const month = months[a.getMonth()];
   const date = a.getDate();
   const hour = leftPad(a.getHours(), 2, "0");
