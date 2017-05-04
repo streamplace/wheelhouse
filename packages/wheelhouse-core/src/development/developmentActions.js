@@ -7,6 +7,8 @@ import { kubernetesStartPullingData } from "../kubernetes/kubernetesActions";
 import { getColor } from "../util/colors";
 import { parseToRgb } from "polished";
 
+let uid = 0;
+
 export const developmentStart = () => async (dispatch, getState) => {
   await dispatch(serverStart());
   const port = getState().config.port;
@@ -18,8 +20,10 @@ export const developmentLog = (pkgName, text) => dispatch => {
   dispatch({
     type: DEVELOPMENT_LOG,
     pkgName,
+    uid,
     text
   });
+  uid += 1;
   const { red, green, blue } = parseToRgb(getColor(pkgName));
   term.colorRgb(red, green, blue)(pkgName);
   term.styleReset();

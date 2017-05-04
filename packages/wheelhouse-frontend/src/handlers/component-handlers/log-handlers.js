@@ -1,30 +1,6 @@
 
 import leftPad from "left-pad";
 
-export const hashCode = (str) => {
-  var hash = 0;
-  for (var i = 0; i < str.length; i++) {
-    hash = str.charCodeAt(i) + ((hash << 5) - hash);
-  }
-  return hash;
-};
-
-export const _makeBrighter = (hex) => {
-  hex = hex.split("");
-  hex[1] = "F";
-  return hex.join("");
-};
-
-export const intToRGB = (i) => {
-  var offLimits = /[0-9a-e]/ig;
-  var c = (i & 0x00FFFFFF)
-        .toString(16)
-        .toUpperCase();
-  c = "#" +"00000".substring(0, 6 - c.length) + c;
-  return c[1].match(offLimits) ? _makeBrighter(c) : c;
-};
-
-
 export const recordAppNamesInState = () => {
   let showLogsCopy = Object.assign({}, this.state.showLogs);
   this.props.logs.forEach(log => {
