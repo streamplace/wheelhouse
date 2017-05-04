@@ -19,7 +19,7 @@
 }
 .customInput {
   width: 30em !important;
-  margin-left: .4em;
+  margin-left: 0;
   border: 1px black;
 }
 

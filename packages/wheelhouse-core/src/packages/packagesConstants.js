@@ -1,0 +1,5 @@
+
+export const PACKAGES_LOADED = "PACKAGES_LOADED";
+export const PACKAGES_RUN = "PACKAGES_RUN";
+export const PACKAGES_START = "PACKAGES_START";
+export const PACKAGES_STOP = "PACKAGES_STOP";

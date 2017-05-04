@@ -5,7 +5,7 @@
   "main": "dist/wheelhouse-core.js",
   "scripts": {
     "test": "jest",
-    "dev": "babel -w -s -d dist src",
+    "dev": "babel --retain-lines -w -s -d dist src",
     "prepublish": "babel -s -d dist src"
   },
   "jest": {
@@ -41,10 +41,14 @@
     "find-up": "^2.1.0",
     "http-proxy-middleware": "^0.17.4",
     "js-yaml": "^3.8.3",
+    "kubectl-cli": "^1.6.2",
     "mz": "^2.6.0",
     "opn": "^4.0.2",
+    "polished": "^1.1.1",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
+    "split": "^1.0.0",
+    "terminal-kit": "^1.5.1",
     "ws": "^2.3.1"
   }
 }

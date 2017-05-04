@@ -1,0 +1,3 @@
+
+export const KUBERNETES_DATA = "KUBERNETES_DATA";
+
