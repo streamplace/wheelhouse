@@ -5,10 +5,6 @@ import { timeConverter } from "../../handlers/component-handlers/log-handlers";
 import { getColor } from "wheelhouse-core";
 
 class LogContainer extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const { logs } = this.props;
     const lines = logs.map((line, idx) => {
