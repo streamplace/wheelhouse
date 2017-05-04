@@ -80,6 +80,7 @@ export default function(state = initialState, action) {
       color: getColor(action.pkgName),
       date: Date.now(),
       serverStatus: "",
+      uid: action.uid,
       expectedAction: action.text };
     return Object.assign({}, state, {logs: [...state.logs, newObject]});
   }
