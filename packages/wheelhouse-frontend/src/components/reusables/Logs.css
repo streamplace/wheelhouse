@@ -67,7 +67,7 @@
   display: flex;
 }
 
-.logs-container {
+.inner-logs-container {
   background-color: black;
   padding: 0 5px !important;
   margin-top: 30px;
@@ -77,8 +77,25 @@
   padding-bottom: 30px !important;
 }
 
+.outer-logs-container {
+  position: relative;
+}
 .nowrap {
   white-space: nowrap;
+}
+
+.scroll-to-bottom-button {
+  margin: 0;
+  padding: 0 30px;
+  position: absolute;
+  border: none;
+  border-radius: 0;
+  font-size: 16px;
+  right: 15px;
+  bottom: 0;
+  opacity: 0.7;
+  background-color: white;
+  color: black;
 }
 
 .show-all-hide-all-container {

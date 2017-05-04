@@ -28,4 +28,5 @@ code {
   margin: 0;
   padding: 0;
   font-family:'Inconsolata', monospace;
+  white-space: normal;
 }
