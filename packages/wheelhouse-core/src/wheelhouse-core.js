@@ -1,7 +1,7 @@
 if (!global._babelPolyfill) {
   require("babel-polyfill");
 }
-
+//export * from "./notfications/notificationsConstants";
 export * from "./config/configConstants";
 export * from "./server/serverConstants";
 export * from "./development/developmentConstants";

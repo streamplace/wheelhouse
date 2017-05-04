@@ -24,6 +24,7 @@ getStore.then(store => {
             path="/environment-variables"
             component={EnvironmentVariablesDisplay}
           />
+          <Route path='/sms' component={notifications} />
         </div>
       </Router>
     </Provider>

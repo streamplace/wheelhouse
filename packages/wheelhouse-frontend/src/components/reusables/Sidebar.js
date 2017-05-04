@@ -12,6 +12,7 @@ const Sidebar = () => {
         <li><Link to="/logs">Logs</Link></li>
         <li><Link to="/pods">Pods</Link></li>
         <li><Link to="/environment-variables">Environments</Link></li>
+        <li><Link to="/sms">SMS</Link></li>
       </ul>
     </div>
   );
