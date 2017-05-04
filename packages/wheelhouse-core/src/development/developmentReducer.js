@@ -1,12 +1,13 @@
 
 import { DEVELOPMENT_LOG, DEVELOPMENT_ENV_CHANGE } from "./developmentConstants";
-import { PACKAGES_START, PACKAGES_STOP } from "../packages/packagesConstants";
-import { PACKAGES_LOADED } from "../packages/packagesConstants";
+import { PACKAGES_START, PACKAGES_STOP, PACKAGES_LOADED } from "../packages/packagesConstants";
 import { getColor } from "../util/colors";
+import { CONFIG_LOADED } from "../config/configConstants";
 
 const initialState = {
   packages: [],
   logs: [],
+  env: []
 };
 
 export default function(state = initialState, action) {
@@ -18,6 +19,7 @@ export default function(state = initialState, action) {
       return state;
     }
     // Otherwise, add it to development controls.
+
     return {
       ...state,
       packages: [
@@ -60,6 +62,48 @@ export default function(state = initialState, action) {
         }
         return pkg;
       })
+    };
+  }
+
+  if (action.type === CONFIG_LOADED) {
+    let newPackages = [];
+    let newEnv = [];
+
+    action.configData.packages.forEach((pkgName) => {
+      if (state.packages.find(pkg => pkg.name === pkgName)) {
+        return;
+      }
+      newPackages.push({
+        name: pkgName,
+        status: "STOPPED",
+        active: false,
+      });
+    });
+
+    action.configData.env.forEach((envName, envValue) => {
+      if (state.env.find(env => env.name === envName)) {
+        return;
+      }
+      if (state.env.find(env => env.value === envValue)) {
+        return;
+      }
+      newEnv.push({
+        name: envName,
+        value: envValue
+      });
+    });
+
+    newPackages = state.packages
+      .concat(newPackages)
+      .filter((pkg) => action.configData.packages.includes(pkg.name));
+    newEnv = state.env
+      .concat(newEnv)
+      .filter((env) => action.configData.env.includes(env.name, env.value));
+
+    return {
+      ...state,
+      packages: newPackages,
+      env: newEnv,
     };
   }
 
