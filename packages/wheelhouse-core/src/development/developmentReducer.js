@@ -1,78 +1,80 @@
 
-import { DEVELOPMENT_LOG, DEVELOPMENT_ENV_CHANGE } from "./developmentConstants";
-import { PACKAGES_START, PACKAGES_STOP } from "../packages/packagesConstants";
-import { PACKAGES_LOADED } from "../packages/packagesConstants";
-import { getColor } from "../util/colors";
+import { CHANGE_BUTTON_STATUS, DEVELOPMENT_LOG, DEVELOPMENT_ENV_CHANGE } from "./developmentConstants";
+import { CONFIG_LOADED } from "../config/configConstants";
 
 const initialState = {
-  packages: [],
   logs: [],
+  packages: [],
+  env: []
 };
 
 export default function(state = initialState, action) {
 
-  if (action.type === PACKAGES_LOADED) {
-    const name = action.packageJson.name;
-    // If we already know about this package, do nothing.
-    if (state.packages.find(pkg => pkg.name === name)) {
-      return state;
-    }
-    // Otherwise, add it to development controls.
+  if (action.type === CHANGE_BUTTON_STATUS) {
+    const newPackages = state.packages.map((pkg) => {
+      if (pkg.name === action.name) {
+        return {
+          ...pkg,
+          status: pkg.active ? "STOPPED" : "STARTED",
+          active: !pkg.active,
+        };
+      }
+      return pkg;
+    });
     return {
       ...state,
-      packages: [
-        ...state.packages,
-        {
-          name: name,
-          status: "STOPPED",
-          active: false,
-        }
-      ]
+      packages: newPackages,
     };
   }
 
-  if (action.type === PACKAGES_START) {
-    return {
-      ...state,
-      packages: state.packages.map((pkg) => {
-        if (action.pkgName === pkg.name) {
-          return {
-            ...pkg,
-            status: "STARTED",
-            active: true,
-          };
-        }
-        return pkg;
-      })
-    };
-  }
+  if (action.type === CONFIG_LOADED) {
+    let newPackages = [];
+    let newEnv = [];
 
-  if (action.type === PACKAGES_STOP) {
+    action.configData.packages.forEach((pkgName) => {
+      if (state.packages.find(pkg => pkg.name === pkgName)) {
+        return;
+      }
+      newPackages.push({
+        name: pkgName,
+        status: "STOPPED",
+        active: false,
+      });
+    });
+
+    action.configData.env.forEach((envName, envValue) => {
+      if (state.env.find(env => env.name === envName)) {
+        return;
+      }
+      if (state.env.find(env => env.value === envValue)) {
+        return;
+      }
+      newEnv.push({
+        name: envName,
+        value: envValue
+      });
+    });
+
+    newPackages = state.packages
+      .concat(newPackages)
+      .filter((pkg) => action.configData.packages.includes(pkg.name));
+    newEnv = state.env
+      .concat(newEnv)
+      .filter((env) => action.configData.env.includes(env.name, env.value));
+
     return {
       ...state,
-      packages: state.packages.map((pkg) => {
-        if (action.pkgName === pkg.name) {
-          return {
-            ...pkg,
-            status: "STOPPED",
-            active: false,
-          };
-        }
-        return pkg;
-      })
+      packages: newPackages,
+      env: newEnv,
     };
   }
 
   if (action.type === DEVELOPMENT_LOG)  {
-    const newObject = {
-      appName: action.pkgName,
-      color: getColor(action.pkgName),
-      date: Date.now(),
-      serverStatus: "",
-      expectedAction: action.text };
+    const newObject = { appName: "Mendoza",
+      serverStatus: "k85_sp-dev-certs.8cffccc.kube-apiserver",
+      expectedAction: "[17.015ms] About to convert to expected version" };
     return Object.assign({}, state, {logs: [...state.logs, newObject]});
   }
-
   if (action.type === DEVELOPMENT_ENV_CHANGE) {
     const { variableName, currentValue } = action;
 

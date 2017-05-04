@@ -1,29 +1,26 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import DataContainer from "../reusables/DataContainer";
-import * as logHandlers from "../../handlers/component-handlers/log-handlers";
-import LogContainer from "../reusables/LogContainer";
-import LogLine from "../reusables/LogLine";
+import Logs from "../reusables/Logs";
 import Sidebar from "../reusables/Sidebar";
 import "./DevelopmentData.css";
-import { PACKAGES_RUN } from "wheelhouse-core";
+import { CONFIG_LOAD, CHANGE_BUTTON_STATUS } from "wheelhouse-core";
 
 class DevelopmentDataDisplay extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      showLogs: {},
+      showLogs: {}
     };
-    this.changeAppStatus = this.changeAppStatus.bind(this);
+    this.changeButtonStatus = this.changeButtonStatus.bind(this);
     this.showLogs = this.showLogs.bind(this);
   }
 
-  changeAppStatus(pkgName, status) {
+  changeButtonStatus(appName) {
     this.props.dispatch({
-      type: PACKAGES_RUN,
-      package: pkgName,
-      status: status
+      type: CHANGE_BUTTON_STATUS,
+      name: appName
     });
   }
 
@@ -34,46 +31,14 @@ class DevelopmentDataDisplay extends Component {
         [appName]: !this.state.showLogs[appName]
       }
     });
-    return appName;
   }
 
   render() {
-
-    const { packages, logs } = this.props;
-
-    const grabIndividualAppLogs = (appName) => {
-      return logs.filter(log => {
-        return log.appName === appName;
-      }).map((specificLog, idx) => {
-        const time = logHandlers.timeConverter(specificLog.date);
-        const hashed = logHandlers.hashCode(specificLog.appName);
-        const randomColor = logHandlers.intToRGB(hashed);
-        const textColor = {
-          color: randomColor
-        };
-        return (
-          <LogLine
-            key={idx}
-            timeStamp={time}
-            appName={specificLog.appName}
-            color={textColor}
-            serverStatus={specificLog.serverStatus}
-            expectedAction={specificLog.expectedAction}
-          />
-        );
-      });
-    };
-
+    const { packages } = this.props;
     const data = packages.map((app, idx) => {
-
       let buttonLabel = app.active ? "Stop" : "Start";
       let buttonColor = buttonLabel === "Stop" ?  "red" : "green";
-      let blockOrNone = !this.state.showLogs[app.name]  ? "none" : null;
-      let seeOrCloseLogs = !this.state.showLogs[app.name] ? "See logs" : "Close logs";
-      let displayBlockOrNone = {
-        display: blockOrNone
-      };
-
+      let showOrHide = this.state.showLogs[app.name] ? "show" : "hide";
       return (
         <div key={idx}>
           <DataContainer
@@ -81,13 +46,12 @@ class DevelopmentDataDisplay extends Component {
             status={app.status}
             startStop={buttonLabel}
             buttonClass={buttonColor}
-            changeButtonStatus={this.changeAppStatus.bind(this, app.name, !app.active)}
-            showLogsAction={() => this.showLogs(app.name)}
-            showLogsText={seeOrCloseLogs}
+            changeButtonStatus={() => this.changeButtonStatus(app.name)}
+            showLogs={() => this.showLogs(app.name)}
           />
-          <LogContainer
-            visibility={displayBlockOrNone}
-            lines={grabIndividualAppLogs(app.name)}
+          <Logs
+            name={app.name}
+            visibility={showOrHide}
            />
         </div>
       );
@@ -95,6 +59,7 @@ class DevelopmentDataDisplay extends Component {
 
     return (
       <div>
+        <button onClick={() => this.props.dispatch({type: CONFIG_LOAD})}>Reload Config</button>
         <div className="container">
           <div className="row">
             <div className="sidebar-container"><Sidebar /></div>
@@ -108,8 +73,7 @@ class DevelopmentDataDisplay extends Component {
 
 const mapStateToProps = state => {
   return {
-    packages: state.development.packages,
-    logs: state.development.logs
+    packages: state.development.packages
   };
 };
 
