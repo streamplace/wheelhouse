@@ -41,7 +41,7 @@ export const populateTableDescriptions = array => {
         /*eslint-disable semi*/
         //linter requires a semi colon here, but it was removed because
         //it renders in the table and throws errors
-        return <td key={j}>{col}</td> })}
+        return <td key={j} className="table-description">{col}</td> })}
      </tr>
     );
   });

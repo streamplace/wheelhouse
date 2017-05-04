@@ -31,7 +31,7 @@ class Dropdown extends Component {
   render() {
     return (
       <div>
-        <button onClick={this.toggle.bind(this)}>{this.props.label} ↓</button>
+        <button className="action-button button-clear" onClick={this.toggle.bind(this)}>{this.props.label}↓</button>
         <div style={{position: "absolute", display: this.state.show ? "block" : "none"}}>
           {this.props.children}
         </div>

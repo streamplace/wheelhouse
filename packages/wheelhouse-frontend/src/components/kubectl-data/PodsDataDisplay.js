@@ -36,7 +36,7 @@ class PodsDataDisplay extends Component {
       ipAddress = item.status.hostIP;
       node= item.spec.nodeName;
       action = <Dropdown
-        children={<button onClick={this.deletePod.bind(this, appName)}>Delete</button>}
+        children={<button className="action-item-button button-clear" onClick={this.deletePod.bind(this, appName)}>Delete</button>}
         />;
       temp = [appName, ready, status, restarts, age, ipAddress, node, action];
       descriptions.push(temp);
