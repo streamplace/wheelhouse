@@ -24,7 +24,6 @@ getStore.then(store => {
             path="/environment-variables"
             component={EnvironmentVariablesDisplay}
           />
-          <Route path='/sms' component={notifications} />
         </div>
       </Router>
     </Provider>
@@ -32,3 +31,4 @@ getStore.then(store => {
 
   ReactDOM.render(routes, document.getElementById("root"));
 });
+//          <Route path='/sms' component={notifications} />
