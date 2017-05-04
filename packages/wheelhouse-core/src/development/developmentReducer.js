@@ -5,38 +5,7 @@ import { CONFIG_LOADED } from "../config/configConstants";
 const initialState = {
   logs: [],
   packages: [],
-  env: {
-    CSATS_DB_URL: {
-      currentValue: "mongo://localhost/stage",
-      presetValues: [
-        {
-          name: "dev",
-          value: "mongo://localhost/dev"
-        },
-        {
-          name: "stage",
-          value: "mongo://localhost/stage"
-        }
-      ]
-    },
-    STREAMPLACE_API_SERVER: {
-      currentValue: "https://butt.fish",
-      presetValues: [
-        {
-          name: "dev",
-          value: "https://test.sp-dev.club"
-        },
-        {
-          name: "local",
-          value: "http://localhost"
-        },
-        {
-          name: "prod",
-          value: "https://stream.place"
-        }
-      ]
-    }
-  },
+  env: []
 };
 
 export default function(state = initialState, action) {
@@ -60,6 +29,8 @@ export default function(state = initialState, action) {
 
   if (action.type === CONFIG_LOADED) {
     let newPackages = [];
+    let newEnv = [];
+
     action.configData.packages.forEach((pkgName) => {
       if (state.packages.find(pkg => pkg.name === pkgName)) {
         return;
@@ -70,12 +41,31 @@ export default function(state = initialState, action) {
         active: false,
       });
     });
+
+    action.configData.env.forEach((envName, envValue) => {
+      if (state.env.find(env => env.name === envName)) {
+        return;
+      }
+      if (state.env.find(env => env.value === envValue)) {
+        return;
+      }
+      newEnv.push({
+        name: envName,
+        value: envValue
+      });
+    });
+
     newPackages = state.packages
       .concat(newPackages)
       .filter((pkg) => action.configData.packages.includes(pkg.name));
+    newEnv = state.env
+      .concat(newEnv)
+      .filter((env) => action.configData.env.includes(env.name, env.value));
+
     return {
       ...state,
       packages: newPackages,
+      env: newEnv,
     };
   }
 
