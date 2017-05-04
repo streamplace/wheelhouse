@@ -19,19 +19,21 @@
 }
 .customInput {
   width: 30em !important;
-  margin-left: 0;
+  margin-left: 0.4em;
   border: 1px black;
 }
 
-.button {
+.environment-variable-picker-button {
   background-color: lightcyan;
   border: 1px solid black;
   width: 30em;
   margin: .4em;
 }
-.button:hover {
+
+.environment-variable-picker-button:hover {
   background-color: #80ffff;
 }
-.button:focus {
+
+.environment-variable-picker-button:focus {
   background-color: lightcyan;
 }

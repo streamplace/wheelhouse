@@ -33,6 +33,35 @@ class EnvironmentVariablesDisplay extends Component {
     const variable = Object.keys(env).map((name) => {
       const data = env[name];
       const presetValues = data.presetValues;
+
+      let isPresetValue = false;
+      const reformattedArray = presetValues.map((obj) => {
+        let button = obj.value;
+        let checked;
+        if (button === this.props.env[name].currentValue) {
+          isPresetValue = true;
+          checked = <span className="checkmark">  ✔️</span>;
+        } else {
+          checked = <span></span>;
+        }
+        return (
+          <div key={obj.value}>
+            <button className="environment-variable-picker-button"
+              onClick={this.buttonClick.bind(this, name, obj.value)}
+            >
+            <div className="buttonText">
+              {obj.name}: {obj.value}
+            </div>
+            </button>
+            {checked}
+          </div>
+        );
+      });
+
+      let newInputCheck;
+      if (!isPresetValue) {
+        newInputCheck = <span className="checkmark">  ✔️</span>;
+      }
       const newInput = <input
         className="customInput"
         type="text"
@@ -40,30 +69,14 @@ class EnvironmentVariablesDisplay extends Component {
         onKeyUp={this.inputChange.bind(this, name)}>
       </input>;
 
-      const reformattedArray = presetValues.map((obj) => {
-        let button = obj.value;
-        let checked;
-        if (button === this.props.env[name].currentValue) {
-          checked = <span className="checkmark">  ✔️</span>;
-        } else {
-          checked = <span></span>;
-        }
-        return (
-          <button className="button"
-            onClick={this.buttonClick.bind(this, name, obj.value)}
-          >
-            <div className="buttonText">
-              {obj.name}: {obj.value}
-              {checked}
-            </div>
-          </button>
-        );
-      });
       return (
-        <div className="variable-container">
+        <div key={name} className="variable-container">
           <span className="variable-name">{name}</span>
-          <div className="envContainer"> {reformattedArray} </div>
-          {newInput}
+          <div className="envContainer">{reformattedArray}</div>
+          <div className="newInput">
+            {newInput}
+            {newInputCheck}
+          </div>
         </div>
       );
     });
