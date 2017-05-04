@@ -1,5 +1,5 @@
 
-import { CONFIG_LOADED, CONFIG_ROOT_FOUND } from "./configConstants";
+import { CONFIG_LOADED } from "./configConstants";
 
 const initialState = {
   port: 3333,
@@ -7,16 +7,10 @@ const initialState = {
 
 export default function(state = initialState, action) {
 
-  if (action.type === CONFIG_ROOT_FOUND) {
-    return {
-      ...state,
-      rootDir: action.rootDir
-    };
-  }
-
+  // In the event that this fires multiple times, we don't want to persist old configs
   if (action.type === CONFIG_LOADED) {
     return {
-      ...state,
+      ...initialState,
       ...action.configData,
     };
   }

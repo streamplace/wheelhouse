@@ -8,6 +8,10 @@ a {
   color: #1a65ab;
 }
 
+button {
+  min-width: 130px;
+}
+
 button:hover {
   opacity: 0.8;
 }
@@ -20,12 +24,4 @@ button:hover {
 .container {
   max-width: 120rem;
   padding: 0;
-}
-
-code {
-  background-color: transparent;
-  font-size: 100%;
-  margin: 0;
-  padding: 0;
-  font-family:'Inconsolata', monospace;
 }

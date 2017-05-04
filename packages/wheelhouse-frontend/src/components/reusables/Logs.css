@@ -1,52 +1,13 @@
 /*!imporant flags added to override default styling from Milligram */
-.hide-log-button {
-  color: gray !important;
-  border-color: gray !important;
-}
 
-.log-filter-button {
-  min-width: 145px;
-  padding: 0;
-  background-color: #1a65ab;
-  border-color: #1a65ab;
-}
-
-.log-filter-button:hover, .log-filter-button:focus {
-  background-color: #1a65ab;
-  border-color: #1a65ab;
-}
-
-.log-filter-container {
-  display: flex;
-  flex-direction: column;
-  margin-right: 15px;
-  margin-top: 0;
-}
-
-.log-filter-container h4 {
-  font-size: 18px;
-  margin: 0 0 2px 8px;
-  font-weight: 400;
-}
-
-.log-filter-container ul {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  margin-left: 10px;
-}
-
-.log-filter-container ul li {
-  display: flex;
-  justify-content: space-between;
-}
-
-.log-line-app-name {
-  color: #62C370;
-}
-
-.log-line-app-server {
-  color: #61E8E1;
+.logs-container {
+  background-color: black;
+  padding: 0 5px !important;
+  margin-top: 30px;
+  min-height: 50vh;
+  overflow: auto;
+  max-height:90vh;
+  padding-bottom: 30px !important;
 }
 
 .log-line-column {
@@ -63,31 +24,25 @@
   padding: 0;
 }
 
+.log-line-app-name {
+  color: #62C370;
+}
+
+.log-line-app-server {
+  color: #61E8E1;
+}
+
 .log-line-row {
   display: flex;
 }
 
-.logs-container {
-  background-color: black;
-  padding: 0 5px !important;
-  margin-top: 30px;
-  min-height: 50vh;
-  overflow: auto;
-  height: 90vh;
-  padding-bottom: 30px !important;
+.logs {
+  height: 200px;
+  margin: 10px;
+  border: 1px solid lightgray;
+  border-radius: 2px;
 }
 
 .nowrap {
   white-space: nowrap;
-}
-
-.show-all-hide-all-container {
-  display: flex;
-  justify-content: space-around;
-}
-
-.toggle-all-apps-button {
-  color: #1a65ab !important;
-  padding: 0;
-  display: block;
 }

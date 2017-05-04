@@ -1,6 +1,7 @@
 import React from "react";
 import "./Table.css";
 
+/*eslint-disable react/prop-types*/
 const Table = (props) => {
   return (
     <table className="reusable-table">
@@ -8,7 +9,7 @@ const Table = (props) => {
         <tr>{props.headers}</tr>
       </thead>
       <tbody>
-        {props.descriptions}
+        <tr>{props.descriptions}</tr>
       </tbody>
     </table>
   );

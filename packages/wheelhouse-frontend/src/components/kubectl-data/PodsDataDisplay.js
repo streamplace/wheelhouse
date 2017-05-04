@@ -1,29 +1,34 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Sidebar from "../reusables/Sidebar";
-import Table from "../reusables/Table";
-import * as podHandlers from "../../handlers/component-handlers/pod-handlers";
+import Sidebar from "../reusables/Sidebar"; 
+import Table from "../reusables/Table"; 
+
+const populateTableHeaders = (array) => {
+  return array.map((header, idx) => {
+    return (
+      <th key={idx}>{header}</th>
+    );
+  });
+};
+
+const populateTableDescriptions = (array) => {
+  return array.map((description, idx) => {
+    return (
+      <tr key={idx}>
+        <td key={idx}>{description}</td>
+      </tr>
+    );
+  });
+};
 
 class PodsDataDisplay extends Component {
-  render() {
+  render() {     
     const { pods } = this.props;
-    let appName, ready, status, restarts, age, ipAddress, node;
-    let descriptions = [];
-    pods.items.forEach((item, idx) => {
-      let temp = [];
-      appName = item.metadata.name;
-      ready = podHandlers.countReadyContainers(item.status.containerStatuses);
-      status = item.status.phase;
-      restarts = item.status.containerStatuses[0].restartCount;
-      age = podHandlers.getContainerAge(item);
-      ipAddress = item.status.hostIP;
-      node= item.spec.nodeName;
-      temp = [appName, ready, status, restarts, age, ipAddress, node];
-      descriptions.push(temp);
-    });
-
-    const importedDescriptions = podHandlers.populateTableDescriptions(descriptions);
-    const importedHeaders = podHandlers.populateTableHeaders(["Name", "Ready", "Status", "Restarts", "Age", "IP", "Node"]);
+    const appNames = pods.items.map((item, idx) => {
+      return item.metadata.generateName; 
+    }).filter(name => name !== undefined);
+    const importedDescriptions = populateTableDescriptions(appNames);
+    const importedHeaders = populateTableHeaders(["Name/Node"]); 
 
     return (
       <div>
@@ -31,7 +36,7 @@ class PodsDataDisplay extends Component {
           <div className="row">
             <div className="sidebar-container"><Sidebar /></div>
             <div className="content-container">
-              <Table
+              <Table 
                 headers={importedHeaders}
                 descriptions={importedDescriptions} />
             </div>
@@ -44,7 +49,7 @@ class PodsDataDisplay extends Component {
 
 const mapStateToProps = state => {
   return {
-    pods: state.kubernetes.pods
+    pods: state.pods
   };
 };
 
