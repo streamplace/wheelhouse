@@ -62,8 +62,8 @@ class EnvironmentVariablesDisplay extends Component {
       return (
         <div className="variable-container">
           <span className="variable-name">{name}</span>
-          <div className="envContainer"> {reformattedArray} </div>
-          {newInput}
+          <div className="envContainer">{reformattedArray}</div>
+          <div className="newInput">{newInput}</div>
         </div>
       );
     });
