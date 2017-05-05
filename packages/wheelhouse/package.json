@@ -1,8 +1,8 @@
 {
-  "name": "wheelhouse-cli",
+  "name": "wheelhouse",
   "version": "0.0.3",
   "description": "Wheelhouse command line interface and all that",
-  "main": "dist/wheelhouse-cli.js",
+  "main": "dist/wheelhouse.js",
   "scripts": {
     "test": "jest",
     "prepublish": "babel -d dist src",
