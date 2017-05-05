@@ -2,8 +2,8 @@ import express from "express";
 import WebSocket from "ws";
 import http from "http";
 import proxy from "http-proxy-middleware";
-import { configLoad } from "../config/configActions";
-import { SERVER_SYNC_STATE } from "./serverConstants";
+import { configLoad } from "./configActions";
+import { SERVER_SYNC_STATE } from "wheelhouse-core";
 import debug from "debug";
 
 const log = debug("wheelhouse:serverActions");

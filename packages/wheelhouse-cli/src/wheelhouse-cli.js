@@ -2,10 +2,8 @@
 /*eslint-disable no-console*/
 
 import yargs from "yargs";
-import { store } from "wheelhouse-core/dist/store";
-import {
-  developmentStart
-} from "wheelhouse-core/dist/development/developmentActions";
+import { store } from "./store";
+import { developmentStart } from "./developmentActions";
 
 const attemptAction = async function(action, ...args) {
   try {

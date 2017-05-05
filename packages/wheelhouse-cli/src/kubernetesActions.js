@@ -1,4 +1,4 @@
-import { KUBERNETES_DATA } from "./kubernetesConstants";
+import { KUBERNETES_DATA } from "wheelhouse-core";
 import { resolve, dirname } from "path";
 // import { runKube } from "../util/processHelpers.js"
 

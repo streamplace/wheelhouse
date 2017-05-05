@@ -3,8 +3,8 @@ import debug from "debug";
 import { safeLoad as parseYaml } from "js-yaml";
 import path from "path";
 import fs from "mz/fs";
-import { CONFIG_LOADED, CONFIG_ROOT_FOUND } from "./configConstants";
-import { packagesLoad } from "../packages/packagesActions";
+import { CONFIG_LOADED, CONFIG_ROOT_FOUND } from "wheelhouse-core";
+import { packagesLoad } from "./packagesActions";
 
 const CONFIG_NAME = "wheelhouse.yaml";
 
