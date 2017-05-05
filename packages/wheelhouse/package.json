@@ -9,7 +9,7 @@
     "dev": "npm run prepublish && npm link && babel -s -d dist -w src"
   },
   "bin": {
-    "wheelhouse": "dist/wheelhouse-cli.js"
+    "wheelhouse": "dist/wheelhouse.js"
   },
   "repository": {
     "type": "git",
