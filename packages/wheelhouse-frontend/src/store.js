@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import { createLogger } from "redux-logger";
-import { SERVER_SYNC_STATE, reducer } from "wheelhouse-core";
+import { SERVER_SYNC_STATE, SERVER_DISCONNECT, reducer } from "wheelhouse-core";
 
 const logger = createLogger();
 
@@ -41,5 +41,12 @@ export default new Promise((resolve, reject) => {
       action._fromServer = true;
       store.dispatch(action);
     }
+  });
+
+  socket.addEventListener("close", function() {
+    store.dispatch({
+      type: SERVER_DISCONNECT,
+      _fromServer: true
+    });
   });
 });

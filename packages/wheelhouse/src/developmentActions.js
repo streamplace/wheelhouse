@@ -1,9 +1,8 @@
-import { serverStart } from "../server/serverActions";
+import { serverStart } from "./serverActions";
 import opn from "opn";
 import { terminal as term } from "terminal-kit";
-import { DEVELOPMENT_LOG } from "./developmentConstants";
-import { kubernetesStartPullingData } from "../kubernetes/kubernetesActions";
-import { getColor } from "../util/colors";
+import { DEVELOPMENT_LOG, getColor } from "wheelhouse-core";
+import { kubernetesStartPullingData } from "./kubernetesActions";
 import { parseToRgb } from "polished";
 
 let uid = 0;

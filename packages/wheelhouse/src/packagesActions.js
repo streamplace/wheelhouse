@@ -5,10 +5,10 @@ import {
   PACKAGES_LOADED,
   PACKAGES_START,
   PACKAGES_STOP
-} from "./packagesConstants";
+} from "wheelhouse-core";
 import { spawn } from "mz/child_process";
 import split from "split";
-import { developmentLog } from "../development/developmentActions";
+import { developmentLog } from "./developmentActions";
 
 const log = debug("wheelhouse:packagesActions");
 
