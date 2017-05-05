@@ -1,12 +1,11 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import LogContainer from "../reusables/LogContainer";
-import LogFilterContainer  from "../reusables/LogFilterContainer";
+import LogFilterContainer from "../reusables/LogFilterContainer";
 import Sidebar from "../reusables/Sidebar";
 import "../reusables/Logs.css";
 
 class LogsDataDisplay extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -55,18 +54,21 @@ class LogsDataDisplay extends Component {
       const buttons = [];
 
       for (let key in this.state.showLogs) {
-        let buttonClass= !this.state.showLogs[key] ?
-        "button-outline hide-log-button log-filter-button" :
-        "log-filter-button";
+        let buttonClass = !this.state.showLogs[key]
+          ? "button-outline hide-log-button log-filter-button"
+          : "log-filter-button";
         buttons.push(
-            <li key={key}>
-              <button
-                onClick={() => {this.toggleIndivApp(key); }}
-                className={buttonClass}>
-                {key}
-              </button>
-            </li>
-          );
+          <li key={key}>
+            <button
+              onClick={() => {
+                this.toggleIndivApp(key);
+              }}
+              className={buttonClass}
+            >
+              {key}
+            </button>
+          </li>
+        );
       }
       return buttons;
     };
@@ -96,4 +98,3 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps)(LogsDataDisplay);
-

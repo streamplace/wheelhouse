@@ -1,4 +1,3 @@
-
 import { CONFIG_LOADED } from "./configConstants";
 import configReducer from "./configReducer";
 

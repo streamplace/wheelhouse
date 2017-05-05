@@ -7,11 +7,10 @@ import "./DevelopmentData.css";
 import { PACKAGES_RUN } from "wheelhouse-core";
 
 class DevelopmentDataDisplay extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
-      showLogs: {},
+      showLogs: {}
     };
     this.changeAppStatus = this.changeAppStatus.bind(this);
     this.showLogs = this.showLogs.bind(this);
@@ -36,13 +35,11 @@ class DevelopmentDataDisplay extends Component {
   }
 
   render() {
-
     const { packages } = this.props;
     const data = packages.map((app, idx) => {
-
       const showLogs = this.state.showLogs[app.name];
       let buttonLabel = app.active ? "Stop" : "Start";
-      let buttonColor = buttonLabel === "Stop" ?  "red" : "green";
+      let buttonColor = buttonLabel === "Stop" ? "red" : "green";
       let seeOrCloseLogs = !showLogs ? "See logs" : "Close logs";
 
       return (
@@ -52,11 +49,15 @@ class DevelopmentDataDisplay extends Component {
             status={app.status}
             startStop={buttonLabel}
             buttonClass={buttonColor}
-            changeButtonStatus={this.changeAppStatus.bind(this, app.name, !app.active)}
+            changeButtonStatus={this.changeAppStatus.bind(
+              this,
+              app.name,
+              !app.active
+            )}
             showLogsAction={() => this.showLogs(app.name)}
             showLogsText={seeOrCloseLogs}
           />
-          {showLogs && <LogContainer filter={{[app.name]: true}} />}
+          {showLogs && <LogContainer filter={{ [app.name]: true }} />}
         </div>
       );
     });
@@ -66,7 +67,9 @@ class DevelopmentDataDisplay extends Component {
         <div className="container">
           <div className="row">
             <div className="sidebar-container"><Sidebar /></div>
-            <div className="development-data-container content-container">{data}</div>
+            <div className="development-data-container content-container">
+              {data}
+            </div>
           </div>
         </div>
       </div>

@@ -1,6 +1,12 @@
-
-import { DEVELOPMENT_LOG, DEVELOPMENT_ENV_CHANGE } from "./developmentConstants";
-import { PACKAGES_START, PACKAGES_STOP, PACKAGES_LOADED } from "../packages/packagesConstants";
+import {
+  DEVELOPMENT_LOG,
+  DEVELOPMENT_ENV_CHANGE
+} from "./developmentConstants";
+import {
+  PACKAGES_START,
+  PACKAGES_STOP,
+  PACKAGES_LOADED
+} from "../packages/packagesConstants";
 import { getColor } from "../util/colors";
 import { CONFIG_LOADED } from "../config/configConstants";
 
@@ -11,7 +17,6 @@ const initialState = {
 };
 
 export default function(state = initialState, action) {
-
   if (action.type === PACKAGES_LOADED) {
     const name = action.packageJson.name;
     // If we already know about this package, do nothing.
@@ -27,7 +32,7 @@ export default function(state = initialState, action) {
         {
           name: name,
           status: "STOPPED",
-          active: false,
+          active: false
         }
       ]
     };
@@ -36,12 +41,12 @@ export default function(state = initialState, action) {
   if (action.type === PACKAGES_START) {
     return {
       ...state,
-      packages: state.packages.map((pkg) => {
+      packages: state.packages.map(pkg => {
         if (action.pkgName === pkg.name) {
           return {
             ...pkg,
             status: "STARTED",
-            active: true,
+            active: true
           };
         }
         return pkg;
@@ -52,12 +57,12 @@ export default function(state = initialState, action) {
   if (action.type === PACKAGES_STOP) {
     return {
       ...state,
-      packages: state.packages.map((pkg) => {
+      packages: state.packages.map(pkg => {
         if (action.pkgName === pkg.name) {
           return {
             ...pkg,
             status: "STOPPED",
-            active: false,
+            active: false
           };
         }
         return pkg;
@@ -69,20 +74,21 @@ export default function(state = initialState, action) {
     return {
       ...state,
       env: {
-        ...action.configData.env,
-      },
+        ...action.configData.env
+      }
     };
   }
 
-  if (action.type === DEVELOPMENT_LOG)  {
+  if (action.type === DEVELOPMENT_LOG) {
     const newObject = {
       appName: action.pkgName,
       color: getColor(action.pkgName),
       date: Date.now(),
       serverStatus: "",
       uid: action.uid,
-      expectedAction: action.text };
-    return Object.assign({}, state, {logs: [...state.logs, newObject]});
+      expectedAction: action.text
+    };
+    return Object.assign({}, state, { logs: [...state.logs, newObject] });
   }
 
   if (action.type === DEVELOPMENT_ENV_CHANGE) {

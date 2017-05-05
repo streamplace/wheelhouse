@@ -21,20 +21,22 @@ const sendToServer = store => next => action => {
 };
 
 export default new Promise((resolve, reject) => {
-
   let store;
 
   socket.addEventListener("message", function(event) {
     const action = JSON.parse(event.data);
     // Special initialization action that runs at the start.
     if (action.type === SERVER_SYNC_STATE) {
-      store = createStore(reducer, action.state, composeEnhancers(
-        applyMiddleware(thunk, logger),
-        applyMiddleware(sendToServer)
-      ));
+      store = createStore(
+        reducer,
+        action.state,
+        composeEnhancers(
+          applyMiddleware(thunk, logger),
+          applyMiddleware(sendToServer)
+        )
+      );
       resolve(store);
-    }
-    else {
+    } else {
       // Flag this as from the server, so we don't send it back up.
       action._fromServer = true;
       store.dispatch(action);
