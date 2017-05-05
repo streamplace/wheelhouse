@@ -1,7 +1,6 @@
 {
   "name": "wheelhouse-frontend",
   "version": "0.0.3",
-  "private": true,
   "dependencies": {
     "ansi-to-react": "^1.2.0",
     "immutability-helper": "^2.1.2",
