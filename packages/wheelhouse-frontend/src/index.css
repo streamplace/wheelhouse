@@ -15,12 +15,13 @@ button:hover {
 
 .container {
   max-width: none;
-  padding: 0;
+  padding: 1em;
   margin: 0;
+  display: flex;
 }
 
 .content-container {
-  min-width: 90%;
+  flex-grow: 1;
   margin-left: 10px;
 }
 

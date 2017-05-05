@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import DataContainer from "../reusables/DataContainer";
 import LogContainer from "../reusables/LogContainer";
-import Sidebar from "../reusables/Sidebar";
 import "./DevelopmentData.css";
 import { PACKAGES_RUN } from "wheelhouse-core";
 
@@ -63,15 +62,8 @@ class DevelopmentDataDisplay extends Component {
     });
 
     return (
-      <div>
-        <div className="container">
-          <div className="row">
-            <div className="sidebar-container"><Sidebar /></div>
-            <div className="development-data-container content-container">
-              {data}
-            </div>
-          </div>
-        </div>
+      <div className="development-data-container content-container">
+        {data}
       </div>
     );
   }

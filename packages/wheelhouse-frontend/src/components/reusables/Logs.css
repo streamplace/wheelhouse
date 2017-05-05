@@ -26,6 +26,10 @@
   flex-direction: column;
   margin-right: 15px;
   margin-top: 0;
+  width: 175px;
+  position: absolute;
+  left: 1em;
+  bottom: 1em;
 }
 
 .log-filter-container h4 {
@@ -84,10 +88,6 @@
 
 .nowrap {
   white-space: nowrap;
-}
-
-.pod-action-container {
-  text-align: center;
 }
 
 .show-all-hide-all-container {

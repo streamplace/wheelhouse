@@ -11,7 +11,6 @@ class Dropdown extends Component {
 
   componentDidMount() {
     this.listener = e => {
-      window.evt1 = e;
       this.setState({ show: false });
     };
     document.body.addEventListener("click", this.listener);
@@ -24,13 +23,12 @@ class Dropdown extends Component {
   toggle(e) {
     e.preventDefault();
     e.stopPropagation();
-    window.evt2 = e.nativeEvent;
     this.setState({ show: !this.state.show });
   }
 
   render() {
     return (
-      <div className="pod-action-container">
+      <div className="dropdown-action-container">
         <button
           className="action-button button-clear"
           onClick={this.toggle.bind(this)}
@@ -38,10 +36,14 @@ class Dropdown extends Component {
           {this.props.label}↓
         </button>
         <div
+          className="dropdown-floating-menu"
           style={{
             display: this.state.show ? "block" : "none"
           }}
         >
+          {this.props.children}
+          {this.props.children}
+          {this.props.children}
           {this.props.children}
         </div>
       </div>

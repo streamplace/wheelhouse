@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { KUBERNETES_DELETE_POD } from "wheelhouse-core";
 import Dropdown from "../reusables/Dropdown";
-import Sidebar from "../reusables/Sidebar";
 import Table from "../reusables/Table";
 import * as podHandlers from "../../handlers/component-handlers/pod-handlers";
 
@@ -65,19 +64,7 @@ class PodsDataDisplay extends Component {
     ]);
 
     return (
-      <div>
-        <div className="container">
-          <div className="row">
-            <div className="sidebar-container"><Sidebar /></div>
-            <div className="content-container">
-              <Table
-                headers={importedHeaders}
-                descriptions={importedDescriptions}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
+      <Table headers={importedHeaders} descriptions={importedDescriptions} />
     );
   }
 }
