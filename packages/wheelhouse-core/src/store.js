@@ -11,7 +11,6 @@ import { serverSendAction } from "./server/serverActions";
 
 const receiveFromClient = otherStore => next => action => {
   if (action._fromClient) {
-
     if (action.type === CONFIG_LOAD) {
       store.dispatch(configLoad());
       return;
