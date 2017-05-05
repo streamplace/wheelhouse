@@ -1,7 +1,7 @@
 jest.mock("wheelhouse-core");
 
 import core from "wheelhouse-core";
-import runCli from "./wheelhouse-cli";
+import runCli from "./wheelhouse";
 
 const run = str => {
   return runCli([].concat(str.split(" ").filter(s => !!s)));
