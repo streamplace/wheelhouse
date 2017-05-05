@@ -863,13 +863,13 @@ debug@2.6.1:
   dependencies:
     ms "0.7.2"
 
-debug@2.6.4, debug@^2.1.1, debug@^2.2.0, debug@^2.6.4:
+debug@2.6.4:
   version "2.6.4"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.4.tgz#7586a9b3c39741c0282ae33445c4e8ac74734fe0"
   dependencies:
     ms "0.7.3"
 
-debug@^2.6.6:
+debug@^2.1.1, debug@^2.2.0, debug@^2.6.4, debug@^2.6.6:
   version "2.6.6"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.6.tgz#a9fa6fbe9ca43cf1e79f73b75c0189cbb7d6db5a"
   dependencies:
@@ -2292,6 +2292,10 @@ pinkie@^2.0.0:
 pngjs@^2.0.0:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/pngjs/-/pngjs-2.3.1.tgz#11d1e12b9cb64d63e30c143a330f4c1f567da85f"
+
+polished@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/polished/-/polished-1.1.1.tgz#44493e22a8947781799a7565230dfb5c95cf7215"
 
 prelude-ls@~1.1.2:
   version "1.1.2"
