@@ -30,7 +30,7 @@ class Dropdown extends Component {
 
   render() {
     return (
-      <div>
+      <div className="pod-action-container">
         <button
           className="action-button button-clear"
           onClick={this.toggle.bind(this)}
@@ -39,7 +39,6 @@ class Dropdown extends Component {
         </button>
         <div
           style={{
-            position: "absolute",
             display: this.state.show ? "block" : "none"
           }}
         >

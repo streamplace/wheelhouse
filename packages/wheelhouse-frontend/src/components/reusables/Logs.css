@@ -1,4 +1,9 @@
 /*!imporant flags added to override default styling from Milligram */
+.action-button, .action-item-button {
+  margin: 0;
+  padding: 0;
+}
+
 .hide-log-button {
   color: gray !important;
   border-color: gray !important;
@@ -79,6 +84,10 @@
 
 .nowrap {
   white-space: nowrap;
+}
+
+.pod-action-container {
+  text-align: center;
 }
 
 .show-all-hide-all-container {
