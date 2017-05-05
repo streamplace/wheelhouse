@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import LogLine from "./LogLine";
 import { timeConverter } from "../../handlers/component-handlers/log-handlers";
@@ -16,7 +16,13 @@ class LogContainer extends Component {
 
   componentDidUpdate() {
     if (!this.state.shouldStick) {
-      if (Math.abs(this.container.scrollTop + this.container.clientHeight - this.container.scrollHeight) < 5) {
+      if (
+        Math.abs(
+          this.container.scrollTop +
+            this.container.clientHeight -
+            this.container.scrollHeight
+        ) < 5
+      ) {
         this.setState({
           shouldStick: true,
           atTheBottom: true
@@ -42,8 +48,7 @@ class LogContainer extends Component {
         shouldStick: true,
         atTheBottom: true
       });
-    }
-    else {
+    } else {
       this.setState({
         shouldStick: false,
         atTheBottom: false
@@ -69,16 +74,23 @@ class LogContainer extends Component {
       );
     });
 
-    const scrollToBottomButton = !this.state.atTheBottom ?
-      <button className="scroll-to-bottom-button" onClick={this.stickToBottom.bind(this)}>↓</button> :
-      null;
+    const scrollToBottomButton = !this.state.atTheBottom
+      ? <button
+          className="scroll-to-bottom-button"
+          onClick={this.stickToBottom.bind(this)}
+        >
+          ↓
+        </button>
+      : null;
 
     return (
       <div className="outer-logs-container">
-        <div ref={container => this.container = container}
+        <div
+          ref={container => (this.container = container)}
           style={this.props.visibility}
           onScroll={this.stickyScrolling.bind(this)}
-          className="content-container inner-logs-container">
+          className="content-container inner-logs-container"
+        >
           {lines}
         </div>
         {scrollToBottomButton}
@@ -91,7 +103,7 @@ const mapStateToProps = (state, props) => {
   return {
     logs: state.development.logs.filter(line => {
       return props.filter[line.appName] === true;
-    }),
+    })
   };
 };
 
