@@ -32,10 +32,9 @@ const receiveFromClient = otherStore => next => action => {
 
   // If the action came from the client, not the server, send it up there!
   return next(action);
-
 };
 
-export const store = createStore(reducer, compose(
-  applyMiddleware(thunk),
-  applyMiddleware(receiveFromClient)
-));
+export const store = createStore(
+  reducer,
+  compose(applyMiddleware(thunk), applyMiddleware(receiveFromClient))
+);

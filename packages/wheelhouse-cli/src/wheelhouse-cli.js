@@ -3,13 +3,14 @@
 
 import yargs from "yargs";
 import { store } from "wheelhouse-core/dist/store";
-import {developmentStart} from "wheelhouse-core/dist/development/developmentActions";
+import {
+  developmentStart
+} from "wheelhouse-core/dist/development/developmentActions";
 
 const attemptAction = async function(action, ...args) {
   try {
     await store.dispatch(action(...args));
-  }
-  catch (e) {
+  } catch (e) {
     console.error("Fatal error!");
     console.error(e);
   }
@@ -21,31 +22,31 @@ if (!global._babelPolyfill) {
 
 const runCli = async function(argv) {
   yargs
-  .command({
-    command: "dev",
-    describe: "Run your local development with Wheelhouse",
-    handler: (argv) => {
-      attemptAction(developmentStart);
-    }
-  })
-  .help()
-  .strict()
-  .exitProcess(false)
-  .parse(argv);
+    .command({
+      command: "dev",
+      describe: "Run your local development with Wheelhouse",
+      handler: argv => {
+        attemptAction(developmentStart);
+      }
+    })
+    .help()
+    .strict()
+    .exitProcess(false)
+    .parse(argv);
 };
 
 export default runCli;
 
 if (!module.parent) {
-  runCli(process.argv).catch((err) => {
+  runCli(process.argv).catch(err => {
     console.error(err);
   });
 }
 
 // Make unhandled promise rejections fatal
-process.on("unhandledRejection", function(reason, p){
+process.on("unhandledRejection", function(reason, p) {
   console.log("Unhandled promise rejection, exiting. Details:");
   console.log(reason);
   process.exit(1);
-    // application specific logging here
+  // application specific logging here
 });

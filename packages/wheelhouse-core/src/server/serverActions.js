@@ -1,4 +1,3 @@
-
 import express from "express";
 import WebSocket from "ws";
 import http from "http";
@@ -48,14 +47,16 @@ export const serverStart = () => async (dispatch, getState) => {
       clients.splice(index, 1);
     });
 
-    ws.on("error", (err) => {
+    ws.on("error", err => {
       log(err);
     });
 
-    ws.send(JSON.stringify({
-      type: SERVER_SYNC_STATE,
-      state: getState(),
-    }));
+    ws.send(
+      JSON.stringify({
+        type: SERVER_SYNC_STATE,
+        state: getState()
+      })
+    );
   });
 
   const websocketPort = await serverListen(websocketServer);
@@ -64,20 +65,22 @@ export const serverStart = () => async (dispatch, getState) => {
   // Cool. With that taken care of, we set up our actual server to proxy as appropriate.
   const server = http.createServer(app);
 
-  app.use(proxy("http://localhost:3000/", {
-    logLevel: "warn",
-    ws: true,
-    router: {
-      [`localhost:${port}/api`]: `http://localhost:${websocketPort}`
-    }
-  }));
+  app.use(
+    proxy("http://localhost:3000/", {
+      logLevel: "warn",
+      ws: true,
+      router: {
+        [`localhost:${port}/api`]: `http://localhost:${websocketPort}`
+      }
+    })
+  );
 
   return await serverListen(server, port);
 };
 
-export const serverSendAction = (action) => {
+export const serverSendAction = action => {
   const message = JSON.stringify(action);
-  clients.forEach((client) => {
+  clients.forEach(client => {
     client.send(message);
   });
 };

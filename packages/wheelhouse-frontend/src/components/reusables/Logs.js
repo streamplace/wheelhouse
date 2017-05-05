@@ -1,7 +1,7 @@
 import React from "react";
 import "./Logs.css";
 
-const Logs = (props) => {
+const Logs = props => {
   return (
     <div className={props.visibility}>
       <div className="container logs">

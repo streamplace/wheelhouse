@@ -5,11 +5,9 @@ import "./EnvironmentVariablesDisplay.css";
 import { DEVELOPMENT_ENV_CHANGE } from "wheelhouse-core";
 
 class EnvironmentVariablesDisplay extends Component {
-
   constructor(props) {
     super(props);
-    this.state = {
-    };
+    this.state = {};
   }
 
   buttonClick(name, selectedValue) {
@@ -30,40 +28,56 @@ class EnvironmentVariablesDisplay extends Component {
 
   render() {
     const { env } = this.props;
-    const variable = Object.keys(env).map((name) => {
+    const variable = Object.keys(env).map(name => {
       const data = env[name];
       const presetValues = data.presetValues;
-      const newInput = <input
-        className="customInput"
-        type="text"
-        placeholder="custom"
-        onKeyUp={this.inputChange.bind(this, name)}>
-      </input>;
 
-      const reformattedArray = presetValues.map((obj) => {
+      let isPresetValue = false;
+      const reformattedArray = presetValues.map(obj => {
         let button = obj.value;
         let checked;
         if (button === this.props.env[name].currentValue) {
-          checked = <span className="checkmark">  ✔️</span>;
+          isPresetValue = true;
+          checked = <span className="checkmark"> ✔️</span>;
         } else {
-          checked = <span></span>;
+          checked = <span />;
         }
         return (
-          <button className="button"
-            onClick={this.buttonClick.bind(this, name, obj.value)}
-          >
-            <div className="buttonText">
-              {obj.name}: {obj.value}
-              {checked}
-            </div>
-          </button>
+          <div key={obj.value}>
+            <button
+              className="environment-variable-picker-button"
+              onClick={this.buttonClick.bind(this, name, obj.value)}
+            >
+              <div className="buttonText">
+                {obj.name}: {obj.value}
+              </div>
+            </button>
+            {checked}
+          </div>
         );
       });
+
+      let newInputCheck;
+      if (!isPresetValue) {
+        newInputCheck = <span className="checkmark"> ✔️</span>;
+      }
+      const newInput = (
+        <input
+          className="customInput"
+          type="text"
+          placeholder="custom"
+          onKeyUp={this.inputChange.bind(this, name)}
+        />
+      );
+
       return (
-        <div className="variable-container">
+        <div key={name} className="variable-container">
           <span className="variable-name">{name}</span>
-          <div className="envContainer"> {reformattedArray} </div>
-          {newInput}
+          <div className="envContainer">{reformattedArray}</div>
+          <div className="newInput">
+            {newInput}
+            {newInputCheck}
+          </div>
         </div>
       );
     });
@@ -89,5 +103,3 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps)(EnvironmentVariablesDisplay);
-
-

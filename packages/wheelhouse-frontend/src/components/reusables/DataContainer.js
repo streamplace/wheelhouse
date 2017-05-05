@@ -1,6 +1,6 @@
 import React from "react";
 
-const DataContainer = (props) => {
+const DataContainer = props => {
   return (
     <div className="container">
       <div className="row container-row">
@@ -10,8 +10,10 @@ const DataContainer = (props) => {
           <a onClick={props.showLogsAction}>{props.showLogsText}</a>
         </div>
         <div className="column">
-          <button className={props.buttonClass}
-            onClick={props.changeButtonStatus}>
+          <button
+            className={props.buttonClass}
+            onClick={props.changeButtonStatus}
+          >
             {props.startStop}
           </button>
         </div>

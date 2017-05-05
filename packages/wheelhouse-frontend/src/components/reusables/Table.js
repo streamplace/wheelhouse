@@ -1,7 +1,7 @@
 import React from "react";
 import "./Table.css";
 
-const Table = (props) => {
+const Table = props => {
   return (
     <table className="reusable-table">
       <thead>

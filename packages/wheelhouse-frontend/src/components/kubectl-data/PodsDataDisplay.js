@@ -49,6 +49,7 @@ class PodsDataDisplay extends Component {
       temp = [appName, ready, status, restarts, age, ipAddress, node, action];
       descriptions.push(temp);
     });
+
     const importedDescriptions = podHandlers.populateTableDescriptions(
       descriptions
     );

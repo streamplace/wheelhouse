@@ -1,14 +1,11 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
-import * as logHandlers from "../../handlers/component-handlers/log-handlers";
 import LogContainer from "../reusables/LogContainer";
-import LogFilterContainer  from "../reusables/LogFilterContainer";
-import LogLine from "../reusables/LogLine";
+import LogFilterContainer from "../reusables/LogFilterContainer";
 import Sidebar from "../reusables/Sidebar";
 import "../reusables/Logs.css";
 
 class LogsDataDisplay extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -53,53 +50,25 @@ class LogsDataDisplay extends Component {
   }
 
   render() {
-    const { logs } = this.props;
-    const lines = logs.map((line, idx) => {
-
-      const time = logHandlers.timeConverter(line.date);
-      const hashed = logHandlers.hashCode(line.appName);
-      const randomColor = logHandlers.intToRGB(hashed);
-
-      let blockOrNone;
-      this.state.showLogs[line.appName] ? blockOrNone = null : blockOrNone = "none";
-
-      const textColor = {
-        color: randomColor
-      };
-
-      const displayBlockOrNone = {
-        display: blockOrNone
-      };
-
-      return (
-        <LogLine
-          key={idx}
-          timeStamp={time}
-          appName={line.appName}
-          color={textColor}
-          serverStatus={line.serverStatus}
-          expectedAction={line.expectedAction}
-          display={displayBlockOrNone}
-        />
-      );
-    });
-
     const logButtons = () => {
       const buttons = [];
 
       for (let key in this.state.showLogs) {
-        let buttonClass= !this.state.showLogs[key] ?
-        "button-outline hide-log-button log-filter-button" :
-        "log-filter-button";
+        let buttonClass = !this.state.showLogs[key]
+          ? "button-outline hide-log-button log-filter-button"
+          : "log-filter-button";
         buttons.push(
-            <li key={key}>
-              <button
-                onClick={() => {this.toggleIndivApp(key); }}
-                className={buttonClass}>
-                {key}
-              </button>
-            </li>
-          );
+          <li key={key}>
+            <button
+              onClick={() => {
+                this.toggleIndivApp(key);
+              }}
+              className={buttonClass}
+            >
+              {key}
+            </button>
+          </li>
+        );
       }
       return buttons;
     };
@@ -115,9 +84,7 @@ class LogsDataDisplay extends Component {
               hideAll={this.toggleAllApps.bind(this, false)}
             />
           </div>
-          <LogContainer
-            lines={lines}
-          />
+          <LogContainer filter={this.state.showLogs} />
         </div>
       </div>
     );
@@ -131,4 +98,3 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps)(LogsDataDisplay);
-
