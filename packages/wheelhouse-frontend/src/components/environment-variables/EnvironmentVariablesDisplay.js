@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Sidebar from "../reusables/Sidebar";
 import "./EnvironmentVariablesDisplay.css";
 import { DEVELOPMENT_ENV_CHANGE } from "wheelhouse-core";
 
@@ -82,15 +81,8 @@ class EnvironmentVariablesDisplay extends Component {
       );
     });
     return (
-      <div>
-        <div className="container">
-          <div className="row">
-            <div className="column column-20"><Sidebar /></div>
-            <div className="environment-variable-container column column-80">
-              {variable}
-            </div>
-          </div>
-        </div>
+      <div className="environment-variable-container column column-80">
+        {variable}
       </div>
     );
   }

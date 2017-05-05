@@ -1,6 +1,10 @@
+.table-description {
+  font-size: 14px;
+}
+
 .reusable-table {
   width: 95%;
-  margin: 20px; 
+  margin: 20px;
 }
 
 

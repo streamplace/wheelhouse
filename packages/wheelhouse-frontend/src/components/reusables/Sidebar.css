@@ -1,6 +1,5 @@
 .sidebar-container {
-  margin: 15px 0 15px 15px;
-  min-width: 15%; 
+  width: 175px;
 }
 
 .sidebar-container ul {

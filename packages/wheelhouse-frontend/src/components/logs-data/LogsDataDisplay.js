@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import LogContainer from "../reusables/LogContainer";
 import LogFilterContainer from "../reusables/LogFilterContainer";
-import Sidebar from "../reusables/Sidebar";
 import "../reusables/Logs.css";
 
 class LogsDataDisplay extends Component {
@@ -74,18 +73,13 @@ class LogsDataDisplay extends Component {
     };
 
     return (
-      <div className="container">
-        <div className="row">
-          <div className="sidebar-container">
-            <Sidebar />
-            <LogFilterContainer
-              logButtons={logButtons()}
-              showAll={this.toggleAllApps.bind(this, true)}
-              hideAll={this.toggleAllApps.bind(this, false)}
-            />
-          </div>
-          <LogContainer filter={this.state.showLogs} />
-        </div>
+      <div>
+        <LogFilterContainer
+          logButtons={logButtons()}
+          showAll={this.toggleAllApps.bind(this, true)}
+          hideAll={this.toggleAllApps.bind(this, false)}
+        />
+        <LogContainer filter={this.state.showLogs} />
       </div>
     );
   }

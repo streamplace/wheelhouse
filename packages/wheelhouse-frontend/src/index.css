@@ -1,3 +1,4 @@
+
 body {
   margin: 0;
   padding: 0;
@@ -12,14 +13,16 @@ button:hover {
   opacity: 0.8;
 }
 
-.content-container {
-  min-width: 80%;
-  margin-left: 10px;
+.container {
+  max-width: none;
+  padding: 1em;
+  margin: 0;
+  display: flex;
 }
 
-.container {
-  max-width: 120rem;
-  padding: 0;
+.content-container {
+  flex-grow: 1;
+  margin-left: 10px;
 }
 
 code {
@@ -30,3 +33,4 @@ code {
   font-family:'Inconsolata', monospace;
   white-space: normal;
 }
+
