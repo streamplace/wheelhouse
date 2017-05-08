@@ -112,8 +112,8 @@ export default function(state = initialState, action) {
       appName: "wheelhouse",
       date: Date.now(),
       serverStatus: "",
-      uid: action.uid,
-      expectedAction: action.message,
+      uid: action.notification.uid,
+      expectedAction: action.notification.message,
       color: getColor("wheelhouse")
     };
     return Object.assign({}, state, { logs: [...state.logs, newObject] });
