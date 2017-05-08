@@ -8,6 +8,7 @@ import EnvironmentVariablesDisplay
 import LogsDataDisplay from "./components/logs-data/LogsDataDisplay";
 import PodsDataDisplay from "./components/kubectl-data/PodsDataDisplay";
 import Sidebar from "./components/reusables/Sidebar";
+import Notifications from "./components/reusables/Notifications.js";
 import "./index.css";
 import { connect } from "react-redux";
 
@@ -33,6 +34,7 @@ class App extends Component {
       return (
         <Router>
           <div className="container">
+            <Notifications />
             <div className="sidebar-container"><Sidebar /></div>
             <div className="content-container">
               <Route path="/development" component={DevelopmentDataDisplay} />
