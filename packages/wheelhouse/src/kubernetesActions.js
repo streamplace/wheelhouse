@@ -33,7 +33,6 @@ export const kubernetesData = (action, resource) => dispatch => {
     code = 1;
     if (code !== 0) {
       const message = `There was an error retrieving the kubernetes packages: ${errorOutput}`;
-      console.log(`code is ${code}, message is ${message}`);
       dispatch(serverError(message));
     } else {
       output = JSON.parse(output);

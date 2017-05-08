@@ -9,5 +9,6 @@ export * from "./packages/packagesConstants";
 export * from "./kubernetes/kubernetesConstants";
 
 export * from "./util/colors";
+export * from "./util/time";
 
 export { default as reducer } from "./reducer";

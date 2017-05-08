@@ -1,11 +1,11 @@
 import fs from "mz/fs";
 import debug from "debug";
+import serverError from "./serverActions";
 import { resolve } from "path";
 import {
   PACKAGES_LOADED,
   PACKAGES_START,
-  PACKAGES_STOP,
-  SERVER_ERROR
+  PACKAGES_STOP
 } from "wheelhouse-core";
 import { spawn } from "mz/child_process";
 import split from "split";
@@ -35,18 +35,10 @@ const procs = {};
 
 export const packagesRun = (pkgName, status) => async (dispatch, getState) => {
   let pkg = getState().packages[pkgName];
-  if (!pkg) {
-    let notification = {
-      message: `Unknown package: ${pkgName}`,
-      visible: true,
-      date: Date.now()
-    };
 
-    dispatch({
-      type: SERVER_ERROR,
-      notification
-    });
-    // throw new Error(`Unknown package: ${pkgName}`);
+  if (!pkg) {
+    const message = `Unknown package: ${pkgName}`;
+    dispatch(serverError(message));
   }
 
   if (status === false) {
