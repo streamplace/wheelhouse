@@ -1,6 +1,6 @@
 {
   "name": "wheelhouse-frontend",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "main": "package.json",
   "devDependencies": {
     "ansi-to-react": "^1.2.0",
