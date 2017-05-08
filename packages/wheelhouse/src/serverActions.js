@@ -3,7 +3,7 @@ import WebSocket from "ws";
 import http from "http";
 import proxy from "http-proxy-middleware";
 import { configLoad } from "./configActions";
-import { SERVER_SYNC_STATE } from "wheelhouse-core";
+import { SERVER_SYNC_STATE, SERVER_ERROR } from "wheelhouse-core";
 import debug from "debug";
 
 const log = debug("wheelhouse:serverActions");
@@ -19,12 +19,19 @@ const serverListen = function(server, port) {
   });
 };
 
-//const serverError = function(message) {
-//puts a date stamp
-//visible stamp
-//then fire off SERVER_ERROR
+export const serverError = message => dispatch => {
+  let notification = {
+    message,
+    date: Date.now(),
+    visible: true
+  };
 
-// }
+  dispatch({
+    type: SERVER_ERROR,
+    notification
+  });
+};
+
 const clients = [];
 
 export const serverStart = () => async (dispatch, getState) => {

@@ -22,50 +22,53 @@ class PodsDataDisplay extends Component {
 
   render() {
     const { pods } = this.props;
-    let appName, ready, status, restarts, age, ipAddress, node, action;
-    let descriptions = [];
-    pods.items.forEach((item, idx) => {
-      let temp = [];
-      appName = item.metadata.name;
-      ready = podHandlers.countReadyContainers(item.status.containerStatuses);
-      status = item.status.phase;
-      restarts = item.status.containerStatuses[0].restartCount;
-      age = podHandlers.getContainerAge(item);
-      ipAddress = item.status.hostIP;
-      node = item.spec.nodeName;
-      action = (
-        <Dropdown
-          children={
-            <button
-              className="action-item-button button-clear"
-              onClick={this.deletePod.bind(this, appName)}
-            >
-              Delete
-            </button>
-          }
-        />
+    if (pods) {
+      let appName, ready, status, restarts, age, ipAddress, node, action;
+      let descriptions = [];
+      pods.items.forEach((item, idx) => {
+        let temp = [];
+        appName = item.metadata.name;
+        ready = podHandlers.countReadyContainers(item.status.containerStatuses);
+        status = item.status.phase;
+        restarts = item.status.containerStatuses[0].restartCount;
+        age = podHandlers.getContainerAge(item);
+        ipAddress = item.status.hostIP;
+        node = item.spec.nodeName;
+        action = (
+          <Dropdown
+            children={
+              <button
+                className="action-item-button button-clear"
+                onClick={this.deletePod.bind(this, appName)}
+              >
+                Delete
+              </button>
+            }
+          />
+        );
+        temp = [appName, ready, status, restarts, age, ipAddress, node, action];
+        descriptions.push(temp);
+      });
+
+      const importedDescriptions = podHandlers.populateTableDescriptions(
+        descriptions
       );
-      temp = [appName, ready, status, restarts, age, ipAddress, node, action];
-      descriptions.push(temp);
-    });
-
-    const importedDescriptions = podHandlers.populateTableDescriptions(
-      descriptions
-    );
-    const importedHeaders = podHandlers.populateTableHeaders([
-      "Name",
-      "Ready",
-      "Status",
-      "Restarts",
-      "Age",
-      "IP",
-      "Node",
-      "Actions"
-    ]);
-
-    return (
-      <Table headers={importedHeaders} descriptions={importedDescriptions} />
-    );
+      const importedHeaders = podHandlers.populateTableHeaders([
+        "Name",
+        "Ready",
+        "Status",
+        "Restarts",
+        "Age",
+        "IP",
+        "Node",
+        "Actions"
+      ]);
+      return (
+        <Table headers={importedHeaders} descriptions={importedDescriptions} />
+      );
+    } else {
+      return <div />;
+    }
   }
 }
 

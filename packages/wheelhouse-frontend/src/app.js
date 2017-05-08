@@ -13,19 +13,19 @@ import "./index.css";
 import { connect } from "react-redux";
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.seenNotifications = new Set();
-  }
+  // constructor(props) {
+  //   super(props);
+  //   // this.seenNotifications = new Set();
+  // }
 
-  componentWillReceiveProps({ notifications }) {
-    // notifications.forEach(notification => {
-    //   if (!this.seenNotifications.has(notification)) {
-    //     // show notification
-    //     this.seenNotifications.add(notification);
-    //   }
-    // });
-  }
+  // componentWillReceiveProps({ notifications }) {
+  //   notifications.forEach(notification => {
+  //     if (!this.seenNotifications.has(notification)) {
+  //       // show notification
+  //       this.seenNotifications.add(notification);
+  //     }
+  //   });
+  // }
 
   render() {
     if (!this.props.serverConnected) {
