@@ -19,6 +19,12 @@ const serverListen = function(server, port) {
   });
 };
 
+//const serverError = function(message) {
+//puts a date stamp
+//visible stamp
+//then fire off SERVER_ERROR
+
+// }
 const clients = [];
 
 export const serverStart = () => async (dispatch, getState) => {

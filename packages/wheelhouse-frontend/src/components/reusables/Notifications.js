@@ -1,27 +1,42 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import NotificationSystem from "react-notification-system";
 import "./Notifications.css";
 
 class Notifications extends Component {
-  constructor() {
-    super();
-    this.state = {};
+  constructor(props) {
+    super(props);
+    this._notificationSystem = null;
   }
 
-  closeNotification() {}
+  _addNotification() {
+    event.preventDefault();
+    this._notificationSystem.addNotification({
+      message: "Notification message",
+      level: "success"
+    });
+  }
+
+  componentDidMount() {
+    this._notificationSystem = this.refs.notificationSystem;
+  }
 
   render() {
     return (
-      <div className="notifications-container">
-        <button
-          onClick={this.closeNotification.bind(this)}
-          className="button-clear close-notification-button"
-        >
-          X
+      <div>
+        <button onClick={this._addNotification.bind(this)}>
+          Add notification
         </button>
-        Hey I'm a notification
+        <NotificationSystem ref="notificationSystem" />
       </div>
     );
   }
 }
 
-export default Notifications;
+const mapStateToProps = state => {
+  return {
+    showNotification: state.server.showNotification
+  };
+};
+
+export default connect(mapStateToProps)(Notifications);

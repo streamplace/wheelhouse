@@ -13,6 +13,20 @@ import "./index.css";
 import { connect } from "react-redux";
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.seenNotifications = new Set();
+  }
+
+  componentWillReceiveProps({ notifications }) {
+    // notifications.forEach(notification => {
+    //   if (!this.seenNotifications.has(notification)) {
+    //     // show notification
+    //     this.seenNotifications.add(notification);
+    //   }
+    // });
+  }
+
   render() {
     if (!this.props.serverConnected) {
       return (
@@ -34,7 +48,7 @@ class App extends Component {
       return (
         <Router>
           <div className="container">
-            <Notifications />
+            {this.props.showNotification ? <Notifications /> : null}
             <div className="sidebar-container"><Sidebar /></div>
             <div className="content-container">
               <Route path="/development" component={DevelopmentDataDisplay} />
@@ -54,7 +68,8 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    serverConnected: state.server.connected
+    serverConnected: state.server.connected,
+    showNotification: state.server.showNotification
   };
 };
 

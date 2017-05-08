@@ -1,7 +1,9 @@
 import { SERVER_DISCONNECT, SERVER_ERROR } from "./serverConstants";
 
 const initialState = {
-  connected: true
+  connected: true,
+  showNotification: true,
+  notifications: []
 };
 
 export default function(state = initialState, action) {
@@ -15,7 +17,8 @@ export default function(state = initialState, action) {
   if (action.type === SERVER_ERROR) {
     return {
       ...state,
-      notifications: [action.notification]
+      notifications: [...state.notifications, action.notification],
+      showNotification: true
     };
   }
 

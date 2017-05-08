@@ -1,4 +1,4 @@
-import { KUBERNETES_DATA, SERVER_ERROR } from "wheelhouse-core";
+import { KUBERNETES_DATA } from "wheelhouse-core";
 import { resolve, dirname } from "path";
 // import { runKube } from "../util/processHelpers.js"
 
@@ -29,24 +29,19 @@ export const kubernetesData = (action, resource) => dispatch => {
 
   /*eslint-disable no-console*/
   kubectl.on("close", code => {
-    output = JSON.parse(output);
-    dispatch({
-      type: KUBERNETES_DATA,
-      output
-    });
-
+    // code = 1;
     if (code !== 0) {
-      let notification = {
-        message: `There was an error retrieving the kubernetes packages: ${errorOutput}`,
-        visible: true,
-        date: Date.now()
-      };
-
+      // const message = `There was an error retrieving the kubernetes packages: ${errorOutput}`;
+      console.error(
+        `There was an error retrieving the kubernetes packages: ${errorOutput}`
+      );
+      // dispatch(serverError(message));
+    } else {
+      output = JSON.parse(output);
       dispatch({
-        type: SERVER_ERROR,
-        notification
+        type: KUBERNETES_DATA,
+        output
       });
-      // console.error("errored output", errorOutput);
     }
   });
 };
