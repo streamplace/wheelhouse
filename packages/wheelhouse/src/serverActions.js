@@ -66,9 +66,7 @@ export const serverStart = () => async (dispatch, getState) => {
         type: SERVER_UPDATE,
         level: "info",
         position: "bl",
-        dismissible: false,
-        update: true,
-        visible: true,
+        autoDismiss: 0,
         message: arg[1],
         uid
       });

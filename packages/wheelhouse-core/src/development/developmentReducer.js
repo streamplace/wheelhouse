@@ -7,7 +7,7 @@ import {
   PACKAGES_STOP,
   PACKAGES_LOADED
 } from "../packages/packagesConstants";
-import { SERVER_ERROR } from "../server/serverConstants";
+import { SERVER_ERROR, SERVER_UPDATE } from "../server/serverConstants";
 import { getColor } from "../util/colors";
 import { CONFIG_LOADED } from "../config/configConstants";
 
@@ -115,6 +115,18 @@ export default function(state = initialState, action) {
       uid: action.notification.uid,
       expectedAction: action.notification.message,
       color: getColor("wheelhouse")
+    };
+    return Object.assign({}, state, { logs: [...state.logs, newObject] });
+  }
+
+  if (action.type === SERVER_UPDATE) {
+    const newObject = {
+      appName: action.message.name,
+      date: Date.now(),
+      serverStatus: "",
+      uid: action.uid,
+      expectedAction: `Update available ${action.message.current} → ${action.message.latest} // Run npm i -g wheelhouse to update`,
+      color: getColor(action.message.name)
     };
     return Object.assign({}, state, { logs: [...state.logs, newObject] });
   }
