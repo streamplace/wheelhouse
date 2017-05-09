@@ -1,6 +1,6 @@
 {
   "name": "wheelhouse",
-  "version": "0.0.7",
+  "version": "0.0.5",
   "description": "Wheelhouse command line interface and all that",
   "main": "dist/wheelhouse.js",
   "scripts": {

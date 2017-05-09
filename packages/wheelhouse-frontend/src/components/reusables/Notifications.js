@@ -11,6 +11,27 @@ class Notifications extends Component {
     this.shown = new Set();
   }
 
+  componentDidMount() {
+    this._notificationSystem = this.refs.notificationSystem;
+    if (this.props.notifications) {
+      this.props.notifications.forEach(notification => {
+        const message =
+          "Update available " +
+          notification.message.current +
+          "→" +
+          notification.message.latest +
+          "\n" +
+          "Run npm i -g wheelhouse to update";
+        this._notificationSystem.addNotification({
+          message,
+          level: notification.level,
+          position: notification.position,
+          autoDismiss: 0
+        });
+      });
+    }
+  }
+
   componentWillReceiveProps(props) {
     if (props.notifications) {
       props.notifications.forEach(notification => {
@@ -28,9 +49,6 @@ class Notifications extends Component {
         }
       });
     }
-  }
-  componentDidMount() {
-    this._notificationSystem = this.refs.notificationSystem;
   }
 
   render() {

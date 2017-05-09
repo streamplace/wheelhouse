@@ -6,15 +6,13 @@ import { configLoad } from "./configActions";
 import {
   SERVER_SYNC_STATE,
   SERVER_ERROR,
+  SERVER_UPDATE,
   timeConverter
 } from "wheelhouse-core";
 import debug from "debug";
 import path from "path";
 import updateNotifier from "update-notifier";
 import pkg from "../package.json";
-
-const notifier = updateNotifier({ pkg });
-notifier.notify();
 
 const log = debug("wheelhouse:serverActions");
 
@@ -59,6 +57,29 @@ export const serverStart = () => async (dispatch, getState) => {
   // This is a little zany because we need to support two websockets -- in development we need to
   // proxy through to the create-react-app development server, and both development and production
   // use the wheelhouse API port. So we first make a secondary random-port server for websockets.
+
+  const notifier = updateNotifier({
+    pkg,
+    updateCheckInterval: 0,
+    callback: (...arg) => {
+      dispatch({
+        type: SERVER_UPDATE,
+        level: "info",
+        position: "bl",
+        dismissible: false,
+        update: true,
+        visible: true,
+        message: arg[1],
+        uid
+      });
+    }
+  });
+
+  notifier.notify({
+    defer: false
+  });
+
+  uid += 1;
 
   const websocketServer = http.createServer();
   const wss = new WebSocket.Server({ server: websocketServer });
