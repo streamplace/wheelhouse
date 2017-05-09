@@ -3,7 +3,11 @@ import WebSocket from "ws";
 import http from "http";
 import proxy from "http-proxy-middleware";
 import { configLoad } from "./configActions";
-import { SERVER_SYNC_STATE } from "wheelhouse-core";
+import {
+  SERVER_SYNC_STATE,
+  SERVER_ERROR,
+  timeConverter
+} from "wheelhouse-core";
 import debug from "debug";
 import path from "path";
 
@@ -18,6 +22,26 @@ const serverListen = function(server, port) {
       resolve(server.address().port);
     });
   });
+};
+
+let uid = 0;
+
+export const serverError = message => dispatch => {
+  const time = timeConverter(Date.now());
+  let notification = {
+    message,
+    date: time,
+    visible: true,
+    uid,
+    level: "error"
+  };
+
+  dispatch({
+    type: SERVER_ERROR,
+    notification
+  });
+
+  uid += 1;
 };
 
 const clients = [];
