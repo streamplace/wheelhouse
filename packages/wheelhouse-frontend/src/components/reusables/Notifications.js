@@ -21,7 +21,7 @@ class Notifications extends Component {
           const message = `${notification.date}: ${notification.message}`;
           return this._notificationSystem.addNotification({
             message: message,
-            level: "error"
+            level: notification.level
           });
         } else {
           return;

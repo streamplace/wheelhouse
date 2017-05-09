@@ -31,7 +31,8 @@ export const serverError = message => dispatch => {
     message,
     date: time,
     visible: true,
-    uid
+    uid,
+    level: "error"
   };
 
   dispatch({
