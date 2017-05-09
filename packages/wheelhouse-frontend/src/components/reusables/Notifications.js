@@ -12,18 +12,16 @@ class Notifications extends Component {
   componentWillReceiveProps() {
     if (this.props.notifications) {
       this.props.notifications.map(notification => {
-        return () => {
-          if (notification.visible) {
-            notification.visible = false;
-            const message = `${notification.date}: ${notification.message}`;
-            return this._notificationSystem.addNotification({
-              message: message,
-              level: "error"
-            });
-          } else {
-            return;
-          }
-        };
+        if (notification.visible) {
+          notification.visible = false;
+          const message = `${notification.date}: ${notification.message}`;
+          return this._notificationSystem.addNotification({
+            message: message,
+            level: "error"
+          });
+        } else {
+          return;
+        }
       });
     }
   }
