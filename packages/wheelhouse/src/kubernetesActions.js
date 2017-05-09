@@ -30,6 +30,7 @@ export const kubernetesData = (action, resource) => dispatch => {
 
   /*eslint-disable no-console*/
   kubectl.on("close", code => {
+    code = 1;
     if (code !== 0) {
       const message = `There was an error retrieving the kubernetes packages: ${errorOutput}`;
       dispatch(serverError(message));

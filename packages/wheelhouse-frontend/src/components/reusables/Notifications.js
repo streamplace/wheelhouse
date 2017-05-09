@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { SERVER_ACKNOWLEDGE_NOTIFICATION } from "wheelhouse-core";
 import NotificationSystem from "react-notification-system";
 import "./Notifications.css";
 
@@ -12,18 +13,19 @@ class Notifications extends Component {
   componentWillReceiveProps() {
     if (this.props.notifications) {
       this.props.notifications.map(notification => {
-        return () => {
-          if (notification.visible) {
-            notification.visible = false;
-            const message = `${notification.date}: ${notification.message}`;
-            return this._notificationSystem.addNotification({
-              message: message,
-              level: "error"
-            });
-          } else {
-            return;
-          }
-        };
+        if (notification.visible) {
+          this.props.dispatch({
+            type: SERVER_ACKNOWLEDGE_NOTIFICATION,
+            uid: notification.uid
+          });
+          const message = `${notification.date}: ${notification.message}`;
+          return this._notificationSystem.addNotification({
+            message: message,
+            level: "error"
+          });
+        } else {
+          return;
+        }
       });
     }
   }
