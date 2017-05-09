@@ -4,7 +4,6 @@ let runningProcs = [];
 console.log("RUNNING PROCS", runningProcs);
 // export function run(cmd, ...args)
 
-//abstracted child-process
 export const runKube = (...args) => {
   const spawn = require("child_process").spawn;
   const kubeProc = spawn("kubectl", args);
@@ -39,7 +38,6 @@ export const runKube = (...args) => {
   return prom;
 };
 
-//sigterm only runs if user hits ctrl c
 process.on("SIGTERM", () => {
   runningProcs.forEach(proc => proc.kill("KILL"));
 });
