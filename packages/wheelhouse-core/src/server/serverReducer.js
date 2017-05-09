@@ -6,7 +6,6 @@ import {
 
 const initialState = {
   connected: true,
-  showNotification: true,
   notifications: []
 };
 
@@ -21,8 +20,7 @@ export default function(state = initialState, action) {
   if (action.type === SERVER_ERROR) {
     return {
       ...state,
-      notifications: [...state.notifications, action.notification],
-      showNotification: true
+      notifications: [...state.notifications, action.notification]
     };
   }
 
