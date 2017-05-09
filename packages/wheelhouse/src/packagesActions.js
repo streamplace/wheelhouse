@@ -1,5 +1,6 @@
 import fs from "mz/fs";
 import debug from "debug";
+import serverError from "./serverActions";
 import { resolve } from "path";
 import {
   PACKAGES_LOADED,
