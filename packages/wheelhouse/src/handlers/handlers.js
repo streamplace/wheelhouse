@@ -1,5 +1,3 @@
-/*eslint-disable no-console*/
-
 let runningProcs = [];
 // export function run(cmd, ...args)
 
