@@ -8,23 +8,23 @@ class Notifications extends Component {
   constructor(props) {
     super(props);
     this._notificationSystem = null;
+    this.shown = new Set();
   }
 
-  componentWillReceiveProps() {
-    if (this.props.notifications) {
-      this.props.notifications.map(notification => {
-        if (notification.visible) {
+  componentWillReceiveProps(props) {
+    if (props.notifications) {
+      props.notifications.forEach(notification => {
+        if (notification.visible && !this.shown.has(notification.uid)) {
+          this.shown.add(notification.uid);
           this.props.dispatch({
             type: SERVER_ACKNOWLEDGE_NOTIFICATION,
             uid: notification.uid
           });
           const message = `${notification.date}: ${notification.message}`;
-          return this._notificationSystem.addNotification({
+          this._notificationSystem.addNotification({
             message: message,
             level: notification.level
           });
-        } else {
-          return;
         }
       });
     }

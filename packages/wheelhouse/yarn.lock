@@ -1865,6 +1865,10 @@ kind-of@^3.0.2:
   dependencies:
     is-buffer "^1.0.2"
 
+kubectl-cli@^1.6.2:
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/kubectl-cli/-/kubectl-cli-1.6.2.tgz#3e4932ee9184251e5fbb0c03e42eb643a66cf576"
+
 lazy-cache@^1.0.3:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/lazy-cache/-/lazy-cache-1.0.4.tgz#a1d78fc3a50474cb80845d3b3b6e1da49a446e8e"
@@ -2763,7 +2767,7 @@ tar@^2.2.1:
     fstream "^1.0.2"
     inherits "2"
 
-terminal-kit@^1.7.1:
+terminal-kit@^1.5.1, terminal-kit@^1.7.1:
   version "1.7.1"
   resolved "https://registry.yarnpkg.com/terminal-kit/-/terminal-kit-1.7.1.tgz#3a51499cf5390c12cd9eacb20d7f1cd0cf76777a"
   dependencies:
@@ -2951,9 +2955,9 @@ whatwg-url@^4.3.0:
     tr46 "~0.0.3"
     webidl-conversions "^3.0.0"
 
-wheelhouse-core@^0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/wheelhouse-core/-/wheelhouse-core-0.0.3.tgz#a0a6be2388d534631ca34966acded3e93e89d027"
+wheelhouse-core@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/wheelhouse-core/-/wheelhouse-core-0.0.4.tgz#49e3b4d818b3d6ec192d30dd539f336701edc8dc"
   dependencies:
     babel-jest "^19.0.0"
     babel-preset-streamplace "^0.0.3"
@@ -2962,10 +2966,14 @@ wheelhouse-core@^0.0.3:
     find-up "^2.1.0"
     http-proxy-middleware "^0.17.4"
     js-yaml "^3.8.3"
+    kubectl-cli "^1.6.2"
     mz "^2.6.0"
     opn "^4.0.2"
+    polished "^1.1.1"
     redux "^3.6.0"
     redux-thunk "^2.2.0"
+    split "^1.0.0"
+    terminal-kit "^1.5.1"
     ws "^2.3.1"
 
 which-module@^1.0.0:

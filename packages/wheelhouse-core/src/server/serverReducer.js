@@ -28,16 +28,18 @@ export default function(state = initialState, action) {
 
   if (action.type === SERVER_ACKNOWLEDGE_NOTIFICATION) {
     const notificationsCopy = [...state.notifications];
-    let index = 0;
-    let itemFound = false;
-    while (!itemFound) {
-      if (notificationsCopy[index].uid === action.uid) {
-        itemFound = true;
-      } else {
-        index++;
+    let index;
+    state.notifications.find((note, idx) => {
+      if (note.uid === action.uid) {
+        index = idx;
+        return true;
       }
-    }
-    notificationsCopy[index].visible = false;
+    });
+
+    notificationsCopy[index] = {
+      ...notificationsCopy[index],
+      visible: false
+    };
     return {
       ...state,
       notifications: notificationsCopy
