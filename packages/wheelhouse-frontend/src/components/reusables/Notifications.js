@@ -29,6 +29,7 @@ class Notifications extends Component {
       });
     }
   }
+
   componentDidMount() {
     this._notificationSystem = this.refs.notificationSystem;
   }
