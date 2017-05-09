@@ -10,6 +10,11 @@ import {
 } from "wheelhouse-core";
 import debug from "debug";
 import path from "path";
+import updateNotifier from "update-notifier";
+import pkg from "../package.json";
+
+const notifier = updateNotifier({ pkg });
+notifier.notify();
 
 const log = debug("wheelhouse:serverActions");
 
