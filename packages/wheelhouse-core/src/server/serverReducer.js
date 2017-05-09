@@ -1,4 +1,3 @@
-
 import {
   SERVER_DISCONNECT,
   SERVER_ERROR,
@@ -47,4 +46,3 @@ export default function(state = initialState, action) {
 
   return state;
 }
-

@@ -34,7 +34,7 @@ class App extends Component {
       return (
         <Router>
           <div className="container">
-            <Notifications /> 
+            <Notifications />
             <div className="sidebar-container"><Sidebar /></div>
             <div className="content-container">
               <Route path="/development" component={DevelopmentDataDisplay} />
