@@ -1,7 +1,6 @@
 /*eslint-disable no-console*/
 
 let runningProcs = [];
-console.log("RUNNING PROCS", runningProcs);
 // export function run(cmd, ...args)
 
 export const runKube = (...args) => {
