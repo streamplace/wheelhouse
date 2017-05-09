@@ -28,6 +28,7 @@ export const kubernetesData = (action, resource) => dispatch => {
     errorOutput += data;
   });
 
+  //how do i abstract error message and action dispatching?
   /*eslint-disable no-console*/
   kubectl.on("close", code => {
     if (code !== 0) {

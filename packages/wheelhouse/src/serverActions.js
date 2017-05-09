@@ -27,7 +27,7 @@ let uid = 0;
 
 export const serverError = message => dispatch => {
   const time = timeConverter(Date.now());
-  let notification = {
+  const notification = {
     message,
     date: time,
     visible: true,
