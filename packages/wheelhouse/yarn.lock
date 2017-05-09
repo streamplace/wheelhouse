@@ -501,6 +501,10 @@ babel-plugin-transform-function-bind@^6.22.0:
     babel-plugin-syntax-function-bind "^6.8.0"
     babel-runtime "^6.22.0"
 
+babel-plugin-transform-inline-environment-variables@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/babel-plugin-transform-inline-environment-variables/-/babel-plugin-transform-inline-environment-variables-0.0.2.tgz#1372475c6c87f3c4ce6046587730ee041bc784b9"
+
 babel-plugin-transform-object-rest-spread@^6.23.0:
   version "6.23.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-object-rest-spread/-/babel-plugin-transform-object-rest-spread-6.23.0.tgz#875d6bc9be761c58a2ae3feee5dc4895d8c7f921"
@@ -2975,6 +2979,10 @@ wheelhouse-core@^0.0.4:
     split "^1.0.0"
     terminal-kit "^1.5.1"
     ws "^2.3.1"
+
+wheelhouse-frontend@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/wheelhouse-frontend/-/wheelhouse-frontend-0.0.5.tgz#26b4ec63b137272cd6aa2342148b88c1087a0773"
 
 which-module@^1.0.0:
   version "1.0.0"

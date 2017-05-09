@@ -9,6 +9,7 @@ import {
   timeConverter
 } from "wheelhouse-core";
 import debug from "debug";
+import path from "path";
 
 const log = debug("wheelhouse:serverActions");
 
@@ -89,8 +90,23 @@ export const serverStart = () => async (dispatch, getState) => {
   // Cool. With that taken care of, we set up our actual server to proxy as appropriate.
   const server = http.createServer(app);
 
+  let staticServerUrl;
+  if (process.env.WH_LOCAL_DEV === "true") {
+    staticServerUrl = "http://localhost:3942";
+    log(`Proxying to create-react-app at ${staticServerUrl}`);
+  } else {
+    const staticApp = express();
+    const frontendModule = require.resolve("wheelhouse-frontend");
+    const frontendPath = path.resolve(path.dirname(frontendModule), "build");
+    staticApp.use(express.static(frontendPath));
+    const staticServer = http.createServer(staticApp);
+    const staticPort = await serverListen(staticServer);
+    staticServerUrl = `http://localhost:${staticPort}`;
+    log(`Static wheelhouse-frontend listening at ${staticServerUrl}`);
+  }
+
   app.use(
-    proxy("http://localhost:3000/", {
+    proxy(staticServerUrl, {
       logLevel: "warn",
       ws: true,
       router: {
