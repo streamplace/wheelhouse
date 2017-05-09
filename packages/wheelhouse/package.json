@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "prepublish": "babel -d dist src",
-    "dev": "npm run prepublish && npm link && WH_LOCAL_DEV=false babel -s -d dist -w src"
+    "dev": "npm run prepublish && npm link && WH_LOCAL_DEV=true babel -s -d dist -w src"
   },
   "bin": {
     "wheelhouse": "dist/wheelhouse.js"
