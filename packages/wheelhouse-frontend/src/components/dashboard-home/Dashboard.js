@@ -26,6 +26,11 @@ class Dashboard extends Component {
   }
 
   render() {
+    const logStyles = {
+      margin: "0",
+      width: "100%",
+      height: "85vh"
+    };
     return (
       <div className="dashboard-container">
         <div className="left-column">
@@ -38,7 +43,7 @@ class Dashboard extends Component {
         </div>
         <div className="right-column">
           <Link to="/logs">Logs</Link>
-          <LogContainer filter={this.state.showLogs} />
+          <LogContainer filter={this.state.showLogs} customStyles={logStyles} />
         </div>
       </div>
     );

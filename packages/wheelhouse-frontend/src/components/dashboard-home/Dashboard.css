@@ -1,7 +1,12 @@
 .dashboard-container {
   display: flex;
-  min-height: 800px;
   border: 1px solid lightgray;
+}
+
+.dashboard-container a {
+  text-align: center;
+  font-size: 24px;
+  margin: 10px;
 }
 
 .left-bottom {
@@ -22,5 +27,7 @@
 
 .right-column {
   width: 50%;
+  display: flex;
+  flex-direction: column;
 }
 

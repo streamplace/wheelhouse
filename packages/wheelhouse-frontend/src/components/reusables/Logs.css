@@ -88,6 +88,7 @@
 
 .outer-logs-container {
   position: relative;
+  height: 100%;
 }
 .nowrap {
   white-space: nowrap;
