@@ -12,6 +12,7 @@ import {
 import debug from "debug";
 import path from "path";
 import updateNotifier from "update-notifier";
+import { generateUid } from "./util/uid";
 import pkg from "../package.json";
 
 const log = debug("wheelhouse:serverActions");
@@ -19,6 +20,7 @@ const log = debug("wheelhouse:serverActions");
 /**
  * Promise helper for apps listening. Returns the port.
  */
+
 const serverListen = function(server, port) {
   return new Promise((resolve, reject) => {
     server.listen(port, function() {
@@ -27,15 +29,13 @@ const serverListen = function(server, port) {
   });
 };
 
-let uid = 0;
-
 export const serverError = message => dispatch => {
   const time = timeConverter(Date.now());
   const notification = {
     message,
     date: time,
     visible: true,
-    uid,
+    uid: generateUid(),
     level: "error"
   };
 
@@ -43,8 +43,6 @@ export const serverError = message => dispatch => {
     type: SERVER_ERROR,
     notification
   });
-
-  uid += 1;
 };
 
 const clients = [];
@@ -73,15 +71,13 @@ export const serverStart = () => async (dispatch, getState) => {
       position: "bl",
       autoDismiss: 0,
       updateInfo: notifier.update,
-      uid
+      uid: generateUid()
     });
   }
 
   notifier.notify({
     defer: false
   });
-
-  uid += 1;
 
   const websocketServer = http.createServer();
   const wss = new WebSocket.Server({ server: websocketServer });
