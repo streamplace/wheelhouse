@@ -1,6 +1,5 @@
 import fs from "mz/fs";
 import debug from "debug";
-import serverError from "./serverActions";
 import { resolve } from "path";
 import {
   PACKAGES_LOADED,
@@ -38,7 +37,7 @@ export const packagesRun = (pkgName, status) => async (dispatch, getState) => {
 
   if (!pkg) {
     const message = `Unknown package: ${pkgName}`;
-    dispatch(serverError(message));
+    throw new Error(message);
   }
 
   if (status === false) {
