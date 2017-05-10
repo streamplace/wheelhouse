@@ -1,0 +1,26 @@
+.dashboard-container {
+  display: flex;
+  min-height: 800px;
+  border: 1px solid lightgray;
+}
+
+.left-bottom {
+  height: 50%;
+}
+
+.left-column {
+  width: 50%;
+  border-right: 1px solid lightgray;
+  display: flex;
+  flex-direction: column;
+}
+
+.left-top {
+  border-bottom: 1px solid lightgray;
+  height: 50%;
+}
+
+.right-column {
+  width: 50%;
+}
+
