@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { HashRouter as Router, Route } from "react-router-dom";
 import "milligram";
-import Dashboard from "./components/dashboard-home/Dashboard";
+import MainDashboard from "./components/dashboard-home/MainDashboard";
 import DevelopmentDataDisplay
   from "./components/development-data/DevelopmentDataDisplay";
 import EnvironmentVariablesDisplay
@@ -38,7 +38,7 @@ class App extends Component {
             <Notifications />
             <div className="sidebar-container"><Sidebar /></div>
             <div className="content-container">
-              <Route exact path="/" component={Dashboard} />
+              <Route exact path="/" component={MainDashboard} />
               <Route path="/development" component={DevelopmentDataDisplay} />
               <Route path="/logs" component={LogsDataDisplay} />
               <Route path="/pods" component={PodsDataDisplay} />

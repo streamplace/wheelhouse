@@ -1,9 +1,9 @@
-.dashboard-container {
+.main-dashboard-container {
   display: flex;
   border: 1px solid lightgray;
 }
 
-.dashboard-container a {
+.main-dashboard-container a {
   text-align: center;
   font-size: 24px;
   margin: 10px;
