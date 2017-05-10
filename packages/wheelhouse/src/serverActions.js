@@ -60,18 +60,22 @@ export const serverStart = () => async (dispatch, getState) => {
 
   const notifier = updateNotifier({
     pkg,
-    updateCheckInterval: 0,
-    callback: (...arg) => {
-      dispatch({
-        type: SERVER_UPDATE,
-        level: "info",
-        position: "bl",
-        autoDismiss: 0,
-        message: arg[1],
-        uid
-      });
-    }
+    updateCheckInterval: 1000 * 60 * 5
   });
+
+  if (notifier.update) {
+    const message = `Update available ${notifier.update.current} → ${notifier.update.latest}
+      Run npm i -g ${notifier.update.name} to update`;
+    dispatch({
+      type: SERVER_UPDATE,
+      level: "info",
+      message,
+      position: "bl",
+      autoDismiss: 0,
+      updateInfo: notifier.update,
+      uid
+    });
+  }
 
   notifier.notify({
     defer: false

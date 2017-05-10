@@ -15,10 +15,8 @@ class Notifications extends Component {
     this._notificationSystem = this.refs.notificationSystem;
     if (this.props.notifications) {
       this.props.notifications.forEach(notification => {
-        const message = `Update available ${notification.message.current} → ${notification.message.latest}
-        Run npm i -g wheelhouse to update`;
         this._notificationSystem.addNotification({
-          message,
+          message: notification.message,
           level: notification.level,
           position: notification.position,
           autoDismiss: notification.autoDismiss

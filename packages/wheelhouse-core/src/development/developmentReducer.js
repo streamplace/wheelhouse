@@ -121,12 +121,12 @@ export default function(state = initialState, action) {
 
   if (action.type === SERVER_UPDATE) {
     const newObject = {
-      appName: action.message.name,
+      appName: action.updateInfo.name,
       date: Date.now(),
       serverStatus: "",
       uid: action.uid,
-      expectedAction: `Update available ${action.message.current} → ${action.message.latest} // Run npm i -g wheelhouse to update`,
-      color: getColor(action.message.name)
+      expectedAction: action.message,
+      color: getColor(action.updateInfo.name)
     };
     return Object.assign({}, state, { logs: [...state.logs, newObject] });
   }
