@@ -1,6 +1,7 @@
 import {
   SERVER_DISCONNECT,
   SERVER_ERROR,
+  SERVER_UPDATE,
   SERVER_ACKNOWLEDGE_NOTIFICATION
 } from "./serverConstants";
 
@@ -21,6 +22,13 @@ export default function(state = initialState, action) {
     return {
       ...state,
       notifications: [...state.notifications, action.notification]
+    };
+  }
+
+  if (action.type === SERVER_UPDATE) {
+    return {
+      ...state,
+      notifications: [...state.notifications, action]
     };
   }
 

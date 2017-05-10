@@ -1,6 +1,6 @@
 import { KUBERNETES_DATA } from "wheelhouse-core";
 import { serverError } from "./serverActions";
-import { runKube } from "./handlers/handlers";
+import { runKube } from "./util/run";
 
 export const kubernetesStartPullingData = () => dispatch => {
   setInterval(() => {

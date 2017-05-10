@@ -6,16 +6,21 @@ import { configLoad } from "./configActions";
 import {
   SERVER_SYNC_STATE,
   SERVER_ERROR,
+  SERVER_UPDATE,
   timeConverter
 } from "wheelhouse-core";
 import debug from "debug";
 import path from "path";
+import updateNotifier from "update-notifier";
+import { generateUid } from "./util/uid";
+import pkg from "../package.json";
 
 const log = debug("wheelhouse:serverActions");
 
 /**
  * Promise helper for apps listening. Returns the port.
  */
+
 const serverListen = function(server, port) {
   return new Promise((resolve, reject) => {
     server.listen(port, function() {
@@ -24,15 +29,13 @@ const serverListen = function(server, port) {
   });
 };
 
-let uid = 0;
-
 export const serverError = message => dispatch => {
   const time = timeConverter(Date.now());
   const notification = {
     message,
     date: time,
     visible: true,
-    uid,
+    uid: generateUid(),
     level: "error"
   };
 
@@ -40,8 +43,6 @@ export const serverError = message => dispatch => {
     type: SERVER_ERROR,
     notification
   });
-
-  uid += 1;
 };
 
 const clients = [];
@@ -54,6 +55,29 @@ export const serverStart = () => async (dispatch, getState) => {
   // This is a little zany because we need to support two websockets -- in development we need to
   // proxy through to the create-react-app development server, and both development and production
   // use the wheelhouse API port. So we first make a secondary random-port server for websockets.
+
+  const notifier = updateNotifier({
+    pkg,
+    updateCheckInterval: 1000 * 60 * 5
+  });
+
+  if (notifier.update) {
+    const message = `Update available ${notifier.update.current} → ${notifier.update.latest}
+      Run npm i -g ${notifier.update.name} to update`;
+    dispatch({
+      type: SERVER_UPDATE,
+      level: "info",
+      message,
+      position: "bl",
+      autoDismiss: 0,
+      updateInfo: notifier.update,
+      uid: generateUid()
+    });
+  }
+
+  notifier.notify({
+    defer: false
+  });
 
   const websocketServer = http.createServer();
   const wss = new WebSocket.Server({ server: websocketServer });
