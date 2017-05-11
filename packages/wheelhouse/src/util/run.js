@@ -4,23 +4,35 @@
  */
 import { resolve, dirname } from "path";
 import { spawn } from "child_process";
+import split from "split";
 
 let runningProcs = [];
 
-export const run = (cmd, ...args) => {
-  const proc = spawn(cmd, args);
+export const run = (cmd, args, opts = {}) => {
+  const proc = spawn(cmd, args, {
+    cwd: opts.cwd
+  });
+
+  const logStdout = opts.stdout || function() {};
+  const logStderr = opts.stdout || function() {};
 
   runningProcs.push(proc);
 
   let stdout = "";
   let stderr = "";
 
-  proc.stdout.on("data", data => {
+  proc.stdout.pipe(split()).on("data", data => {
     stdout += data;
+    if (data.trim() !== "") {
+      logStdout(data);
+    }
   });
 
-  proc.stderr.on("data", data => {
+  proc.stderr.pipe(split()).on("data", data => {
     stderr += data;
+    if (data.trim() !== "") {
+      logStderr(data);
+    }
   });
 
   let dead = false;
@@ -60,7 +72,7 @@ process.on("SIGTERM", () => {
 
 export const runKube = (...args) => {
   const kubePath = resolve(dirname(require.resolve("kubectl-cli")), "kubectl");
-  return run(kubePath, ...args).then(data => {
+  return run(kubePath, args).then(data => {
     return JSON.parse(data);
   });
 };
