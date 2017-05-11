@@ -4,6 +4,9 @@ import EnvironmentsDashboard from "./EnvironmentsDashboard";
 import {
   createList
 } from "../../handlers/component-handlers/environment-handlers";
+// import {
+//   notReadyContainers
+// } from "../../handlers/component-handlers/pod-handlers";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import "./Dashboard.css";
@@ -30,11 +33,18 @@ class Dashboard extends Component {
   }
 
   render() {
+    // const { pods } = this.props;
     const allDbs = createList(this.props.env.CSATS_DB_URL.presetValues);
 
     const allServs = createList(
       this.props.env.STREAMPLACE_API_SERVER.presetValues
     );
+
+    // let notReady;
+
+    // pods.items.forEach(pod => {
+    //   notReady = notReadyContainers(pod.status.containerStatuses);
+    // });
 
     const logStyles = {
       margin: "0",
@@ -69,7 +79,8 @@ class Dashboard extends Component {
 const mapStateToProps = state => {
   return {
     logs: state.development.logs,
-    env: state.development.env
+    env: state.development.env,
+    pods: state.kubernetes.pods
   };
 };
 
