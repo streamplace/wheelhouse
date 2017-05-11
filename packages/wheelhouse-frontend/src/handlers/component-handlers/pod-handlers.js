@@ -17,8 +17,15 @@ export const notReadyContainers = containers => {
     .filter(container => {
       return !container.ready;
     })
-    .map(container => {
-      return container.name;
+    .map((container, idx) => {
+      return (
+        <div>
+          <p>These pods aren't ready: </p>
+          <ul>
+            <li key={idx}>{container.name}</li>
+          </ul>
+        </div>
+      );
     });
 };
 

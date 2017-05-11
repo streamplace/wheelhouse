@@ -1,3 +1,21 @@
+
+.environments-dashboard-container {
+  padding-left: 10px !important;
+}
+
+.environments-dashboard-container li {
+  margin-bottom: 0 !important;
+}
+
+.environments-dashboard-container p {
+  margin-bottom: 0;
+}
+
+.environments-dashboard-container ul {
+  margin-bottom: 20px;
+  list-style: none;
+}
+
 .main-dashboard-container {
   display: flex;
   border: 1px solid lightgray;
@@ -5,10 +23,13 @@
 
 .main-dashboard-container a {
   margin: 10px;
+  display: block;
+  font-size: 20px;
+  text-align: center !important;
 }
 
-.left-bottom {
-  height: 50%;
+.left-bottom, .left-middle {
+  padding: 10px;
 }
 
 .left-column {
@@ -18,14 +39,93 @@
   flex-direction: column;
 }
 
+.left-middle {
+  text-align: center;
+  border-bottom: 1px solid lightgray;
+}
+
+.left-middle p {
+  margin-bottom: 10px;
+}
+
+.left-middle ul {
+  list-style: none;
+}
+
 .left-top {
   border-bottom: 1px solid lightgray;
-  height: 50%;
+  position: relative;
+  min-height: 200px;
+  }
+
+.house-icon {
+  width: 130px;
+}
+
+.house-icon, .wheel-icon {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.pod-status-image {
+  width: 75px;
+  display: block;
+  margin: 30px auto;
 }
 
 .right-column {
   width: 50%;
   display: flex;
   flex-direction: column;
+}
+
+.top-env-header {
+  margin-bottom: 15px !important;
+}
+
+.wheel-icon {
+  width: 80px;
+}
+
+
+/*animation code*/
+
+/* @-webkit-keyframes rotating /* Safari and Chrome */ {
+  from {
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes rotating {
+  from {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+.rotating {
+  -webkit-animation: rotating 30s linear infinite;
+  -moz-animation: rotating 30s linear infinite;
+  -ms-animation: rotating 30s linear infinite;
+  -o-animation: rotating 30s linear infinite;
+  animation: rotating 30s linear infinite;
 }
 
