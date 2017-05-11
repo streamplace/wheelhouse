@@ -1,4 +1,5 @@
 import { serverStart } from "./serverActions";
+import { configLoad } from "./configActions";
 import opn from "opn";
 import { terminal as term } from "terminal-kit";
 import { DEVELOPMENT_LOG, getColor } from "wheelhouse-core";
@@ -25,4 +26,8 @@ export const developmentLog = (pkgName, text) => dispatch => {
   term.colorRgb(red, green, blue)(pkgName);
   term.styleReset();
   term(` ${text}\n`);
+};
+
+export const developmentBuild = () => async dispatch => {
+  await dispatch(configLoad());
 };

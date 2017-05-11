@@ -3,7 +3,7 @@
 
 import yargs from "yargs";
 import { store } from "./store";
-import { developmentStart } from "./developmentActions";
+import { developmentStart, developmentBuild } from "./developmentActions";
 
 const attemptAction = async function(action, ...args) {
   try {
@@ -25,6 +25,13 @@ const runCli = async function(argv) {
       describe: "Run your local development with Wheelhouse",
       handler: argv => {
         attemptAction(developmentStart);
+      }
+    })
+    .command({
+      command: "build",
+      describe: "Build your app!",
+      handler: argv => {
+        attemptAction(developmentBuild);
       }
     })
     .help()
