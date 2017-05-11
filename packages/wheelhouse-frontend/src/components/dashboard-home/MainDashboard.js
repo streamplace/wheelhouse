@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import LogContainer from "../reusables/LogContainer";
 import EnvironmentsDashboard from "./EnvironmentsDashboard";
+import {
+  createList
+} from "../../handlers/component-handlers/environment-handlers";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import "./Dashboard.css";
@@ -27,14 +30,10 @@ class Dashboard extends Component {
   }
 
   render() {
-    const allDbs = this.props.env.CSATS_DB_URL.presetValues.map((item, idx) => {
-      return <li key={idx}> {item.name}: {item.value}</li>;
-    });
+    const allDbs = createList(this.props.env.CSATS_DB_URL.presetValues);
 
-    const allServs = this.props.env.STREAMPLACE_API_SERVER.presetValues.map(
-      (item, idx) => {
-        return <li key={idx}>{item.name}: {item.value}</li>;
-      }
+    const allServs = createList(
+      this.props.env.STREAMPLACE_API_SERVER.presetValues
     );
 
     const logStyles = {
