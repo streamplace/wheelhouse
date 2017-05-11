@@ -15,9 +15,13 @@ const log = debug("wheelhouse:packagesActions");
 export const packagesLoad = pkgPath => async (dispatch, getState) => {
   log(`Loading ${pkgPath}`);
   const { rootDir } = getState().config;
+
+  // Load package.json
   const pkgJsonPath = resolve(rootDir, pkgPath, "package.json");
   const pkgJson = await fs.readFile(pkgJsonPath, "utf8");
   const pkg = JSON.parse(pkgJson);
+
+  // TODO: Check if Chart.yaml exists. If yes, load it here also.
   dispatch(
     packagesLoaded({
       packageJson: pkg,

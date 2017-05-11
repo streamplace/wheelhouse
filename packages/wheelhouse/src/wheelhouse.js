@@ -3,7 +3,11 @@
 
 import yargs from "yargs";
 import { store } from "./store";
-import { developmentStart } from "./developmentActions";
+import {
+  developmentStart,
+  developmentKubeUp,
+  developmentKubeDown
+} from "./developmentActions";
 
 const attemptAction = async function(action, ...args) {
   try {
@@ -23,6 +27,30 @@ const runCli = async function(argv) {
     .command({
       command: "dev",
       describe: "Run your local development with Wheelhouse",
+      handler: argv => {
+        attemptAction(developmentStart);
+      }
+    })
+    .command({
+      command: "kube",
+      aliases: ["kubernetes", "k8s"],
+      describe: "Command for manipulating local Kubernetes clusters",
+      builder: yargs => {
+        yargs.command({
+          command: "up",
+          describe: "Start a local Kubernetes cluster",
+          handler: () => {
+            attemptAction(developmentKubeUp);
+          }
+        });
+        yargs.command({
+          command: "down",
+          describe: "Stop a local Kubernetes cluster",
+          handler: () => {
+            attemptAction(developmentKubeDown);
+          }
+        });
+      },
       handler: argv => {
         attemptAction(developmentStart);
       }

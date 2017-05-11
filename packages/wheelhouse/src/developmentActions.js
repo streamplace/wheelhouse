@@ -4,6 +4,8 @@ import { terminal as term } from "terminal-kit";
 import { DEVELOPMENT_LOG, getColor } from "wheelhouse-core";
 import { kubernetesStartPullingData } from "./kubernetesActions";
 import { parseToRgb } from "polished";
+import { run } from "./proc";
+import { homedir } from "os";
 
 let uid = 0;
 
@@ -13,6 +15,10 @@ export const developmentStart = () => async (dispatch, getState) => {
   opn(`http://localhost:${port}/#/development`);
   dispatch(kubernetesStartPullingData());
 };
+
+export const developmentKubeUp = () => async (dispatch, getState) => {};
+
+export const developmentKubeDown = () => {};
 
 export const developmentLog = (pkgName, text) => dispatch => {
   dispatch({
