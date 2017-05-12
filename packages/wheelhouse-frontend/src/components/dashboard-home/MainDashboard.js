@@ -7,6 +7,9 @@ import {
 import {
   notReadyContainers
 } from "../../handlers/component-handlers/pod-handlers";
+import {
+  activeApps
+} from "../../handlers/component-handlers/development-handlers";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import wheel from "../../../public/assets/wheel.png";
@@ -37,7 +40,7 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { pods } = this.props;
+    const { pods, packages } = this.props;
     let allDbs, allServs, notReady;
 
     if (pods) {
@@ -67,19 +70,29 @@ class Dashboard extends Component {
       );
     }
 
+    const appStatuses = activeApps(packages);
+
     return (
       <div className="main-dashboard-container">
-        <div className="left-column">
-          <div className="left-top">
+        <div className="left-column-container">
+          <div className="left-top-container">
             <img className="wheel-icon rotating" alt="house" src={wheel} />
             <img className="house-icon" alt="house" src={house} />
           </div>
-          <div className="left-middle">
-            <Link to="/pods">Pods</Link>
-            {podImage}
-            {notReady.length > 0 ? notReady : "All pods are ready."}
+          <div className="left-middle-container">
+            <div className="left-middle-left left-middle">
+              <Link to="/pods">Pods</Link>
+              {podImage}
+              {notReady.length > 0 ? notReady : "All pods are ready."}
+            </div>
+            <div className="left-middle-right left-middle">
+              <Link to="/development">Active Applications</Link>
+              <ul>
+                {appStatuses}
+              </ul>
+            </div>
           </div>
-          <div className="left-bottom">
+          <div className="left-bottom-container">
             <Link to="/environment-variables">Environment Variables</Link>
             <EnvironmentsDashboard
               currentDbUrl={this.props.env.CSATS_DB_URL.currentValue}
@@ -89,7 +102,7 @@ class Dashboard extends Component {
             />
           </div>
         </div>
-        <div className="right-column">
+        <div className="right-column-container">
           <Link to="/logs">Logs</Link>
           <LogContainer filter={this.state.showLogs} customStyles={logStyles} />
         </div>
@@ -102,7 +115,8 @@ const mapStateToProps = state => {
   return {
     logs: state.development.logs,
     env: state.development.env,
-    pods: state.kubernetes.pods
+    pods: state.kubernetes.pods,
+    packages: state.development.packages
   };
 };
 

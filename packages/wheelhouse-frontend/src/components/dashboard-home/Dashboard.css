@@ -1,3 +1,6 @@
+.active {
+  color: #449d44;
+}
 
 .environments-dashboard-container {
   padding-left: 10px !important;
@@ -28,11 +31,11 @@
   text-align: center !important;
 }
 
-.left-bottom, .left-middle {
+.left-bottom-container {
   padding: 10px;
 }
 
-.left-column {
+.left-column-container {
   width: 50%;
   border-right: 1px solid lightgray;
   display: flex;
@@ -52,14 +55,28 @@
   list-style: none;
 }
 
-.left-top {
+.left-middle-container {
+  display: flex;
+  justify-content: center;
+}
+
+.left-middle-left, .left-middle-right {
+  width: 50%;
+}
+
+.left-middle-left {
+  border-right: 1px solid lightgray;
+}
+
+.left-top-container {
   border-bottom: 1px solid lightgray;
   position: relative;
-  min-height: 200px;
+  min-height: 130px;
   }
 
 .house-icon {
   width: 130px;
+  top: 10px;
 }
 
 .house-icon, .wheel-icon {
@@ -70,13 +87,17 @@
   margin-right: auto;
 }
 
+.inactive {
+  color: #c9302c;
+}
+
 .pod-status-image {
-  width: 75px;
+  width: 60px;
   display: block;
   margin: 30px auto;
 }
 
-.right-column {
+.right-column-container {
   width: 50%;
   display: flex;
   flex-direction: column;
@@ -88,8 +109,8 @@
 
 .wheel-icon {
   width: 80px;
+  top: 35px;
 }
-
 
 /*animation code*/
 
