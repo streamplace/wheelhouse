@@ -2,12 +2,17 @@
   color: #449d44;
 }
 
-.environments-dashboard-container {
-  padding-left: 10px !important;
+.app-not-started {
+  color: #c9302c;
 }
 
-.environments-dashboard-container li {
-  margin-bottom: 0 !important;
+.app-started {
+  color: #449d44;
+}
+
+.environments-dashboard-container {
+  padding-top: 5px !important;
+  text-align: center;
 }
 
 .environments-dashboard-container p {
@@ -15,7 +20,7 @@
 }
 
 .environments-dashboard-container ul {
-  margin-bottom: 20px;
+  margin-bottom: 18px;
   list-style: none;
 }
 
@@ -25,18 +30,22 @@
 }
 
 .main-dashboard-container a {
-  margin: 10px;
+  margin: 5px;
   display: block;
-  font-size: 20px;
+  font-size: 18px;
   text-align: center !important;
 }
 
+.main-dashboard-container p, .main-dashboard-container li {
+  font-size: 14px;
+}
+
 .left-bottom-container {
-  padding: 10px;
+  padding: 5px;
 }
 
 .left-column-container {
-  width: 50%;
+  width: 25%;
   border-right: 1px solid lightgray;
   display: flex;
   flex-direction: column;
@@ -56,26 +65,16 @@
 }
 
 .left-middle-container {
-  display: flex;
-  justify-content: center;
-}
-
-.left-middle-left, .left-middle-right {
-  width: 50%;
-}
-
-.left-middle-left {
-  border-right: 1px solid lightgray;
 }
 
 .left-top-container {
   border-bottom: 1px solid lightgray;
   position: relative;
-  min-height: 130px;
+  min-height: 90px;
   }
 
 .house-icon {
-  width: 130px;
+  width: 80px;
   top: 10px;
 }
 
@@ -92,13 +91,13 @@
 }
 
 .pod-status-image {
-  width: 60px;
+  width: 40px;
   display: block;
-  margin: 30px auto;
+  margin: 12px auto;
 }
 
 .right-column-container {
-  width: 50%;
+  width: 75%;
   display: flex;
   flex-direction: column;
 }
@@ -108,8 +107,8 @@
 }
 
 .wheel-icon {
-  width: 80px;
-  top: 35px;
+  width: 40px;
+  top: 30px;
 }
 
 /*animation code*/

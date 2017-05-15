@@ -5621,9 +5621,9 @@ whatwg-url@^4.3.0:
     tr46 "~0.0.3"
     webidl-conversions "^3.0.0"
 
-wheelhouse-core@^0.0.4:
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/wheelhouse-core/-/wheelhouse-core-0.0.4.tgz#49e3b4d818b3d6ec192d30dd539f336701edc8dc"
+wheelhouse-core@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/wheelhouse-core/-/wheelhouse-core-0.0.8.tgz#ac958c1e80989ba0065cb69375f55cc9eceb39ca"
   dependencies:
     babel-jest "^19.0.0"
     babel-preset-streamplace "^0.0.3"
@@ -5633,6 +5633,7 @@ wheelhouse-core@^0.0.4:
     http-proxy-middleware "^0.17.4"
     js-yaml "^3.8.3"
     kubectl-cli "^1.6.2"
+    left-pad "^1.1.3"
     mz "^2.6.0"
     opn "^4.0.2"
     polished "^1.1.1"

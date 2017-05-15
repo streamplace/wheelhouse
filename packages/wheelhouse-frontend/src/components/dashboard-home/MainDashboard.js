@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import LogContainer from "../reusables/LogContainer";
 import EnvironmentsDashboard from "./EnvironmentsDashboard";
 import {
-  createList
+  createLabels
 } from "../../handlers/component-handlers/environment-handlers";
 import {
   notReadyContainers
@@ -40,13 +40,11 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { pods, packages } = this.props;
-    let allDbs, allServs, notReady;
+    const { pods, packages, env } = this.props;
+    let notReady, labels;
 
     if (pods) {
-      allDbs = createList(this.props.env.CSATS_DB_URL.presetValues);
-      allServs = createList(this.props.env.STREAMPLACE_API_SERVER.presetValues);
-
+      labels = createLabels(env);
       pods.items.forEach(pod => {
         notReady = notReadyContainers(pod.status.containerStatuses);
       });
@@ -55,7 +53,7 @@ class Dashboard extends Component {
     const logStyles = {
       margin: "0",
       width: "100%",
-      height: "85vh"
+      height: "100vh"
     };
 
     let podImage;
@@ -80,12 +78,12 @@ class Dashboard extends Component {
             <img className="house-icon" alt="house" src={house} />
           </div>
           <div className="left-middle-container">
-            <div className="left-middle-left left-middle">
+            <div className="left-middle-top left-middle">
               <Link to="/pods">Pods</Link>
               {podImage}
-              {notReady.length > 0 ? notReady : "All pods are ready."}
+              {notReady.length > 0 ? notReady : <p>All pods are ready.</p>}
             </div>
-            <div className="left-middle-right left-middle">
+            <div className="left-middle-bottom left-middle">
               <Link to="/development">Active Applications</Link>
               <ul>
                 {appStatuses}
@@ -94,12 +92,7 @@ class Dashboard extends Component {
           </div>
           <div className="left-bottom-container">
             <Link to="/environment-variables">Environment Variables</Link>
-            <EnvironmentsDashboard
-              currentDbUrl={this.props.env.CSATS_DB_URL.currentValue}
-              allDbUrls={allDbs}
-              currentServer={this.props.env.STREAMPLACE_API_SERVER.currentValue}
-              allServers={allServs}
-            />
+            <EnvironmentsDashboard labels={labels} />
           </div>
         </div>
         <div className="right-column-container">
