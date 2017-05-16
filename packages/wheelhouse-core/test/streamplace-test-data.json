@@ -1,0 +1,1382 @@
+{
+  "config": {
+    "port": 3005,
+    "rootDir": "/Users/eli/code/streamplace",
+    "packages": [
+      "packages/*"
+    ],
+    "env": {}
+  },
+  "development": {
+    "packages": [
+      {
+        "name": "sp-auth-frontend",
+        "status": "STOPPED",
+        "active": false
+      },
+      {
+        "name": "sp-api-server",
+        "status": "STOPPED",
+        "active": false
+      },
+      {
+        "name": "sp-app",
+        "status": "STOPPED",
+        "active": false
+      },
+      {
+        "name": "sp-channel-manager",
+        "status": "STOPPED",
+        "active": false
+      },
+      {
+        "name": "sp-components",
+        "status": "STOPPED",
+        "active": false
+      },
+      {
+        "name": "sp-client",
+        "status": "STOPPED",
+        "active": false
+      },
+      {
+        "name": "sp-compositor",
+        "status": "STOPPED",
+        "active": false
+      },
+      {
+        "name": "sp-configuration",
+        "status": "STOPPED",
+        "active": false
+      },
+      {
+        "name": "sp-coturn",
+        "status": "STOPPED",
+        "active": false
+      },
+      {
+        "name": "sp-default",
+        "status": "STOPPED",
+        "active": false
+      },
+      {
+        "name": "sp-dev",
+        "status": "STOPPED",
+        "active": false
+      },
+      {
+        "name": "sp-dev-certs",
+        "status": "STOPPED",
+        "active": false
+      },
+      {
+        "name": "sp-ffmpeg",
+        "status": "STOPPED",
+        "active": false
+      },
+      {
+        "name": "sp-frontend",
+        "status": "STOPPED",
+        "active": false
+      },
+      {
+        "name": "sp-ingress",
+        "status": "STOPPED",
+        "active": false
+      },
+      {
+        "name": "sp-kube-lego",
+        "status": "STOPPED",
+        "active": false
+      },
+      {
+        "name": "sp-logs",
+        "status": "STOPPED",
+        "active": false
+      },
+      {
+        "name": "sp-node",
+        "status": "STOPPED",
+        "active": false
+      },
+      {
+        "name": "sp-peer-stream",
+        "status": "STOPPED",
+        "active": false
+      },
+      {
+        "name": "sp-plugin-auth",
+        "status": "STOPPED",
+        "active": false
+      },
+      {
+        "name": "sp-plugin-core",
+        "status": "STOPPED",
+        "active": false
+      },
+      {
+        "name": "sp-resource",
+        "status": "STOPPED",
+        "active": false
+      },
+      {
+        "name": "sp-schema",
+        "status": "STOPPED",
+        "active": false
+      },
+      {
+        "name": "sp-rethinkdb",
+        "status": "STOPPED",
+        "active": false
+      },
+      {
+        "name": "sp-static",
+        "status": "STOPPED",
+        "active": false
+      },
+      {
+        "name": "sp-styles",
+        "status": "STOPPED",
+        "active": false
+      },
+      {
+        "name": "sp-utils",
+        "status": "STOPPED",
+        "active": false
+      },
+      {
+        "name": "streamplace",
+        "status": "STOPPED",
+        "active": false
+      },
+      {
+        "name": "streamplace-cli",
+        "status": "STOPPED",
+        "active": false
+      }
+    ],
+    "logs": [],
+    "env": {}
+  },
+  "packages": {
+    "sp-auth-frontend": {
+      "name": "sp-auth-frontend",
+      "packageJson": {
+        "name": "sp-auth-frontend",
+        "version": "0.0.15",
+        "description": "frontend for auth.stream.place",
+        "devDependencies": {
+          "auth0-lock": "^10.11.0",
+          "react-scripts": "0.9.3",
+          "sp-configuration": "^0.0.15",
+          "sp-node": "^0.0.15",
+          "sp-static": "^0.0.15"
+        },
+        "dependencies": {
+          "color": "^1.0.3",
+          "qs": "^6.3.1",
+          "react": "^15.4.2",
+          "react-dom": "^15.4.2",
+          "sp-client": "^0.0.15",
+          "sp-styles": "^0.0.15",
+          "styled-components": "^1.4.4"
+        },
+        "scripts": {
+          "dev": "bash -c 'PORT=80 react-scripts start | cat'",
+          "prepublish": "react-scripts build && rm -rf dist && mv build dist",
+          "test": "react-scripts test --env=jsdom",
+          "eject": "react-scripts eject"
+        },
+        "license": "Apache-2.0",
+        "wheelhouse": {}
+      },
+      "path": "/Users/eli/code/streamplace/packages/sp-auth-frontend",
+      "allDependencies": [
+        "color",
+        "qs",
+        "react",
+        "react-dom",
+        "sp-client",
+        "sp-styles",
+        "styled-components",
+        "auth0-lock",
+        "react-scripts",
+        "sp-configuration",
+        "sp-node",
+        "sp-static"
+      ],
+      "localDependencies": [
+        "sp-client",
+        "sp-configuration",
+        "sp-node",
+        "sp-static",
+        "sp-styles"
+      ]
+    },
+    "sp-api-server": {
+      "name": "sp-api-server",
+      "packageJson": {
+        "name": "sp-api-server",
+        "version": "0.0.15",
+        "description": "API Server for Streamplace",
+        "main": "dist/sp-api-server.js",
+        "scripts": {
+          "test": "mocha --compilers js:babel-register",
+          "prepublish": "babel -d dist src"
+        },
+        "repository": {
+          "type": "git",
+          "url": "git+https://git@github.com/iameli/pratty-apps.git"
+        },
+        "author": "Streamplace",
+        "license": "Apache-2.0",
+        "bugs": {
+          "url": "https://github.com/iameli/pratty-apps/issues"
+        },
+        "homepage": "https://github.com/iameli/pratty-apps#readme",
+        "dependencies": {
+          "ajv": "^4.4.0",
+          "axios": "^0.15.3",
+          "babel-polyfill": "^6.3.14",
+          "body-parser": "^1.14.2",
+          "colors": "^1.1.2",
+          "debug": "^2.2.0",
+          "express": "^4.13.4",
+          "morgan": "^1.6.1",
+          "njwt": "^0.3.1",
+          "on-finished": "^2.3.0",
+          "rethinkdb": "^2.3.3",
+          "socket.io": "^1.4.5",
+          "sp-configuration": "^0.0.15",
+          "sp-resource": "^0.0.15",
+          "swagger-parser": "^3.4.0",
+          "underscore": "^1.8.3",
+          "winston": "^2.1.1"
+        },
+        "devDependencies": {
+          "babel-cli": "^6.23.0",
+          "babel-core": "^6.23.1",
+          "babel-preset-streamplace": "*",
+          "babel-register": "^6.4.3",
+          "babel-watch": "^2.0.6",
+          "expect.js": "^0.3.1",
+          "mocha": "^2.4.5",
+          "nodemon": "^1.8.1"
+        },
+        "wheelhouse": {}
+      },
+      "path": "/Users/eli/code/streamplace/packages/sp-api-server",
+      "allDependencies": [
+        "ajv",
+        "axios",
+        "babel-polyfill",
+        "body-parser",
+        "colors",
+        "debug",
+        "express",
+        "morgan",
+        "njwt",
+        "on-finished",
+        "rethinkdb",
+        "socket.io",
+        "sp-configuration",
+        "sp-resource",
+        "swagger-parser",
+        "underscore",
+        "winston",
+        "babel-cli",
+        "babel-core",
+        "babel-preset-streamplace",
+        "babel-register",
+        "babel-watch",
+        "expect.js",
+        "mocha",
+        "nodemon"
+      ],
+      "localDependencies": [
+        "sp-configuration",
+        "sp-resource"
+      ]
+    },
+    "sp-app": {
+      "name": "sp-app",
+      "packageJson": {
+        "name": "sp-app",
+        "version": "0.0.15",
+        "description": "Streamplace Desktop App",
+        "main": "dist/sp-app.js",
+        "build": {
+          "appId": "stream.place",
+          "mac": {
+            "category": "public.app-category.video"
+          }
+        },
+        "scripts": {
+          "prepublish": "babel --keep-lines --copy-files -d dist src",
+          "start-electron": "npm run prepublish && SP_URL=$(cat ../../values-dev.yaml  | grep domain | sed 's/^.*://' | sed 's/ //') electron .",
+          "start": "nodemon -w src -x npm run start-electron",
+          "test": "echo \"Error: no test specified\" && exit 1",
+          "electron-builder": "build --publish never",
+          "electron-publish": "build -mw --publish always"
+        },
+        "author": "Streamplace",
+        "license": "Apache-2.0",
+        "devDependencies": {
+          "babel-cli": "^6.23.0",
+          "babel-core": "^6.23.1",
+          "babel-preset-streamplace": "0.0.1",
+          "electron": "^1.4.15",
+          "electron-builder": "^15.6.2",
+          "electron-publisher-s3": "^15.6.3",
+          "js-yaml": "^3.8.2",
+          "nodemon": "^1.11.0"
+        },
+        "dependencies": {
+          "electron-log": "^2.0.0",
+          "electron-updater": "^1.10.4"
+        },
+        "wheelhouse": {}
+      },
+      "path": "/Users/eli/code/streamplace/packages/sp-app",
+      "allDependencies": [
+        "electron-log",
+        "electron-updater",
+        "babel-cli",
+        "babel-core",
+        "babel-preset-streamplace",
+        "electron",
+        "electron-builder",
+        "electron-publisher-s3",
+        "js-yaml",
+        "nodemon"
+      ],
+      "localDependencies": []
+    },
+    "sp-channel-manager": {
+      "name": "sp-channel-manager",
+      "packageJson": {
+        "name": "sp-channel-manager",
+        "version": "0.0.15",
+        "description": "Route WebRTC connections as is appropriate for a channel",
+        "main": "dist/sp-channel-manager.js",
+        "scripts": {
+          "prepublish": "babel -d dist src"
+        },
+        "author": "streamplace",
+        "license": "Apache-2.0",
+        "dependencies": {
+          "express": "^4.15.2",
+          "request": "^2.79.0",
+          "request-promise": "^4.1.1",
+          "sp-client": "^0.0.15",
+          "sp-configuration": "^0.0.15",
+          "underscore": "^1.8.3",
+          "winston": "^2.2.0"
+        },
+        "devDependencies": {
+          "babel-cli": "^6.24.0",
+          "babel-core": "^6.24.0",
+          "babel-preset-streamplace": "0.0.1",
+          "babel-watch": "^2.0.6",
+          "sp-node": "^0.0.15"
+        },
+        "wheelhouse": {}
+      },
+      "path": "/Users/eli/code/streamplace/packages/sp-channel-manager",
+      "allDependencies": [
+        "express",
+        "request",
+        "request-promise",
+        "sp-client",
+        "sp-configuration",
+        "underscore",
+        "winston",
+        "babel-cli",
+        "babel-core",
+        "babel-preset-streamplace",
+        "babel-watch",
+        "sp-node"
+      ],
+      "localDependencies": [
+        "sp-client",
+        "sp-configuration",
+        "sp-node"
+      ]
+    },
+    "sp-components": {
+      "name": "sp-components",
+      "packageJson": {
+        "name": "sp-components",
+        "version": "0.0.15",
+        "description": "Streamplace React Components",
+        "main": "dist/index.js",
+        "scripts": {
+          "test": "echo \"Error: no test specified\" && exit 1",
+          "start": "babel -s -w -d dist src",
+          "prepublish": "babel -s -d dist src"
+        },
+        "author": "Streamplace",
+        "license": "Apache-2.0",
+        "devDependencies": {
+          "babel-cli": "^6.24.1",
+          "babel-core": "^6.24.1",
+          "babel-plugin-transform-class-properties": "^6.24.1",
+          "babel-preset-react": "^6.24.1",
+          "babel-preset-streamplace": "0.0.1"
+        },
+        "dependencies": {
+          "react": "^15.5.4",
+          "sp-client": "^0.0.15",
+          "sp-peer-stream": "^0.0.15",
+          "sp-utils": "^0.0.15",
+          "styled-components": "^1.4.4",
+          "three": "^0.84.0"
+        },
+        "wheelhouse": {}
+      },
+      "path": "/Users/eli/code/streamplace/packages/sp-components",
+      "allDependencies": [
+        "react",
+        "sp-client",
+        "sp-peer-stream",
+        "sp-utils",
+        "styled-components",
+        "three",
+        "babel-cli",
+        "babel-core",
+        "babel-plugin-transform-class-properties",
+        "babel-preset-react",
+        "babel-preset-streamplace"
+      ],
+      "localDependencies": [
+        "sp-client",
+        "sp-peer-stream",
+        "sp-utils"
+      ]
+    },
+    "sp-client": {
+      "name": "sp-client",
+      "packageJson": {
+        "name": "sp-client",
+        "version": "0.0.15",
+        "description": "Streamplace Javascript Client",
+        "main": "dist/sp-client.js",
+        "scripts": {
+          "prepublish": "babel -d dist src",
+          "start": "babel --watch --preserve-lines -d dist src",
+          "test": "echo \"Error: no test specified\" && exit 1"
+        },
+        "author": "",
+        "license": "Apache-2.0",
+        "dependencies": {
+          "jwt-decode": "^2.1.0",
+          "njwt": "^0.3.1",
+          "socket.io-client": "^1.7.3",
+          "sp-configuration": "^0.0.15",
+          "swagger-client": "^2.1.32",
+          "underscore": "^1.8.3",
+          "wolfy87-eventemitter": "^4.3.0"
+        },
+        "devDependencies": {
+          "babel-cli": "^6.23.0",
+          "babel-core": "^6.23.1",
+          "babel-preset-streamplace": "*",
+          "nodemon": "^1.9.1"
+        },
+        "wheelhouse": {}
+      },
+      "path": "/Users/eli/code/streamplace/packages/sp-client",
+      "allDependencies": [
+        "jwt-decode",
+        "njwt",
+        "socket.io-client",
+        "sp-configuration",
+        "swagger-client",
+        "underscore",
+        "wolfy87-eventemitter",
+        "babel-cli",
+        "babel-core",
+        "babel-preset-streamplace",
+        "nodemon"
+      ],
+      "localDependencies": [
+        "sp-configuration"
+      ]
+    },
+    "sp-compositor": {
+      "name": "sp-compositor",
+      "packageJson": {
+        "name": "sp-compositor",
+        "version": "0.0.15",
+        "description": "",
+        "main": "dist/sp-compositor.js",
+        "scripts": {
+          "test": "echo \"Error: no test specified\" && exit 1",
+          "start": "nodemon -w src -x npm run build-dev",
+          "build-dev": "npm run prepublish && electron .",
+          "prepublish": "babel -s --copy-files -d dist src"
+        },
+        "author": "Streamplace",
+        "license": "Apache-2.0",
+        "devDependencies": {
+          "babel-cli": "^6.22.2",
+          "babel-core": "^6.22.1",
+          "babel-preset-react": "^6.24.1",
+          "babel-preset-streamplace": "0.0.1",
+          "nodemon": "^1.11.0"
+        },
+        "dependencies": {
+          "electron": "^1.6.2",
+          "sp-frontend": "^0.0.15"
+        },
+        "wheelhouse": {}
+      },
+      "path": "/Users/eli/code/streamplace/packages/sp-compositor",
+      "allDependencies": [
+        "electron",
+        "sp-frontend",
+        "babel-cli",
+        "babel-core",
+        "babel-preset-react",
+        "babel-preset-streamplace",
+        "nodemon"
+      ],
+      "localDependencies": [
+        "sp-frontend"
+      ]
+    },
+    "sp-configuration": {
+      "name": "sp-configuration",
+      "packageJson": {
+        "name": "sp-configuration",
+        "version": "0.0.15",
+        "description": "Streamplace shared runtime configuration",
+        "main": "dist/sp-configuration.js",
+        "scripts": {
+          "prepublish": "babel -d dist src",
+          "start": "nodemon -w src -x npm run prepublish",
+          "test": "echo \"Error: no test specified\" && exit 1"
+        },
+        "author": "Streamplace",
+        "license": "Apache-2.0",
+        "dependencies": {
+          "js-yaml": "^3.6.1",
+          "mustache": "^2.2.1"
+        },
+        "devDependencies": {
+          "babel-preset-streamkitchen": "*",
+          "nodemon": "^1.9.1",
+          "underscore": "^1.8.3"
+        },
+        "wheelhouse": {}
+      },
+      "path": "/Users/eli/code/streamplace/packages/sp-configuration",
+      "allDependencies": [
+        "js-yaml",
+        "mustache",
+        "babel-preset-streamkitchen",
+        "nodemon",
+        "underscore"
+      ],
+      "localDependencies": []
+    },
+    "sp-coturn": {
+      "name": "sp-coturn",
+      "packageJson": {
+        "name": "sp-coturn",
+        "version": "0.0.15",
+        "description": "Coturn for Streamplace servers",
+        "main": "package.json",
+        "scripts": {
+          "test": "echo \"Error: no test specified\" && exit 1"
+        },
+        "author": "Streamplace",
+        "license": "Apache-2.0",
+        "wheelhouse": {}
+      },
+      "path": "/Users/eli/code/streamplace/packages/sp-coturn",
+      "allDependencies": [],
+      "localDependencies": []
+    },
+    "sp-default": {
+      "name": "sp-default",
+      "packageJson": {
+        "name": "sp-default",
+        "version": "0.0.15",
+        "description": "404 backend",
+        "main": "package.json",
+        "scripts": {
+          "test": "echo \"Error: no test specified\" && exit 1"
+        },
+        "author": "Streamplace",
+        "license": "Apache-2.0",
+        "wheelhouse": {}
+      },
+      "path": "/Users/eli/code/streamplace/packages/sp-default",
+      "allDependencies": [],
+      "localDependencies": []
+    },
+    "sp-dev": {
+      "name": "sp-dev",
+      "packageJson": {
+        "name": "sp-dev",
+        "version": "0.0.15",
+        "description": "Streamplace Development Container",
+        "main": "Dockerfile",
+        "scripts": {
+          "test": "echo 'nothing to do'"
+        },
+        "author": "Streamplace",
+        "license": "Apache-2.0",
+        "dependencies": {
+          "sp-node": "^0.0.15"
+        },
+        "wheelhouse": {}
+      },
+      "path": "/Users/eli/code/streamplace/packages/sp-dev",
+      "allDependencies": [
+        "sp-node"
+      ],
+      "localDependencies": [
+        "sp-node"
+      ]
+    },
+    "sp-dev-certs": {
+      "name": "sp-dev-certs",
+      "packageJson": {
+        "name": "sp-dev-certs",
+        "version": "0.0.15",
+        "description": "Automatically provisioned certs for Streamplace development!",
+        "main": "index.js",
+        "scripts": {
+          "test": "echo \"Error: no test specified\" && exit 1",
+          "build": "babel --retain-lines --copy-files -d dist src",
+          "prepublish": "npm run build"
+        },
+        "author": "",
+        "license": "Apache-2.0",
+        "devDependencies": {
+          "babel-cli": "^6.22.2",
+          "babel-core": "^6.22.1",
+          "babel-preset-streamplace": "0.0.1",
+          "babel-watch": "^2.0.6"
+        },
+        "dependencies": {
+          "axios": "^0.15.3",
+          "express": "^4.14.1",
+          "morgan": "^1.8.1",
+          "mz": "^2.6.0",
+          "openpgp": "^2.3.6",
+          "sp-node": "^0.0.15",
+          "winston": "^2.3.1"
+        },
+        "wheelhouse": {}
+      },
+      "path": "/Users/eli/code/streamplace/packages/sp-dev-certs",
+      "allDependencies": [
+        "axios",
+        "express",
+        "morgan",
+        "mz",
+        "openpgp",
+        "sp-node",
+        "winston",
+        "babel-cli",
+        "babel-core",
+        "babel-preset-streamplace",
+        "babel-watch"
+      ],
+      "localDependencies": [
+        "sp-node"
+      ]
+    },
+    "sp-ffmpeg": {
+      "name": "sp-ffmpeg",
+      "packageJson": {
+        "name": "sp-ffmpeg",
+        "version": "0.0.15",
+        "description": "Streamplace's FFMpeg bulid",
+        "main": "Dockerfile",
+        "scripts": {
+          "test": "echo \"Error: no test specified\" && exit 1"
+        },
+        "repository": {
+          "type": "git",
+          "url": "https://github.com/babel/babel/tree/master"
+        },
+        "keywords": [
+          "FFMpeg"
+        ],
+        "author": "Streamplace Inc.",
+        "license": "Apache-2.0",
+        "wheelhouse": {}
+      },
+      "path": "/Users/eli/code/streamplace/packages/sp-ffmpeg",
+      "allDependencies": [],
+      "localDependencies": []
+    },
+    "sp-frontend": {
+      "name": "sp-frontend",
+      "packageJson": {
+        "name": "sp-frontend",
+        "version": "0.0.15",
+        "devDependencies": {
+          "react-scripts": "0.8.5",
+          "sp-static": "^0.0.15"
+        },
+        "dependencies": {
+          "color-hash": "^1.0.3",
+          "cookie": "^0.3.1",
+          "font-awesome": "^4.7.0",
+          "normalize.css": "^5.0.0",
+          "qs": "^6.3.1",
+          "react": "^15.5.4",
+          "react-dom": "^15.4.2",
+          "react-router": "^4.0.0-beta.8",
+          "react-router-dom": "^4.0.0-beta.8",
+          "sp-client": "^0.0.15",
+          "sp-components": "^0.0.15",
+          "sp-styles": "^0.0.15",
+          "styled-components": "^1.4.4",
+          "three": "^0.84.0",
+          "url": "^0.11.0"
+        },
+        "scripts": {
+          "dev": "bash -c 'PORT=80 react-scripts start | cat'",
+          "prepublish": "react-scripts build && rm -rf dist && mv build dist",
+          "test": "react-scripts test --env=jsdom",
+          "eject": "react-scripts eject"
+        },
+        "wheelhouse": {}
+      },
+      "path": "/Users/eli/code/streamplace/packages/sp-frontend",
+      "allDependencies": [
+        "color-hash",
+        "cookie",
+        "font-awesome",
+        "normalize.css",
+        "qs",
+        "react",
+        "react-dom",
+        "react-router",
+        "react-router-dom",
+        "sp-client",
+        "sp-components",
+        "sp-styles",
+        "styled-components",
+        "three",
+        "url",
+        "react-scripts",
+        "sp-static"
+      ],
+      "localDependencies": [
+        "sp-components",
+        "sp-client",
+        "sp-static",
+        "sp-styles"
+      ]
+    },
+    "sp-ingress": {
+      "name": "sp-ingress",
+      "packageJson": {
+        "name": "sp-ingress",
+        "version": "0.0.15",
+        "description": "Incoming connections get routed here!",
+        "main": "package.json",
+        "scripts": {
+          "test": "echo \"Error: no test specified\" && exit 1"
+        },
+        "author": "Streamplace",
+        "license": "Apache-2.0",
+        "wheelhouse": {}
+      },
+      "path": "/Users/eli/code/streamplace/packages/sp-ingress",
+      "allDependencies": [],
+      "localDependencies": []
+    },
+    "sp-kube-lego": {
+      "name": "sp-kube-lego",
+      "packageJson": {
+        "name": "sp-kube-lego",
+        "version": "0.0.15",
+        "description": "Kube-Lego for Streamplace",
+        "main": "package.json",
+        "scripts": {
+          "test": "echo \"Error: no test specified\" && exit 1"
+        },
+        "author": "Streamplace",
+        "license": "Apache-2.0",
+        "wheelhouse": {}
+      },
+      "path": "/Users/eli/code/streamplace/packages/sp-kube-lego",
+      "allDependencies": [],
+      "localDependencies": []
+    },
+    "sp-logs": {
+      "name": "sp-logs",
+      "packageJson": {
+        "name": "sp-logs",
+        "version": "0.0.15",
+        "description": "Logs for Streamplace",
+        "main": "package.json",
+        "scripts": {
+          "test": "echo \"Error: no test specified\" && exit 1",
+          "start": "node dev-stream.js"
+        },
+        "author": "Streamplace",
+        "license": "Apache-2.0",
+        "devDependencies": {
+          "JSONStream": "^1.3.0",
+          "js-yaml": "^3.8.1",
+          "request": "^2.79.0",
+          "terminal-kit": "^0.26.1"
+        },
+        "wheelhouse": {}
+      },
+      "path": "/Users/eli/code/streamplace/packages/sp-logs",
+      "allDependencies": [
+        "JSONStream",
+        "js-yaml",
+        "request",
+        "terminal-kit"
+      ],
+      "localDependencies": []
+    },
+    "sp-node": {
+      "name": "sp-node",
+      "packageJson": {
+        "name": "sp-node",
+        "version": "0.0.15",
+        "description": "Base container for all Streamplace node.js stuff",
+        "main": "Dockerfile",
+        "scripts": {
+          "test": "echo \"Error: no test specified\" && exit 1"
+        },
+        "author": "Streamplace",
+        "license": "Apache-2.0",
+        "wheelhouse": {}
+      },
+      "path": "/Users/eli/code/streamplace/packages/sp-node",
+      "allDependencies": [],
+      "localDependencies": []
+    },
+    "sp-peer-stream": {
+      "name": "sp-peer-stream",
+      "packageJson": {
+        "name": "sp-peer-stream",
+        "version": "0.0.15",
+        "description": "Video Peer Connections made easy-ish",
+        "main": "dist/sp-peer-stream.js",
+        "scripts": {
+          "test": "echo \"Error: no test specified\" && exit 1",
+          "prepublish": "babel -d dist src",
+          "start": "babel -w -d dist src"
+        },
+        "author": "",
+        "license": "Apache-2.0",
+        "devDependencies": {
+          "babel-cli": "^6.24.0",
+          "babel-core": "^6.24.0",
+          "babel-preset-streamplace": "0.0.1",
+          "json-loader": "^0.5.4"
+        },
+        "dependencies": {
+          "debug": "^2.6.3",
+          "kurento-utils": "^6.6.1",
+          "sp-client": "^0.0.15",
+          "wolfy87-eventemitter": "^5.1.0"
+        },
+        "wheelhouse": {}
+      },
+      "path": "/Users/eli/code/streamplace/packages/sp-peer-stream",
+      "allDependencies": [
+        "debug",
+        "kurento-utils",
+        "sp-client",
+        "wolfy87-eventemitter",
+        "babel-cli",
+        "babel-core",
+        "babel-preset-streamplace",
+        "json-loader"
+      ],
+      "localDependencies": [
+        "sp-client"
+      ]
+    },
+    "sp-plugin-auth": {
+      "name": "sp-plugin-auth",
+      "packageJson": {
+        "name": "sp-plugin-auth",
+        "version": "0.0.15",
+        "description": "Streamplace auth plugin",
+        "main": "dist/sp-plugin-auth.js",
+        "scripts": {
+          "prepublish": "babel -d dist src",
+          "start": "babel --watch -d dist src"
+        },
+        "author": "Streamplace",
+        "license": "Apache-2.0",
+        "devDependencies": {
+          "babel-cli": "^6.23.0",
+          "babel-core": "^6.23.1",
+          "babel-preset-streamplace": "*",
+          "jest": "^15.1.1",
+          "sp-node": "^0.0.15",
+          "sp-schema": "^0.0.15"
+        },
+        "dependencies": {
+          "dove-jwt": "0.0.4",
+          "mz": "^2.6.0",
+          "node-uuid": "^1.4.7",
+          "sp-resource": "^0.0.15",
+          "sp-utils": "^0.0.15",
+          "winston": "^2.2.0"
+        },
+        "wheelhouse": {}
+      },
+      "path": "/Users/eli/code/streamplace/packages/sp-plugin-auth",
+      "allDependencies": [
+        "dove-jwt",
+        "mz",
+        "node-uuid",
+        "sp-resource",
+        "sp-utils",
+        "winston",
+        "babel-cli",
+        "babel-core",
+        "babel-preset-streamplace",
+        "jest",
+        "sp-node",
+        "sp-schema"
+      ],
+      "localDependencies": [
+        "sp-node",
+        "sp-resource",
+        "sp-schema",
+        "sp-utils"
+      ]
+    },
+    "sp-plugin-core": {
+      "name": "sp-plugin-core",
+      "packageJson": {
+        "name": "sp-plugin-core",
+        "version": "0.0.15",
+        "description": "Streamplace core plugin",
+        "main": "dist/sp-plugin-core.js",
+        "scripts": {
+          "prepublish": "babel -d dist src",
+          "start": "babel --watch -d dist src"
+        },
+        "author": "Streamplace",
+        "license": "Apache-2.0",
+        "devDependencies": {
+          "babel-cli": "^6.23.0",
+          "babel-core": "^6.23.1",
+          "babel-preset-streamkitchen": "0.0.2",
+          "jest": "^15.1.1",
+          "sp-node": "^0.0.15",
+          "sp-schema": "^0.0.15"
+        },
+        "dependencies": {
+          "node-uuid": "^1.4.7",
+          "sp-resource": "^0.0.15",
+          "sp-utils": "^0.0.15",
+          "winston": "^2.2.0"
+        },
+        "wheelhouse": {}
+      },
+      "path": "/Users/eli/code/streamplace/packages/sp-plugin-core",
+      "allDependencies": [
+        "node-uuid",
+        "sp-resource",
+        "sp-utils",
+        "winston",
+        "babel-cli",
+        "babel-core",
+        "babel-preset-streamkitchen",
+        "jest",
+        "sp-node",
+        "sp-schema"
+      ],
+      "localDependencies": [
+        "sp-node",
+        "sp-resource",
+        "sp-schema",
+        "sp-utils"
+      ]
+    },
+    "sp-resource": {
+      "name": "sp-resource",
+      "packageJson": {
+        "name": "sp-resource",
+        "version": "0.0.15",
+        "description": "Streamplace resource class for plugins",
+        "main": "dist/sp-resource.js",
+        "scripts": {
+          "test": "jest --colors",
+          "prepublish": "babel -d dist src",
+          "start": "babel --watch -d dist src",
+          "test-rethink": "SK_TEST_DB_DRIVER=rethink SK_TEST_DB_HOST=localhost SK_TEST_DB_PORT=28019 jest --colors"
+        },
+        "author": "Stream Kitchen",
+        "license": "Apache-2.0",
+        "devDependencies": {
+          "ajv": "^4.7.0",
+          "babel-cli": "^6.23.0",
+          "babel-core": "^6.23.1",
+          "babel-jest": "^15.0.0",
+          "babel-polyfill": "^6.13.0",
+          "babel-preset-streamkitchen": "0.0.2",
+          "jest": "^15.1.1",
+          "node-uuid": "^1.4.7",
+          "underscore": "^1.8.3"
+        },
+        "dependencies": {
+          "aguid": "^2.0.0",
+          "dove-jwt": "0.0.2",
+          "jsonwebtoken": "^7.3.0",
+          "merge": "^1.2.0",
+          "ms": "^0.7.2",
+          "njwt": "^0.3.1",
+          "rethinkdb": "^2.3.3",
+          "sp-configuration": "^0.0.15",
+          "underscore": "^1.8.3",
+          "uuid": "^3.0.1",
+          "winston": "^2.2.0"
+        },
+        "wheelhouse": {}
+      },
+      "path": "/Users/eli/code/streamplace/packages/sp-resource",
+      "allDependencies": [
+        "aguid",
+        "dove-jwt",
+        "jsonwebtoken",
+        "merge",
+        "ms",
+        "njwt",
+        "rethinkdb",
+        "sp-configuration",
+        "underscore",
+        "uuid",
+        "winston",
+        "ajv",
+        "babel-cli",
+        "babel-core",
+        "babel-jest",
+        "babel-polyfill",
+        "babel-preset-streamkitchen",
+        "jest",
+        "node-uuid"
+      ],
+      "localDependencies": [
+        "sp-configuration"
+      ]
+    },
+    "sp-schema": {
+      "name": "sp-schema",
+      "packageJson": {
+        "name": "sp-schema",
+        "version": "0.0.15",
+        "description": "Schema for Streamplace",
+        "main": "dist/sk-schema.js",
+        "scripts": {
+          "test": "echo \"Error: no test specified\" && exit 1",
+          "prepublish": "babel -d dist src",
+          "dev": "babel-watch -L src/sp-schema.js"
+        },
+        "author": "Streamplace",
+        "license": "Apache-2.0",
+        "dependencies": {
+          "express": "^4.14.1",
+          "js-yaml": "^3.5.2",
+          "kubectl-cli": "^1.6.0-1",
+          "mz": "^2.6.0",
+          "sp-configuration": "^0.0.15",
+          "sp-node": "^0.0.15",
+          "winston": "^2.3.0"
+        },
+        "devDependencies": {
+          "babel-cli": "^6.23.0",
+          "babel-core": "^6.23.1",
+          "babel-preset-streamplace": "*",
+          "babel-watch": "^2.0.6",
+          "nodemon": "^1.9.1"
+        },
+        "wheelhouse": {}
+      },
+      "path": "/Users/eli/code/streamplace/packages/sp-schema",
+      "allDependencies": [
+        "express",
+        "js-yaml",
+        "kubectl-cli",
+        "mz",
+        "sp-configuration",
+        "sp-node",
+        "winston",
+        "babel-cli",
+        "babel-core",
+        "babel-preset-streamplace",
+        "babel-watch",
+        "nodemon"
+      ],
+      "localDependencies": [
+        "sp-configuration",
+        "sp-node"
+      ]
+    },
+    "sp-rethinkdb": {
+      "name": "sp-rethinkdb",
+      "packageJson": {
+        "name": "sp-rethinkdb",
+        "version": "0.0.15",
+        "description": "RethinkDB server for Streamplace",
+        "main": "Chart.yaml",
+        "scripts": {
+          "test": "echo \"Error: no test specified\" && exit 1"
+        },
+        "author": "Streamplace",
+        "license": "Apache-2.0",
+        "wheelhouse": {}
+      },
+      "path": "/Users/eli/code/streamplace/packages/sp-rethinkdb",
+      "allDependencies": [],
+      "localDependencies": []
+    },
+    "sp-static": {
+      "name": "sp-static",
+      "packageJson": {
+        "name": "sp-static",
+        "version": "0.0.15",
+        "description": "For hosting static files with Streamplace",
+        "main": "index.js",
+        "scripts": {
+          "test": "echo \"Error: no test specified\" && exit 1"
+        },
+        "author": "Streamplace",
+        "license": "Apache-2.0",
+        "devDependencies": {
+          "sp-node": "^0.0.15"
+        },
+        "wheelhouse": {}
+      },
+      "path": "/Users/eli/code/streamplace/packages/sp-static",
+      "allDependencies": [
+        "sp-node"
+      ],
+      "localDependencies": [
+        "sp-node"
+      ]
+    },
+    "sp-styles": {
+      "name": "sp-styles",
+      "packageJson": {
+        "name": "sp-styles",
+        "version": "0.0.15",
+        "description": "Styles for Streamplace, used in a few places",
+        "main": "dist/sp-styles.js",
+        "scripts": {
+          "test": "echo \"Error: no test specified\" && exit 1",
+          "prepublish": "babel -d dist src",
+          "start": "babel --watch -d dist src"
+        },
+        "author": "",
+        "license": "Apache-2.0",
+        "devDependencies": {
+          "babel-cli": "^6.24.0",
+          "babel-core": "^6.24.0",
+          "babel-preset-react": "^6.23.0",
+          "babel-preset-streamplace": "*",
+          "css-loader": "^0.26.1",
+          "node-sass": "^4.5.0",
+          "sass-loader": "^5.0.1",
+          "style-loader": "^0.13.1",
+          "webpack": "^2.2.1"
+        },
+        "dependencies": {
+          "color": "^1.0.3",
+          "react": "^15.4.2",
+          "styled-components": "^1.4.4"
+        },
+        "wheelhouse": {}
+      },
+      "path": "/Users/eli/code/streamplace/packages/sp-styles",
+      "allDependencies": [
+        "color",
+        "react",
+        "styled-components",
+        "babel-cli",
+        "babel-core",
+        "babel-preset-react",
+        "babel-preset-streamplace",
+        "css-loader",
+        "node-sass",
+        "sass-loader",
+        "style-loader",
+        "webpack"
+      ],
+      "localDependencies": []
+    },
+    "sp-utils": {
+      "name": "sp-utils",
+      "packageJson": {
+        "name": "sp-utils",
+        "version": "0.0.15",
+        "description": "Rando shared SP utilities",
+        "main": "dist/sp-utils.js",
+        "scripts": {
+          "prepublish": "babel -d dist src",
+          "start": "babel --watch -d dist src"
+        },
+        "author": "Stream Kitchen",
+        "license": "Apache-2.0",
+        "devDependencies": {
+          "babel-cli": "^6.14.0",
+          "babel-preset-streamplace": "*",
+          "nodemon": "^1.10.2"
+        },
+        "dependencies": {},
+        "wheelhouse": {}
+      },
+      "path": "/Users/eli/code/streamplace/packages/sp-utils",
+      "allDependencies": [
+        "babel-cli",
+        "babel-preset-streamplace",
+        "nodemon"
+      ],
+      "localDependencies": []
+    },
+    "streamplace": {
+      "name": "streamplace",
+      "packageJson": {
+        "name": "streamplace",
+        "version": "0.0.15",
+        "description": "An open-source compositor and CMS for live video",
+        "main": "dist/streamplace.js",
+        "scripts": {
+          "test": "echo \"Error: no test specified\" && exit 1"
+        },
+        "keywords": [
+          "streamplace"
+        ],
+        "author": "Streamplace",
+        "license": "Apache-2.0",
+        "dependencies": {
+          "sp-logs": "^0.0.15",
+          "sp-plugin-core": "^0.0.15",
+          "sp-rethinkdb": "^0.0.15",
+          "sp-schema": "^0.0.15",
+          "sp-api-server": "^0.0.15",
+          "sp-ingress": "^0.0.15",
+          "sp-default": "^0.0.15",
+          "sp-dev-certs": "^0.0.15",
+          "sp-auth-frontend": "^0.0.15",
+          "sp-kube-lego": "^0.0.15",
+          "sp-coturn": "^0.0.15",
+          "sp-frontend": "^0.0.15"
+        },
+        "wheelhouse": {}
+      },
+      "path": "/Users/eli/code/streamplace/packages/streamplace",
+      "allDependencies": [
+        "sp-logs",
+        "sp-plugin-core",
+        "sp-rethinkdb",
+        "sp-schema",
+        "sp-api-server",
+        "sp-ingress",
+        "sp-default",
+        "sp-dev-certs",
+        "sp-auth-frontend",
+        "sp-kube-lego",
+        "sp-coturn",
+        "sp-frontend"
+      ],
+      "localDependencies": [
+        "sp-auth-frontend",
+        "sp-api-server",
+        "sp-coturn",
+        "sp-default",
+        "sp-dev-certs",
+        "sp-frontend",
+        "sp-ingress",
+        "sp-kube-lego",
+        "sp-logs",
+        "sp-plugin-core",
+        "sp-schema",
+        "sp-rethinkdb"
+      ]
+    },
+    "streamplace-cli": {
+      "name": "streamplace-cli",
+      "packageJson": {
+        "name": "streamplace-cli",
+        "version": "0.0.15",
+        "description": "streamplace console command",
+        "main": "dist/sp-cli.js",
+        "bin": {
+          "sp": "dist/sp-cli.js"
+        },
+        "scripts": {
+          "prepublish": "npm run build",
+          "build": "babel -p --copy-files -d dist src",
+          "dev": "babel --watch --copy-files --retainLines=true -d dist src",
+          "test": "echo \"Error: no test specified\" && exit 1"
+        },
+        "author": "Streamplace",
+        "license": "Apache-2.0",
+        "devDependencies": {
+          "babel-cli": "^6.22.2",
+          "babel-core": "^6.22.1",
+          "babel-preset-streamplace": "0.0.1"
+        },
+        "dependencies": {
+          "chokidar": "^1.6.1",
+          "commander": "^2.9.0",
+          "find-package-json": "^1.0.0",
+          "inquirer": "^2.0.0",
+          "js-yaml": "^3.7.0",
+          "minimist": "^1.2.0",
+          "mkdirp": "^0.5.1",
+          "mkdirp-promise": "^5.0.0",
+          "mz": "^2.6.0",
+          "redux": "^3.6.0",
+          "redux-thunk": "^2.2.0",
+          "sp-node": "^0.0.15",
+          "terminal-kit": "^0.26.1",
+          "vorpal": "^1.11.4",
+          "ws": "^1.1.1"
+        },
+        "wheelhouse": {}
+      },
+      "path": "/Users/eli/code/streamplace/packages/streamplace-cli",
+      "allDependencies": [
+        "chokidar",
+        "commander",
+        "find-package-json",
+        "inquirer",
+        "js-yaml",
+        "minimist",
+        "mkdirp",
+        "mkdirp-promise",
+        "mz",
+        "redux",
+        "redux-thunk",
+        "sp-node",
+        "terminal-kit",
+        "vorpal",
+        "ws",
+        "babel-cli",
+        "babel-core",
+        "babel-preset-streamplace"
+      ],
+      "localDependencies": [
+        "sp-node"
+      ]
+    }
+  },
+  "kubernetes": {},
+  "server": {
+    "connected": true,
+    "notifications": []
+  }
+}

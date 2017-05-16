@@ -3,7 +3,11 @@
 
 import yargs from "yargs";
 import { store } from "./store";
-import { developmentStart, developmentBuild } from "./developmentActions";
+import {
+  developmentStart,
+  developmentBuild,
+  developmentInstall
+} from "./developmentActions";
 
 const attemptAction = async function(action, ...args) {
   try {
@@ -32,6 +36,13 @@ const runCli = async function(argv) {
       describe: "Build your app!",
       handler: argv => {
         attemptAction(developmentBuild);
+      }
+    })
+    .command({
+      command: "install",
+      describe: "install all necessary dependencies in all packages",
+      handler: argv => {
+        attemptAction(developmentInstall);
       }
     })
     .help()

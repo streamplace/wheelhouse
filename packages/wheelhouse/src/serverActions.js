@@ -2,7 +2,6 @@ import express from "express";
 import WebSocket from "ws";
 import http from "http";
 import proxy from "http-proxy-middleware";
-import { configLoad } from "./configActions";
 import {
   SERVER_SYNC_STATE,
   SERVER_ERROR,
@@ -48,7 +47,6 @@ export const serverError = message => dispatch => {
 const clients = [];
 
 export const serverStart = () => async (dispatch, getState) => {
-  await dispatch(configLoad());
   const port = getState().config.port;
   const app = express();
 

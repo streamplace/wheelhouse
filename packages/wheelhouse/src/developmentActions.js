@@ -6,9 +6,11 @@ import { DEVELOPMENT_LOG, getColor } from "wheelhouse-core";
 import { kubernetesStartPullingData } from "./kubernetesActions";
 import { parseToRgb } from "polished";
 import { generateUid } from "./util/uid";
+// import { pkgForEach } from "./util/graph";
 import { packagesInstall, packagesLink, packagesRun } from "./packagesActions";
 
 export const developmentStart = () => async (dispatch, getState) => {
+  await dispatch(configLoad());
   await dispatch(serverStart());
   await dispatch(packagesInstall());
   await dispatch(packagesLink());
@@ -21,6 +23,11 @@ export const developmentStart = () => async (dispatch, getState) => {
   const port = getState().config.port;
   opn(`http://localhost:${port}/#/development`);
   dispatch(kubernetesStartPullingData());
+};
+
+export const developmentInstall = () => async (dispatch, getState) => {
+  await dispatch(configLoad());
+  await dispatch(packagesInstall());
 };
 
 export const developmentLog = (pkgName, text) => dispatch => {
@@ -37,6 +44,6 @@ export const developmentLog = (pkgName, text) => dispatch => {
   term(` ${text}\n`);
 };
 
-export const developmentBuild = () => async dispatch => {
+export const developmentBuild = () => async (dispatch, getState) => {
   await dispatch(configLoad());
 };
