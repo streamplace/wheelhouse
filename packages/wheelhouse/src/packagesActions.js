@@ -10,6 +10,7 @@ import { spawn } from "mz/child_process";
 import split from "split";
 import { developmentLog } from "./developmentActions";
 import { run } from "./util/run";
+import { pkgForEach } from "./util/graph";
 
 const log = debug("wheelhouse:packagesActions");
 
@@ -29,14 +30,13 @@ export const packagesLoad = pkgPath => async (dispatch, getState) => {
 
 export const packagesInstall = () => async (dispatch, getState) => {
   const { packages } = getState();
-  for (const pkgName of Object.keys(packages)) {
-    const pkg = packages[pkgName];
+  await pkgForEach(packages, async pkg => {
     await run("yarn", ["install", "--no-lockfile"], {
-      stdout: line => dispatch(developmentLog(pkgName, line)),
-      stderr: line => dispatch(developmentLog(pkgName, line)),
+      stdout: line => dispatch(developmentLog(pkg.name, line)),
+      stderr: line => dispatch(developmentLog(pkg.name, line)),
       cwd: pkg.path
     });
-  }
+  });
 };
 
 export const packagesLink = () => async (dispatch, getState) => {
