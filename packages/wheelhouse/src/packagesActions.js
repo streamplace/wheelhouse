@@ -1,4 +1,4 @@
-import fs from "mz/fs";
+import fs from "fs-extra";
 import debug from "debug";
 import { resolve } from "path";
 import {
@@ -9,6 +9,7 @@ import {
 import { spawn } from "mz/child_process";
 import split from "split";
 import { developmentLog } from "./developmentActions";
+import { run } from "./util/run";
 
 const log = debug("wheelhouse:packagesActions");
 
@@ -24,6 +25,50 @@ export const packagesLoad = pkgPath => async (dispatch, getState) => {
       path: resolve(pkgPath)
     })
   );
+};
+
+export const packagesInstall = () => async (dispatch, getState) => {
+  const { packages } = getState();
+  const proms = Object.keys(packages).map(pkgName => {
+    const pkg = packages[pkgName];
+    return run("yarn", ["install", "--no-lockfile"], {
+      stdout: line => dispatch(developmentLog(pkgName, line)),
+      stderr: line => dispatch(developmentLog(pkgName, line)),
+      cwd: pkg.path
+    });
+  });
+  await Promise.all(proms);
+};
+
+export const packagesLink = () => async (dispatch, getState) => {
+  const { packages } = getState();
+  const links = [];
+  Object.keys(packages).forEach(pkgName => {
+    const pkg = packages[pkgName];
+    pkg.allDependencies.forEach(depName => {
+      if (packages[depName]) {
+        links.push([pkg, packages[depName]]);
+      }
+    });
+  });
+
+  const proms = links.map(async ([pkg, dep]) => {
+    dispatch(
+      developmentLog(
+        "wheelhouse",
+        `linking ${dep.packageJson.name} for ${pkg.packageJson.name}`
+      )
+    );
+    const linkPath = resolve(pkg.path, "node_modules", dep.packageJson.name);
+    try {
+      await fs.remove(linkPath);
+    } catch (e) {
+      // No problem, we're idempotent, we probably just removed it already.
+    }
+    await fs.symlink(dep.path, linkPath);
+  });
+
+  await Promise.all(proms);
 };
 
 export const packagesLoaded = ({ packageJson, path }) => {

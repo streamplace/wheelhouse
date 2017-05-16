@@ -11,7 +11,6 @@ export const kubernetesStartPullingData = () => dispatch => {
 export const kubernetesData = (action, resource) => dispatch => {
   return runKube(action, resource, "-o", "json")
     .then(output => {
-      output = JSON.parse(output);
       dispatch({
         type: KUBERNETES_DATA,
         output

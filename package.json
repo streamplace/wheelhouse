@@ -5,10 +5,11 @@
   "main": "package.json",
   "scripts": {
     "test": "npm run lint && lerna run test",
-    "postinstall": "lerna exec --concurrency=1 --no-sort yarn install && lerna bootstrap",
+    "postinstall": "lerna exec --concurrency=1 --no-sort -- yarn install --no-lockfile && lerna bootstrap",
     "lint": "eslint .",
     "precommit": "lint-staged",
-    "dev": "DEBUG='wheelhouse:*' lerna exec --concurrency=999 --no-sort yarn run dev"
+    "dev": "DEBUG='wheelhouse:*' lerna exec --concurrency=999 --no-sort yarn run dev",
+    "publish": "lerna publish --exact --force-publish"
   },
   "lint-staged": {
     "*.js": [
@@ -37,7 +38,7 @@
     "eslint": "^3.19.0",
     "eslint-plugin-react": "^6.10.3",
     "husky": "^0.13.3",
-    "lerna": "2.0.0-beta.37",
+    "lerna": "^2.0.0-rc.4",
     "lint-staged": "^3.4.0"
   },
   "dependencies": {
