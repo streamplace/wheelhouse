@@ -72,7 +72,8 @@ class DevelopmentDataDisplay extends Component {
 const mapStateToProps = state => {
   return {
     packages: state.development.packages,
-    logs: state.development.logs
+    logs: state.development.logs,
+    pods: state.kubernetes.pods
   };
 };
 

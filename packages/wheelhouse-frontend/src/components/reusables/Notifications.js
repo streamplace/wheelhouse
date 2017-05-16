@@ -19,7 +19,7 @@ class Notifications extends Component {
           message: notification.message,
           level: notification.level,
           position: notification.position,
-          autoDismiss: notification.autoDismiss
+          autoDismiss: Number(notification.autoDismiss)
         });
       });
     }
