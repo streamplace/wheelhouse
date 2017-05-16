@@ -8,6 +8,7 @@ const Sidebar = () => {
     <div className="sidebar-container">
       <Header />
       <ul>
+        <li><Link to="/">Home</Link></li>
         <li><Link to="/development">Development</Link></li>
         <li><Link to="/logs">Logs</Link></li>
         <li><Link to="/pods">Pods</Link></li>

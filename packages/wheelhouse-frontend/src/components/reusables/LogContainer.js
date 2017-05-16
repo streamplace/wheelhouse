@@ -87,7 +87,7 @@ class LogContainer extends Component {
       <div className="outer-logs-container">
         <div
           ref={container => (this.container = container)}
-          style={this.props.visibility}
+          style={this.props.customStyles}
           onScroll={this.stickyScrolling.bind(this)}
           className="content-container inner-logs-container"
         >

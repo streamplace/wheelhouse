@@ -12,6 +12,23 @@ export const countReadyContainers = containers => {
   return `${readyCount}/${containerLength}`;
 };
 
+export const notReadyContainers = containers => {
+  return containers
+    .filter(container => {
+      return !container.ready;
+    })
+    .map((container, idx) => {
+      return (
+        <div>
+          <p>These pods aren't ready: </p>
+          <ul>
+            <li key={idx}>{container.name}</li>
+          </ul>
+        </div>
+      );
+    });
+};
+
 export const getContainerAge = container => {
   let now = new Date();
   const year = now.getFullYear();

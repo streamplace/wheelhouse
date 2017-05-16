@@ -13,6 +13,10 @@ button:hover {
   opacity: 0.8;
 }
 
+.bold {
+  font-weight: bold;
+}
+
 .container {
   max-width: none;
   padding: 1em;
