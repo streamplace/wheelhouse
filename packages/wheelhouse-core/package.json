@@ -35,6 +35,7 @@
   },
   "dependencies": {
     "babel-jest": "^19.0.0",
+    "babel-polyfill": "^6.23.0",
     "babel-preset-streamplace": "^0.0.3",
     "debug": "^2.6.4",
     "express": "^4.15.2",
