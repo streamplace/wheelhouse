@@ -15,6 +15,7 @@ const attemptAction = async function(action, ...args) {
   } catch (e) {
     console.error("Fatal error!");
     console.error(e);
+    process.exit(1);
   }
 };
 

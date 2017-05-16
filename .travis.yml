@@ -1,8 +1,23 @@
 language: node_js
+
+before_install:
+  # Repo for Yarn
+  - sudo apt-key adv --keyserver pgp.mit.edu --recv D101F7899D41F3C3
+  - echo "deb http://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+  - sudo apt-get update -qq
+  - sudo apt-get install -y -qq yarn
+
 node_js:
 - '4'
 - '6'
 - '7'
+
 notifications:
   slack:
     secure: gRThzzX4IlFcKycr/RenLpwm+609TD/LInU8Ql9Cy8I+HNjLviwkGCojFrV0WWhcSV7KbwHqU8CxjjIqwT89APuRyKoEmlzXbYGjDFIBXYW5oBidAP/5ORLvnzymLRlDhwIUucaJU2O3ipOzKkFY34cR8EGs2p4+29Ea/n8OeVOxfjgX67tYbTU/oNzt7A1ExTh39lMEHKdrRhM2RRzpB+bKgcXF20qDGa73O99AoA+ZidUlg1oCPXBPihunVetiIZXP/fNT6lrG4oNjQAqeSdx4JY4iy5E+O5QUWwpkuxpQ8FN6hIKsGn1CkI3jqiRUxNwlUBA+PZQzh2q5NalN9iYuoR9HQebv6LugoMAj245ItFnzyFA2B4jdiAKPr20jORvYLNVMoYlAYg3TOqP4KngQ6/1k7VuZU/r6frDusyBHry//uzdTvAff5wig/uLCcjdprtxEkE7ni9vK+7LRT0q75ONjWCxgbZu5ipR2yd3GfYiTgxAz7vB8b3kKiCG7zOjYYqVrqiC0X/BCyHiaE22ESnK7JH3RTXIkPh+OZVxtVX0Nu+wTRNd4mA46cLa1lbb5GHuZ79jofqyzOcM2mYj8hECJ/TperZMHG0eAE8B2iuZ771GrwC5hbv02+DVVBvUg5LDx1WjR7DbByOj9WsQGYIXV4OTJOPs6n4YLnks=
+
+cache:
+  yarn: true
+  directories:
+    - node_modules
+
