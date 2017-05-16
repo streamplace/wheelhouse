@@ -29,15 +29,14 @@ export const packagesLoad = pkgPath => async (dispatch, getState) => {
 
 export const packagesInstall = () => async (dispatch, getState) => {
   const { packages } = getState();
-  const proms = Object.keys(packages).map(pkgName => {
+  for (const pkgName of Object.keys(packages)) {
     const pkg = packages[pkgName];
-    return run("yarn", ["install", "--no-lockfile"], {
+    await run("yarn", ["install", "--no-lockfile"], {
       stdout: line => dispatch(developmentLog(pkgName, line)),
       stderr: line => dispatch(developmentLog(pkgName, line)),
       cwd: pkg.path
     });
-  });
-  await Promise.all(proms);
+  }
 };
 
 export const packagesLink = () => async (dispatch, getState) => {
