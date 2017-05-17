@@ -5,6 +5,7 @@ import path from "path";
 import fs from "mz/fs";
 import { CONFIG_LOADED, CONFIG_ROOT_FOUND } from "wheelhouse-core";
 import { packagesLoad } from "./packagesActions";
+import { helmLoad } from "./helmActions";
 import Glob from "glob-fs";
 
 const glob = Glob({ gitignore: true });
@@ -43,7 +44,12 @@ export const configLoad = () => async dispatch => {
     .reduce((arr1, arr2) => arr1.concat(arr2), [])
     .map(pkg => path.resolve(pkg))
     .filter(pkg => pkg.split("/").pop()[0] !== ".");
-  await Promise.all(packages.map(p => dispatch(packagesLoad(p))));
+  await Promise.all(
+    packages.map(async p => {
+      await dispatch(packagesLoad(p));
+      await dispatch(helmLoad(p));
+    })
+  );
 };
 
 export const configRootFound = rootDir => ({

@@ -92,6 +92,7 @@ export const packagesRun = (pkgName, status) => async (dispatch, getState) => {
     });
     return;
   }
+
   // Refresh package.json, in case they changed the dev script or something
   await dispatch(packagesLoad(pkg.path));
   pkg = getState().packages[pkgName];

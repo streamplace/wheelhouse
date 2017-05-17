@@ -7,13 +7,13 @@ import { kubernetesStartPullingData } from "./kubernetesActions";
 import { parseToRgb } from "polished";
 import { generateUid } from "./util/uid";
 // import { pkgForEach } from "./util/graph";
-import { packagesInstall, packagesLink, packagesRun } from "./packagesActions";
+import { packagesInstall, packagesRun } from "./packagesActions";
 
 export const developmentStart = () => async (dispatch, getState) => {
   await dispatch(configLoad());
   await dispatch(serverStart());
-  await dispatch(packagesInstall());
-  await dispatch(packagesLink());
+  // await dispatch(packagesInstall());
+  // await dispatch(packagesLink());
   const { packages } = getState();
   Object.keys(packages).forEach(pkgName => {
     if (packages[pkgName].packageJson.wheelhouse.autostart) {
@@ -47,3 +47,6 @@ export const developmentLog = (pkgName, text) => dispatch => {
 export const developmentBuild = () => async (dispatch, getState) => {
   await dispatch(configLoad());
 };
+
+//developmentLint
+//the logic for comparing packageJson to chart.yaml

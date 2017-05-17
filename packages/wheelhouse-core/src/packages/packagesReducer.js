@@ -1,4 +1,5 @@
 import { PACKAGES_LOADED } from "./packagesConstants";
+import { HELM_LOADED } from "../helm/helmConstants";
 
 const initialState = {};
 
@@ -51,6 +52,13 @@ export default function(state = initialState, action) {
         localDependencies
       }
     };
+  }
+
+  if (action.type === HELM_LOADED) {
+    let name = action.chartYaml.name;
+    let stateCopy = Object.assign({}, state);
+    stateCopy[name].chartYaml = action.chartYaml;
+    return (state = stateCopy);
   }
 
   return state;
