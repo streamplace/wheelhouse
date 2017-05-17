@@ -63,5 +63,3 @@ export const developmentLint = () => async (dispatch, getState) => {
     console.log("👍");
   }
 };
-//developmentLint
-//the logic for comparing packageJson to chart.yaml
