@@ -2,7 +2,7 @@ import { safeLoad as parseYaml } from "js-yaml";
 import { resolve } from "path";
 import fs from "fs-extra";
 import debug from "debug";
-import { HELM_LOADED } from "wheelhouse-core";
+import { HELM_LOADED, PACKAGES_CHECK_SYNC } from "wheelhouse-core";
 
 const log = debug("wheelhouse:packagesActions");
 
@@ -22,11 +22,14 @@ export const helmLoad = pkgPath => async (dispatch, getState) => {
   }
   const yamlFile = await fs.readFile(pkgHelmPath, "utf8");
   const pkg = parseYaml(yamlFile);
-  dispatch(
+  await dispatch(
     helmLoaded({
       chartYaml: pkg
     })
   );
+  await dispatch({
+    type: PACKAGES_CHECK_SYNC
+  });
 };
 
 export const helmLoaded = ({ chartYaml }) => {
