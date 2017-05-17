@@ -8,6 +8,7 @@ import { parseToRgb } from "polished";
 import { generateUid } from "./util/uid";
 // import { pkgForEach } from "./util/graph";
 import { packagesInstall, packagesRun } from "./packagesActions";
+import { outOfSync } from "./util/sync.js";
 
 export const developmentStart = () => async (dispatch, getState) => {
   await dispatch(configLoad());
@@ -48,5 +49,19 @@ export const developmentBuild = () => async (dispatch, getState) => {
   await dispatch(configLoad());
 };
 
+export const developmentLint = () => async (dispatch, getState) => {
+  await dispatch(configLoad());
+  const { packages } = getState();
+  const outOfSyncPackages = outOfSync(packages);
+
+  if (outOfSyncPackages.length > 0) {
+    throw new Error(
+      `package.json and Chart.yaml are out of sync in: ${outOfSyncPackages}`
+    );
+    /*eslint-disable no-console*/
+  } else {
+    console.log("👍");
+  }
+};
 //developmentLint
 //the logic for comparing packageJson to chart.yaml
