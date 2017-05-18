@@ -46,4 +46,5 @@ export const developmentLog = (pkgName, text) => dispatch => {
 
 export const developmentBuild = () => async (dispatch, getState) => {
   await dispatch(configLoad());
+  await dispatch(packagesLink());
 };

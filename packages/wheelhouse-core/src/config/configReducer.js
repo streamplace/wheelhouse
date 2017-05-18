@@ -1,4 +1,8 @@
-import { CONFIG_LOADED, CONFIG_ROOT_FOUND } from "./configConstants";
+import {
+  CONFIG_LOADED,
+  CONFIG_ROOT_FOUND,
+  CONFIG_VERSION
+} from "./configConstants";
 
 const initialState = {
   port: 3333
@@ -16,6 +20,13 @@ export default function(state = initialState, action) {
     return {
       ...state,
       ...action.configData
+    };
+  }
+
+  if (action.type === CONFIG_VERSION) {
+    return {
+      ...state,
+      version: action.version
     };
   }
 

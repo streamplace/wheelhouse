@@ -3,9 +3,14 @@ import debug from "debug";
 import { safeLoad as parseYaml } from "js-yaml";
 import path from "path";
 import fs from "mz/fs";
-import { CONFIG_LOADED, CONFIG_ROOT_FOUND } from "wheelhouse-core";
+import {
+  CONFIG_LOADED,
+  CONFIG_ROOT_FOUND,
+  CONFIG_VERSION
+} from "wheelhouse-core";
 import { packagesLoad } from "./packagesActions";
 import Glob from "glob-fs";
+import { run } from "./util/run";
 
 const glob = Glob({ gitignore: true });
 
@@ -44,6 +49,18 @@ export const configLoad = () => async dispatch => {
     .map(pkg => path.resolve(pkg))
     .filter(pkg => pkg.split("/").pop()[0] !== ".");
   await Promise.all(packages.map(p => dispatch(packagesLoad(p))));
+
+  // Determine version based on current git state
+  let version;
+  // If we have a tag, that's our version
+  try {
+    version = await run("git", ["describe", "--exact-match", "HEAD"]);
+  } catch (e) {
+    // Otherwise use a commit hash
+    version = await run("git", ["rev-parse", "HEAD"]);
+    version = version.slice(0, 8);
+  }
+  dispatch(configVersion(version));
 };
 
 export const configRootFound = rootDir => ({
@@ -55,3 +72,8 @@ export const configRootFound = rootDir => ({
  * Fires when the config file is loaded.
  */
 export const configLoaded = configData => ({ type: CONFIG_LOADED, configData });
+
+/**
+ * Fires when the config file is loaded.
+ */
+export const configVersion = version => ({ type: CONFIG_VERSION, version });
