@@ -1,4 +1,4 @@
-import { PACKAGES_LOADED, PACKAGES_CHECK_SYNC } from "./packagesConstants";
+import { PACKAGES_LOADED } from "./packagesConstants";
 import { HELM_LOADED } from "../helm/helmConstants";
 import { outOfSync, addLintingErrorStatuses } from "../util/sync.js";
 
@@ -59,13 +59,8 @@ export default function(state = initialState, action) {
     let name = action.chartYaml.name;
     let stateCopy = Object.assign({}, state);
     stateCopy[name].chartYaml = action.chartYaml;
-    return (state = stateCopy);
-  }
-
-  if (action.type === PACKAGES_CHECK_SYNC) {
-    const errorStatuses = outOfSync(state);
-    let stateCopy = Object.assign({}, state);
-    addLintingErrorStatuses(errorStatuses, stateCopy);
+    const errorStatuses = outOfSync(stateCopy);
+    addLintingErrorStatuses(errorStatuses, stateCopy, "chartAndPackageMatch");
     return (state = stateCopy);
   }
 

@@ -24,7 +24,6 @@ if (!global._babelPolyfill) {
   require("babel-polyfill");
 }
 
-//make wheelhouse-lint command
 const runCli = async function(argv) {
   yargs
     .command({

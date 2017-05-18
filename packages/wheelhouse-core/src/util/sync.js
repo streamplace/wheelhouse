@@ -21,13 +21,14 @@ export const outOfSync = packages => {
   return packagesOutOfSync;
 };
 
-export const addLintingErrorStatuses = (errorStatuses, state) => {
+export const addLintingErrorStatuses = (errorStatuses, state, flag) => {
   errorStatuses.forEach(status => {
     let key = Object.keys(status)[0];
+    state[key].linting = {};
     if (Object.values(status)[0]) {
-      state[key].lintingError = true;
+      state[key].linting[flag] = true;
     } else {
-      state[key].lintingError = false;
+      state[key].linting[flag] = false;
     }
   });
 };
