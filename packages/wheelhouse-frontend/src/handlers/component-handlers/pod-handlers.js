@@ -13,6 +13,9 @@ export const countReadyContainers = containers => {
 };
 
 export const notReadyContainers = containers => {
+  if (!containers) {
+    return [];
+  }
   return containers
     .filter(container => {
       return !container.ready;
