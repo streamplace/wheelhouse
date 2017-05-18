@@ -8,17 +8,24 @@ export const kubernetesStartPullingData = () => dispatch => {
   }, 5000);
 };
 
+// Flag to silence duplicate kubectl polling messages
+let didSucceed = true;
+
 export const kubernetesData = (action, resource) => dispatch => {
   return runKube(action, resource, "-o", "json")
     .then(output => {
+      didSucceed = true;
       dispatch({
         type: KUBERNETES_DATA,
         output
       });
     })
     .catch(errorOutput => {
-      const message = `There was an error retrieving the kubernetes packages: ${errorOutput}`;
-      dispatch(serverError(message));
+      if (didSucceed === true) {
+        didSucceed = false;
+        const message = `There was an error retrieving the kubernetes packages: ${errorOutput}`;
+        dispatch(serverError(message));
+      }
     });
 };
 
