@@ -21,7 +21,8 @@ import "./Dashboard.css";
 class Dashboard extends Component {
   render() {
     const { pods, packages, env } = this.props;
-    let notReady, labels;
+    let notReady = [];
+    let labels;
 
     const showLogs = {};
     this.props.packages.forEach(pkgName => (showLogs[pkgName] = true));
