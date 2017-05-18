@@ -14,6 +14,10 @@ class LogContainer extends Component {
     this.stickToBottom = this.stickToBottom.bind(this);
   }
 
+  componentDidMount() {
+    this.componentDidUpdate();
+  }
+
   componentDidUpdate() {
     if (!this.state.shouldStick) {
       if (
@@ -100,6 +104,9 @@ class LogContainer extends Component {
 }
 
 const mapStateToProps = (state, props) => {
+  if (props.showAll) {
+    return { logs: state.development.logs };
+  }
   return {
     logs: state.development.logs.filter(line => {
       return props.filter[line.appName] === true;

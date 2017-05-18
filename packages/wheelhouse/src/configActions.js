@@ -25,7 +25,8 @@ export const configLoad = () => async dispatch => {
       `Unable to locate ${CONFIG_NAME} in parent directories of ${process.cwd()}`
     );
   }
-  await dispatch(configRootFound(path.dirname(configPath)));
+  const rootPath = path.dirname(configPath);
+  await dispatch(configRootFound(rootPath));
 
   const yamlStr = await fs.readFile(configPath, "utf8");
   const configData = parseYaml(yamlStr);
@@ -54,4 +55,7 @@ export const configRootFound = rootDir => ({
 /**
  * Fires when the config file is loaded.
  */
-export const configLoaded = configData => ({ type: CONFIG_LOADED, configData });
+export const configLoaded = (configData, rootPackageJson) => ({
+  type: CONFIG_LOADED,
+  configData
+});

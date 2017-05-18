@@ -19,29 +19,12 @@ import error from "../../../public/assets/error.png";
 import "./Dashboard.css";
 
 class Dashboard extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showLogs: {}
-    };
-  }
-
-  componentWillReceiveProps(props) {
-    props.logs.forEach(log => {
-      if (!this.state.showLogs[log.appName]) {
-        this.setState({
-          showLogs: {
-            ...this.state.showLogs,
-            [log.appName]: true
-          }
-        });
-      }
-    });
-  }
-
   render() {
     const { pods, packages, env } = this.props;
     let notReady, labels;
+
+    const showLogs = {};
+    this.props.packages.forEach(pkgName => (showLogs[pkgName] = true));
 
     if (pods) {
       labels = createLabels(env);
@@ -52,8 +35,7 @@ class Dashboard extends Component {
 
     const logStyles = {
       margin: "0",
-      width: "100%",
-      height: "100vh"
+      width: "100%"
     };
 
     let podImage;
@@ -97,7 +79,7 @@ class Dashboard extends Component {
         </div>
         <div className="right-column-container">
           <Link to="/logs">Logs</Link>
-          <LogContainer filter={this.state.showLogs} customStyles={logStyles} />
+          <LogContainer showAll customStyles={logStyles} />
         </div>
       </div>
     );
@@ -106,7 +88,6 @@ class Dashboard extends Component {
 
 const mapStateToProps = state => {
   return {
-    logs: state.development.logs,
     env: state.development.env,
     pods: state.kubernetes.pods,
     packages: state.development.packages

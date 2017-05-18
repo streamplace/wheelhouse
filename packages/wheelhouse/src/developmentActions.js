@@ -8,12 +8,17 @@ import { parseToRgb } from "polished";
 import { generateUid } from "./util/uid";
 // import { pkgForEach } from "./util/graph";
 import { packagesInstall, packagesLink, packagesRun } from "./packagesActions";
+import { run } from "./util/run";
 
-export const developmentStart = () => async (dispatch, getState) => {
+export const developmentStart = script => async (dispatch, getState) => {
   await dispatch(configLoad());
   await dispatch(serverStart());
   await dispatch(packagesInstall());
   await dispatch(packagesLink());
+  if (script) {
+    // The selected script runs in parallel with us. No await.
+    dispatch(developmentRunScript(script));
+  }
   const { packages } = getState();
   Object.keys(packages).forEach(pkgName => {
     if (packages[pkgName].packageJson.wheelhouse.autostart) {
@@ -21,8 +26,18 @@ export const developmentStart = () => async (dispatch, getState) => {
     }
   });
   const port = getState().config.port;
-  opn(`http://localhost:${port}/#/development`);
+  opn(`http://localhost:${port}/#/`);
   dispatch(kubernetesStartPullingData());
+};
+
+export const developmentRunScript = script => async (dispatch, getState) => {
+  const args = script.split(" ");
+  const cmd = args.shift();
+  await run("npm", ["run", cmd, "--", ...args], {
+    stdout: line => dispatch(developmentLog("run", line)),
+    stderr: line => dispatch(developmentLog("run", line)),
+    cwd: getState().config.rootDir
+  });
 };
 
 export const developmentInstall = () => async (dispatch, getState) => {
