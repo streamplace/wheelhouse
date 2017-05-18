@@ -31,7 +31,7 @@ export const packagesLoad = pkgPath => async (dispatch, getState) => {
 export const packagesInstall = () => async (dispatch, getState) => {
   const { packages } = getState();
   await pkgForEach(packages, async pkg => {
-    await run("yarn", ["install", "--no-lockfile"], {
+    await run("yarn", ["install", "--no-lockfile", "--mutex", "network"], {
       stdout: line => dispatch(developmentLog(pkg.name, line)),
       stderr: line => dispatch(developmentLog(pkg.name, line)),
       cwd: pkg.path
