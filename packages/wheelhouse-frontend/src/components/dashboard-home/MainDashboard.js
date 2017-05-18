@@ -40,7 +40,7 @@ class Dashboard extends Component {
 
     let podImage;
 
-    if (notReady.length > 0) {
+    if (notReady && notReady.length > 0) {
       podImage = (
         <img alt="pods not ready" className="pod-status-image" src={error} />
       );
