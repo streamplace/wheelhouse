@@ -76,12 +76,12 @@
   display: flex;
 }
 
-.log-link {
+.log-link, .log-link:visited {
   color: white;
   text-decoration: underline;
 }
 
-.log-link:hover, .log-link:visited {
+.log-link:hover {
   color: gray;
 }
 

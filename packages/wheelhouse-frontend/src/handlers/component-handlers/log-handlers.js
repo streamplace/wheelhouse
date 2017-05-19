@@ -48,11 +48,12 @@ export const createLogLink = log => {
 
   return (
     <span>
-      {" "}=&gt; App is running at:
+      ✨{" "}=&gt; App is running at:
       {" "}
       <a className="log-link" href={link} target="_blank">
         {link}
       </a>
+      ✨
     </span>
   );
 };
