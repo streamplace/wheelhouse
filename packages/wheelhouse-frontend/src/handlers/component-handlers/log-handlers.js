@@ -1,3 +1,4 @@
+import React from "react";
 import leftPad from "left-pad";
 
 export const recordAppNamesInState = () => {
@@ -34,4 +35,24 @@ export const timeConverter = a => {
   const min = leftPad(a.getMinutes(), 2, "0");
   const sec = leftPad(a.getSeconds(), 2, "0");
   return `${month} ${date} ${hour}:${min}:${sec}`;
+};
+
+export const createLogLink = log => {
+  log = log.split(" ");
+  let link;
+  log.forEach(word => {
+    if (word.includes("http://localhost:")) {
+      link = word;
+    }
+  });
+
+  return (
+    <span>
+      {" "}=&gt; App is running at:
+      {" "}
+      <a className="log-link" href={link} target="_blank">
+        {link}
+      </a>
+    </span>
+  );
 };
