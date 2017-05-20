@@ -31,18 +31,22 @@ export const configLoad = () => async dispatch => {
   const yamlStr = await fs.readFile(configPath, "utf8");
   const configData = parseYaml(yamlStr);
   await dispatch(configLoaded(configData));
-  let packages = await Promise.all(
-    configData.packages.map(async pkgName => {
-      // If the string has a *, glob it, otherwise treat it as literal
-      if (pkgName.indexOf("*") === -1) {
-        return [pkgName];
-      }
-      return await glob.readdirPromise(pkgName);
-    })
-  );
+  let packages = [];
+  for (const pkgName of configData.packages) {
+    const resolved = path.resolve(rootPath, pkgName);
+    if (pkgName.indexOf("*") === -1) {
+      packages.push([resolved]);
+      continue;
+    }
+    packages.push(
+      await glob.readdirPromise(path.relative(process.cwd(), resolved))
+    );
+  }
   packages = packages
     .reduce((arr1, arr2) => arr1.concat(arr2), [])
-    .map(pkg => path.resolve(pkg))
+    .map(pkg => {
+      return path.resolve(pkg);
+    })
     .filter(pkg => pkg.split("/").pop()[0] !== ".");
   await Promise.all(packages.map(p => dispatch(packagesLoad(p))));
 };
