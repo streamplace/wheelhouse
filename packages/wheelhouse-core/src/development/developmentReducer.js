@@ -105,5 +105,15 @@ export default function(state = initialState, action) {
       }
     };
   }
+
+  // if (action.type === NOTIFICATION_TEXT_SEND) {
+  //   const newTextObject = {
+  //     recipient: action.to,
+  //     sender: action.from,
+  //     message: action.body
+  //     textId: action.textId
+  //   };
+  //   return Object.assign({}, state, {sms: [...state.sms, newTextObject ]});
+  // }
   return state;
 }

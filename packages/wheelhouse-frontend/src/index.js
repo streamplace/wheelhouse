@@ -9,6 +9,8 @@ import EnvironmentVariablesDisplay
   from "./components/environment-variables/EnvironmentVariablesDisplay";
 import LogsDataDisplay from "./components/logs-data/LogsDataDisplay";
 import PodsDataDisplay from "./components/kubectl-data/PodsDataDisplay";
+import NotificationDisplay
+  from "./components/notifications/NotificationDisplay";
 import getStore from "./store";
 import "./index.css";
 
@@ -24,6 +26,7 @@ getStore.then(store => {
             path="/environment-variables"
             component={EnvironmentVariablesDisplay}
           />
+          <Route path="/sms" component={NotificationDisplay} />
         </div>
       </Router>
     </Provider>
