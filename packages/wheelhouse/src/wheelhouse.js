@@ -8,6 +8,7 @@ import {
   developmentBuild,
   developmentInstall
 } from "./developmentActions";
+import { meteorPackageBuild } from "./meteorActions";
 import debug from "debug";
 
 const log = debug("wheelhouse:cli");
@@ -52,6 +53,23 @@ const runCli = async function(inputArgv) {
       describe: "Build your app!",
       handler: argv => {
         attemptAction(developmentBuild);
+      }
+    })
+    .command({
+      command: "meteor",
+      describe: "Meteor-related commands",
+      builder: yargs => {
+        yargs.command({
+          command: "build-package",
+          describe: "build a Meteor package",
+          handler: argv => {
+            attemptAction(meteorPackageBuild);
+          }
+        });
+        yargs.help();
+      },
+      handler: argv => {
+        yargs.showHelp();
       }
     })
     .command({

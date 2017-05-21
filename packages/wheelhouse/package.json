@@ -33,7 +33,10 @@
   },
   "homepage": "https://github.com/streamplace/wheelhouse#readme",
   "dependencies": {
+    "babel": "^6.23.0",
+    "babel-core": "^6.24.1",
     "babel-polyfill": "^6.23.0",
+    "babel-preset-streamplace": "0.0.3",
     "debug": "^2.6.6",
     "express": "^4.15.2",
     "find-up": "^2.1.0",
@@ -43,10 +46,12 @@
     "js-yaml": "^3.8.3",
     "kubectl-cli": "^1.6.3",
     "mz": "^2.6.0",
+    "node-sandbox": "^0.1.0",
     "opn": "^5.0.0",
     "polished": "^1.1.1",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
+    "sandbox": "^0.8.6",
     "split": "^1.0.0",
     "terminal-kit": "^1.7.1",
     "update-notifier": "^2.1.0",
@@ -57,10 +62,8 @@
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
-    "babel-core": "^6.24.1",
     "babel-jest": "^19.0.0",
     "babel-plugin-transform-inline-environment-variables": "^0.0.2",
-    "babel-preset-streamplace": "^0.0.3",
     "jest": "^19.0.2"
   }
 }
