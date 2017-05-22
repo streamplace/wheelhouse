@@ -13,7 +13,6 @@ import { run } from "./util/run";
 export const developmentStart = script => async (dispatch, getState) => {
   await dispatch(configLoad());
   await dispatch(serverStart());
-  await dispatch(packagesInstall());
   await dispatch(packagesLink());
   if (script) {
     // The selected script runs in parallel with us. No await.
