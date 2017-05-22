@@ -8,6 +8,7 @@ import { parseToRgb } from "polished";
 import { generateUid } from "./util/uid";
 // import { pkgForEach } from "./util/graph";
 import { packagesInstall, packagesLink, packagesRun } from "./packagesActions";
+import { meteorLoadPackages } from "./meteorActions";
 import { run } from "./util/run";
 
 function isExplicitlyFalse(val) {
@@ -69,4 +70,5 @@ export const developmentLog = (pkgName, text) => dispatch => {
 
 export const developmentBuild = () => async (dispatch, getState) => {
   await dispatch(configLoad());
+  await dispatch(meteorLoadPackages());
 };

@@ -5,9 +5,7 @@ import path from "path";
 import fs from "mz/fs";
 import { CONFIG_LOADED, CONFIG_ROOT_FOUND } from "wheelhouse-core";
 import { packagesLoad } from "./packagesActions";
-import Glob from "glob-fs";
-
-const glob = Glob({ gitignore: true });
+import { globDirs } from "./util/globDirs";
 
 const CONFIG_NAME = "wheelhouse.yaml";
 
@@ -25,29 +23,13 @@ export const configLoad = () => async dispatch => {
       `Unable to locate ${CONFIG_NAME} in parent directories of ${process.cwd()}`
     );
   }
-  const rootPath = path.dirname(configPath);
-  await dispatch(configRootFound(rootPath));
+  const rootDir = path.dirname(configPath);
+  await dispatch(configRootFound(rootDir));
 
   const yamlStr = await fs.readFile(configPath, "utf8");
   const configData = parseYaml(yamlStr);
   await dispatch(configLoaded(configData));
-  let packages = [];
-  for (const pkgName of configData.packages) {
-    const resolved = path.resolve(rootPath, pkgName);
-    if (pkgName.indexOf("*") === -1) {
-      packages.push([resolved]);
-      continue;
-    }
-    packages.push(
-      await glob.readdirPromise(path.relative(process.cwd(), resolved))
-    );
-  }
-  packages = packages
-    .reduce((arr1, arr2) => arr1.concat(arr2), [])
-    .map(pkg => {
-      return path.resolve(pkg);
-    })
-    .filter(pkg => pkg.split("/").pop()[0] !== ".");
+  const packages = await dispatch(globDirs(configData.packages));
   await Promise.all(packages.map(p => dispatch(packagesLoad(p))));
 };
 

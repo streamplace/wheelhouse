@@ -1,7 +1,9 @@
 import { CONFIG_LOADED, CONFIG_ROOT_FOUND } from "./configConstants";
 
 const initialState = {
-  port: 3333
+  port: 3333,
+  packages: [],
+  meteorPackages: []
 };
 
 export default function(state = initialState, action) {

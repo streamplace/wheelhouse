@@ -1,8 +1,10 @@
 import { configLoad } from "./configActions";
 import fs from "fs-extra";
 import Sandbox from "sandbox";
-import { resolve } from "path";
+import { resolve, dirname } from "path";
 import { developmentLog } from "./developmentActions";
+import { globDirs } from "./util/globDirs";
+import { transform } from "babel-core";
 
 const runSandbox = jsStr => {
   const sandbox = new Sandbox();
@@ -22,9 +24,15 @@ const runSandbox = jsStr => {
   });
 };
 
-export const meteorPackageBuild = () => async (dispatch, getState) => {
-  await dispatch(configLoad());
-  const myDir = process.cwd();
+export const meteorLoadPackages = () => async (dispatch, getState) => {
+  const meteorPackageGlob = getState().config.meteorPackages;
+  const meteorPackages = await dispatch(globDirs(meteorPackageGlob));
+  for (const pkgDir of meteorPackages) {
+    await dispatch(meteorPackageBuild(pkgDir));
+  }
+};
+
+export const meteorPackageBuild = myDir => async (dispatch, getState) => {
   const loader = await fs.readFile(
     resolve(__dirname, "util", "packageLoader.js")
   );
@@ -42,6 +50,7 @@ export const meteorPackageBuild = () => async (dispatch, getState) => {
   const pkgJsonPath = resolve(outputDir, "package.json");
   dispatch(developmentLog(pkgName, "creating package.json"));
   const dependencies = {};
+  // Add in ^ in front of package versions, Meteor uses exact
   for (const depName of Object.keys(packageData.npm)) {
     dependencies[depName] = `^${packageData.npm[depName]}`;
   }
@@ -53,6 +62,24 @@ export const meteorPackageBuild = () => async (dispatch, getState) => {
     dependencies
   };
   await fs.writeFile(pkgJsonPath, JSON.stringify(pkgJsonData, null, 2), "utf8");
+
+  // Compile all server files with babel
+  const proms = [];
+  for (const inputFile of packageData.server.files) {
+    const inPath = resolve(myDir, inputFile);
+    const outPath = resolve(outputDir, inputFile);
+    proms.push(dispatch(meteorTransformFile(inPath, outPath)));
+  }
+  await Promise.all(proms);
+};
+
+export const meteorTransformFile = (file, outputFile) => async () => {
+  const inputData = await fs.readFile(file, "utf8");
+  const result = transform(inputData, {
+    presets: [require("babel-preset-streamplace")]
+  });
+  await fs.ensureDir(dirname(outputFile));
+  await fs.writeFile(outputFile, result.code, "utf8");
 };
 
 // console.log(packageData);
