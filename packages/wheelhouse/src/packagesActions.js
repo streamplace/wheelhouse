@@ -77,7 +77,12 @@ export const packagesLoaded = ({ packageJson, path }) => {
 const procs = {};
 
 export const packagesRun = (pkgName, status) => async (dispatch, getState) => {
-  let pkg = getState().packages[pkgName];
+  const state = getState();
+  let pkg = state.packages[pkgName];
+  const env = { ...process.env };
+  for (const envName of Object.keys(state.development.env)) {
+    env[envName] = state.development.env[envName].currentValue;
+  }
 
   if (!pkg) {
     const message = `Unknown package: ${pkgName}`;
@@ -103,7 +108,8 @@ export const packagesRun = (pkgName, status) => async (dispatch, getState) => {
   }
 
   const proc = spawn("bash", ["-c", devScript], {
-    cwd: pkg.path
+    cwd: pkg.path,
+    env
   });
 
   procs[pkgName] = proc;
