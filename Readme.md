@@ -27,8 +27,8 @@ yarn global add wheelhouse
 Clone the repo, and then:
 
 ```
-yarn install
-yarn run dev
+npm install
+npm run dev
 ```
 
 ## Credits
