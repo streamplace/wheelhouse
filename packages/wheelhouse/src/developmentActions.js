@@ -45,6 +45,9 @@ export const developmentInstall = () => async (dispatch, getState) => {
 };
 
 export const developmentLog = (pkgName, text) => dispatch => {
+  if (text.trim().length === 0) {
+    return;
+  }
   dispatch({
     type: DEVELOPMENT_LOG,
     pkgName,

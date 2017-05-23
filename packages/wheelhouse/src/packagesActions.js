@@ -12,6 +12,7 @@ import { developmentLog } from "./developmentActions";
 import { run } from "./util/run";
 import { pkgForEach } from "./util/graph";
 
+const SHOULD_RETRY = 1000; // wait at least this long before auto-rebooting an app, prevent thrash
 const log = debug("wheelhouse:packagesActions");
 
 export const packagesLoad = pkgPath => async (dispatch, getState) => {
@@ -77,6 +78,7 @@ export const packagesLoaded = ({ packageJson, path }) => {
 const procs = {};
 
 export const packagesRun = (pkgName, status) => async (dispatch, getState) => {
+  dispatch(developmentLog(pkgName, "starting"));
   const state = getState();
   let pkg = state.packages[pkgName];
   const env = { ...process.env };
@@ -90,7 +92,8 @@ export const packagesRun = (pkgName, status) => async (dispatch, getState) => {
   }
 
   if (status === false) {
-    procs[pkgName].kill("SIGKILL");
+    // Negative pid kills the proc group
+    await process.kill(procs[pkgName].pid);
     dispatch({
       type: PACKAGES_STOP,
       pkgName
@@ -107,9 +110,12 @@ export const packagesRun = (pkgName, status) => async (dispatch, getState) => {
     );
   }
 
+  const startTime = Date.now();
+
   const proc = spawn("bash", ["-c", devScript], {
     cwd: pkg.path,
-    env
+    env,
+    detached: true
   });
 
   procs[pkgName] = proc;
@@ -122,8 +128,51 @@ export const packagesRun = (pkgName, status) => async (dispatch, getState) => {
     dispatch(developmentLog(pkgName, text));
   });
 
-  proc.on("close", code => {
-    dispatch(developmentLog(pkgName, `process exited with code ${code}`));
+  proc.on("close", (code, signal) => {
+    dispatch(
+      developmentLog(pkgName, `process closed code=${code} signal=${signal}`)
+    );
+  });
+
+  proc.on("exit", async (code, signal) => {
+    const uptime = Date.now() - startTime;
+    dispatch(
+      developmentLog(pkgName, `process exited code=${code} signal=${signal}`)
+    );
+    // Clean up any remaining subprocesses
+    process.kill(proc.pid);
+    if (code !== 0) {
+      dispatch(developmentLog(pkgName, "abnormal exit detected"));
+      if (uptime < SHOULD_RETRY) {
+        dispatch(
+          developmentLog(
+            pkgName,
+            `but we were only up for ${uptime}ms, so we're not going to retry.`
+          )
+        );
+      } else {
+        dispatch(developmentLog(pkgName, "retrying!"));
+        dispatch(packagesRun(pkgName));
+      }
+      return;
+    }
+    dispatch({
+      type: PACKAGES_STOP,
+      pkgName
+    });
+  });
+
+  proc.on("disconnect", () => {
+    dispatch(
+      developmentLog(
+        pkgName,
+        "proc disconnect? this shouldn't happen. tell eli."
+      )
+    );
+  });
+
+  proc.on("error", err => {
+    dispatch(developmentLog(pkgName, `process error: ${err}`));
   });
 
   dispatch({
