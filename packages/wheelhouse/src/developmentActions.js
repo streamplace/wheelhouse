@@ -24,8 +24,10 @@ export const developmentStart = script => async (dispatch, getState) => {
       dispatch(packagesRun(pkgName, true));
     }
   });
-  const port = getState().config.port;
-  opn(`http://localhost:${port}/#/`);
+  if (!(getState().config.openBrowserOnStartup && getState().config.openBrowserOnStartup === false)) {
+    const port = getState().config.port;
+    opn(`http://localhost:${port}/#/`);
+  }
   dispatch(kubernetesStartPullingData());
 };
 
