@@ -10,6 +10,10 @@ import { generateUid } from "./util/uid";
 import { packagesInstall, packagesLink, packagesRun } from "./packagesActions";
 import { run } from "./util/run";
 
+function isExplicitlyFalse(val) {
+  return typeof val !== "undefined" && val === false;
+}
+
 export const developmentStart = script => async (dispatch, getState) => {
   await dispatch(configLoad());
   await dispatch(serverStart());
@@ -24,8 +28,10 @@ export const developmentStart = script => async (dispatch, getState) => {
       dispatch(packagesRun(pkgName, true));
     }
   });
-  const port = getState().config.port;
-  opn(`http://localhost:${port}/#/`);
+  if (!isExplicitlyFalse(getState().config.openBrowserOnStartup)) {
+    const port = getState().config.port;
+    opn(`http://localhost:${port}/#/`);
+  }
   dispatch(kubernetesStartPullingData());
 };
 
