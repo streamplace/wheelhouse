@@ -77,8 +77,9 @@ if (!module.parent) {
 
 // Make unhandled promise rejections fatal
 process.on("unhandledRejection", function(reason, p) {
-  console.log("Unhandled promise rejection, exiting. Details:");
+  console.log("Unhandled promise rejection. Details:");
   console.log(reason);
-  process.exit(1);
+  // Commented for now as it appears to be mucking with child processes
+  // process.exit(1);
   // application specific logging here
 });

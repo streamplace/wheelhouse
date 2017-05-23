@@ -6,7 +6,7 @@ import {
   PACKAGES_START,
   PACKAGES_STOP
 } from "wheelhouse-core";
-import { spawn } from "mz/child_process";
+import { spawn } from "child_process";
 import split from "split";
 import { developmentLog } from "./developmentActions";
 import { run } from "./util/run";
@@ -78,7 +78,6 @@ export const packagesLoaded = ({ packageJson, path }) => {
 const procs = {};
 
 export const packagesRun = (pkgName, status) => async (dispatch, getState) => {
-  dispatch(developmentLog(pkgName, "starting"));
   const state = getState();
   let pkg = state.packages[pkgName];
   const env = { ...process.env };
@@ -92,13 +91,21 @@ export const packagesRun = (pkgName, status) => async (dispatch, getState) => {
   }
 
   if (status === false) {
+    dispatch(developmentLog(pkgName, "stopping"));
     // Negative pid kills the proc group
-    await process.kill(procs[pkgName].pid);
+    try {
+      process.kill(-procs[pkgName].pid);
+    } catch (e) {
+      // It's already gone. That's great!
+    }
     dispatch({
       type: PACKAGES_STOP,
       pkgName
     });
+    delete procs[pkgName];
     return;
+  } else {
+    dispatch(developmentLog(pkgName, "starting"));
   }
   // Refresh package.json, in case they changed the dev script or something
   await dispatch(packagesLoad(pkg.path));
@@ -132,15 +139,28 @@ export const packagesRun = (pkgName, status) => async (dispatch, getState) => {
     dispatch(
       developmentLog(pkgName, `process closed code=${code} signal=${signal}`)
     );
+    delete procs[pkgName];
   });
 
   proc.on("exit", async (code, signal) => {
+    if (!procs[pkgName]) {
+      // Expected exit.
+      return;
+    }
     const uptime = Date.now() - startTime;
     dispatch(
       developmentLog(pkgName, `process exited code=${code} signal=${signal}`)
     );
     // Clean up any remaining subprocesses
-    process.kill(proc.pid);
+    // process.kill(proc.pid);
+    try {
+      process.kill(-proc.pid, "SIGKILL");
+    } catch (e) {
+      if (e.code !== "ESRCH") {
+        /* eslint-disable no-console */
+        console.error(e);
+      }
+    }
     if (code !== 0) {
       dispatch(developmentLog(pkgName, "abnormal exit detected"));
       if (uptime < SHOULD_RETRY) {
@@ -180,3 +200,20 @@ export const packagesRun = (pkgName, status) => async (dispatch, getState) => {
     pkgName
   });
 };
+
+const cleanup = () => {
+  Object.keys(procs).forEach(proc => {
+    try {
+      process.kill(-procs[proc].pid, "SIGKILL");
+    } catch (e) {
+      // It's already gone. That's great!
+    }
+  });
+  // Ugh at this, but it appears to be necessary to give the process.kill a minute to go out.
+  setTimeout(function() {
+    process.exit(0);
+  }, 100);
+};
+
+process.on("SIGINT", cleanup);
+process.on("SIGTERM", cleanup);

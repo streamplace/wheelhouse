@@ -66,8 +66,8 @@ export const run = (cmd, args, opts = {}) => {
   return prom;
 };
 
-process.on("SIGTERM", () => {
-  runningProcs.forEach(proc => proc.kill("KILL"));
+process.on("exit", () => {
+  runningProcs.forEach(proc => proc.kill("SIGKILL"));
 });
 
 export const runKube = (...args) => {
