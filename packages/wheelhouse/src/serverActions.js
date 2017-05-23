@@ -20,7 +20,9 @@ const log = debug("wheelhouse:serverActions");
  * Promise helper for apps listening. Returns the port.
  */
 
-const serverListen = function(server, port) {
+// The port = 0 default is a Linux workaround.
+// See https://github.com/FWeinb/nodeshot/issues/11#issuecomment-228529517
+const serverListen = function(server, port = 0) {
   return new Promise((resolve, reject) => {
     server.listen(port, function() {
       resolve(server.address().port);
