@@ -1,10 +1,10 @@
-import { configLoad } from "./configActions";
 import fs from "fs-extra";
 import Sandbox from "sandbox";
 import { resolve, dirname } from "path";
 import { developmentLog } from "./developmentActions";
 import { globDirs } from "./util/globDirs";
 import { transform } from "babel-core";
+import { run } from "./util/run";
 
 const runSandbox = jsStr => {
   const sandbox = new Sandbox();
@@ -63,14 +63,34 @@ export const meteorPackageBuild = myDir => async (dispatch, getState) => {
   };
   await fs.writeFile(pkgJsonPath, JSON.stringify(pkgJsonData, null, 2), "utf8");
 
+  await run("npm5", ["install"], {
+    stdout: line => dispatch(developmentLog(pkgName, line)),
+    stderr: line => dispatch(developmentLog(pkgName, line)),
+    cwd: outputDir
+  });
+
   // Compile all server files with babel
-  const proms = [];
-  for (const inputFile of packageData.server.files) {
-    const inPath = resolve(myDir, inputFile);
-    const outPath = resolve(outputDir, inputFile);
-    proms.push(dispatch(meteorTransformFile(inPath, outPath)));
-  }
-  await Promise.all(proms);
+  // const proms = [];
+  // for (const inputFile of packageData.server.files) {
+  //   const inPath = resolve(myDir, inputFile);
+  //   const outPath = resolve(outputDir, inputFile);
+  //   proms.push(dispatch(meteorTransformFile(inPath, outPath)));
+  // }
+
+  const clientLines = packageData.client.files.map(file => {
+    return `import '${resolve(myDir, file)}';`;
+  });
+  const clientFilePath = resolve(outputDir, ".wh-client-build.js");
+  await fs.writeFile(clientFilePath, clientLines.join("\n"), "utf8");
+  await run(
+    resolve(__dirname, "..", "node_modules", ".bin", "webpack"),
+    ["--config", resolve(__dirname, "meteor-build.webpack-config.js")],
+    {
+      cwd: outputDir,
+      stdout: line => dispatch(developmentLog(pkgName, line)),
+      stderr: line => dispatch(developmentLog(pkgName, line))
+    }
+  );
 };
 
 export const meteorTransformFile = (file, outputFile) => async () => {
