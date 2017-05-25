@@ -15,7 +15,7 @@ const LogLine = props => {
         <div className="log-line-column log-line-app-server nowrap">
           {props.serverStatus}
         </div>
-        <div className="log-line-column">
+        <div className="log-line-column wrap">
           <Ansi>{props.expectedAction}</Ansi>
         </div>
       </div>
