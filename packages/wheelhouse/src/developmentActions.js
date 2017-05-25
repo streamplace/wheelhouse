@@ -8,7 +8,7 @@ import { parseToRgb } from "polished";
 import { generateUid } from "./util/uid";
 // import { pkgForEach } from "./util/graph";
 import { packagesInstall, packagesLink, packagesRun } from "./packagesActions";
-import { meteorLoadPackages } from "./meteorActions";
+import { meteorLoadPackages, meteorPackageBuild } from "./meteorActions";
 import { run } from "./util/run";
 
 function isExplicitlyFalse(val) {
@@ -18,6 +18,7 @@ function isExplicitlyFalse(val) {
 export const developmentStart = script => async (dispatch, getState) => {
   await dispatch(configLoad());
   await dispatch(serverStart());
+  await dispatch(meteorLoadPackages());
   await dispatch(packagesLink());
   if (script) {
     // The selected script runs in parallel with us. No await.
@@ -71,4 +72,9 @@ export const developmentLog = (pkgName, text) => dispatch => {
 export const developmentBuild = () => async (dispatch, getState) => {
   await dispatch(configLoad());
   await dispatch(meteorLoadPackages());
+};
+
+export const developmentMeteorPackageBuild = pkgDir => async dispatch => {
+  await dispatch(configLoad());
+  await dispatch(meteorPackageBuild(pkgDir));
 };

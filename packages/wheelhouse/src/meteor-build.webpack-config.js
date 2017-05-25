@@ -8,15 +8,15 @@ const loader = name => {
 
 module.exports = {
   entry: "./.wh-client-build.js",
-  output: {
-    filename: ".wh-client-built.js"
-  },
   plugins: [
     new webpack.DefinePlugin({
       "Meteor.isClient": JSON.stringify(true),
-      "Meteor.isServer": JSON.stringify(false)
+      "Meteor.isServer": JSON.stringify(false),
+      // Disable amd support. Silly workaround for https://github.com/collab-project/videojs-wavesurfer/issues/30
+      "define.amd": JSON.stringify(false)
     })
   ],
+  externals: /^meteor/g,
   module: {
     loaders: [
       {
@@ -25,12 +25,26 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        loader: [`${loader("file")}?name=[name].scss`]
+        loaders: [
+          loader("style"),
+          loader("css"),
+          loader("sass"),
+          `${loader("string-replace")}?search={csats:tealtown}&replace=/Volumes/elidev/csats/apps/custom_packages/tealtown&flags=gi`
+        ]
       },
       {
         test: /\.css$/,
-        loader: [`${loader("file")}?name=[name].css`]
+        loaders: [loader("style"), loader("css")]
+      },
+      {
+        test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: `${loader("url")}?limit=10000&minetype=application/font-woff`
+      },
+      {
+        test: /\.(ttf|eot|svg|png)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: loader("file")
       }
     ]
-  }
+  },
+  resolve: {}
 };
