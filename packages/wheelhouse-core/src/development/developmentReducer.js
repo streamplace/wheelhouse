@@ -89,7 +89,9 @@ export default function(state = initialState, action) {
       uid: action.uid,
       expectedAction: action.text
     };
-    return Object.assign({}, state, { logs: [...state.logs, newObject] });
+    return Object.assign({}, state, {
+      logs: [...state.logs.slice(-999), newObject]
+    });
   }
 
   if (action.type === DEVELOPMENT_ENV_CHANGE) {
