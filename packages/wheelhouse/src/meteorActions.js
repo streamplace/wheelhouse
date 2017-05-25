@@ -60,8 +60,9 @@ export const meteorPackageBuild = myDir => async (dispatch, getState) => {
   const pkgJsonData = {
     name: pkgName,
     description: packageJs.describe.summary,
-    version: packageJs.describe.version,
+    version: "0.0.1-alpha0",
     repository: packageJs.describe.git,
+    main: "index.js",
     dependencies
   };
   await fs.ensureDir(resolve(outputDir));
@@ -114,18 +115,50 @@ export const meteorPackageBuild = myDir => async (dispatch, getState) => {
 
   await Promise.all(proms);
 
-  const clientLines = packageJs.client.files.map(file => {
-    if (localNpmRe.test(file)) {
-      // If it's a reference to meteor's local npm, rewrite it to a node_moduiles ref
-      file = file.replace(localNpmRe, "");
-    } else {
-      // Otherwise, treat it as a local file
-      file = `./${file}`;
+  const serverJs = packageJs.server.exports
+    .map(exp => {
+      return `global["${exp}"] = {};`;
+    })
+    .concat(
+      packageJs.server.files.map(file => {
+        if (localNpmRe.test(file)) {
+          // If it's a reference to meteor's local npm, rewrite it to a node_moduiles ref
+          file = file.replace(localNpmRe, "");
+        } else {
+          // Otherwise, treat it as a local file
+          file = `./dist/${file}`;
+        }
+        return `require("${file}");`;
+      })
+    )
+    .join("\n");
+
+  const clientJs = packageJs.client.files
+    .map(file => {
+      if (localNpmRe.test(file)) {
+        // If it's a reference to meteor's local npm, rewrite it to a node_moduiles ref
+        file = file.replace(localNpmRe, "");
+      } else {
+        // Otherwise, treat it as a local file
+        file = `./${file}`;
+      }
+      return `import "${file}";`;
+    })
+    .join("\n");
+  const indexJs = `
+    if (Meteor.isServer) {
+      require("./server.js");
     }
-    return `import '${file}';`;
-  });
-  const clientFilePath = resolve(myDir, ".wh-client-build.js");
-  await fs.writeFile(clientFilePath, clientLines.join("\n"), "utf8");
+    if (Meteor.isClient) {
+      require("./dist/client-compiled.js");
+    }
+  `;
+  const clientFilePath = resolve(myDir, "client.js");
+  const serverFilePath = resolve(myDir, "server.js");
+  const indexFilePath = resolve(myDir, "index.js");
+  await fs.writeFile(clientFilePath, prettier.format(clientJs), "utf8");
+  await fs.writeFile(serverFilePath, prettier.format(serverJs), "utf8");
+  await fs.writeFile(indexFilePath, prettier.format(indexJs), "utf8");
   await run(
     resolve(__dirname, "..", "node_modules", ".bin", "webpack"),
     [
