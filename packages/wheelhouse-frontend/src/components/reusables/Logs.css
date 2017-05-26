@@ -76,6 +76,15 @@
   display: flex;
 }
 
+.log-link, .log-link:visited {
+  color: white;
+  text-decoration: underline;
+}
+
+.log-link:hover {
+  color: gray;
+}
+
 .inner-logs-container {
   background-color: black;
   padding: 0 5px !important;

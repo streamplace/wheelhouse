@@ -1,8 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import LogLine from "./LogLine";
-import { timeConverter } from "../../handlers/component-handlers/log-handlers";
+import {
+  timeConverter,
+  createLogLink
+} from "../../handlers/component-handlers/log-handlers";
 import { getColor } from "wheelhouse-core";
+import Ansi from "ansi-to-react";
 
 class LogContainer extends Component {
   constructor(props) {
@@ -66,6 +70,14 @@ class LogContainer extends Component {
       const textColor = {
         color: getColor(line.appName)
       };
+      let expectedAction;
+      let link;
+      if (line.expectedAction.includes("http://localhost")) {
+        link = createLogLink(line.expectedAction);
+        expectedAction = link;
+      } else {
+        expectedAction = <Ansi>{line.expectedAction}</Ansi>;
+      }
       return (
         <LogLine
           key={line.uid}
@@ -73,7 +85,7 @@ class LogContainer extends Component {
           appName={line.appName}
           color={textColor}
           serverStatus={line.serverStatus}
-          expectedAction={line.expectedAction}
+          expectedAction={expectedAction}
         />
       );
     });

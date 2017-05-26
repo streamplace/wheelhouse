@@ -1,5 +1,4 @@
 import React from "react";
-import Ansi from "ansi-to-react";
 
 const LogLine = props => {
   return (
@@ -16,7 +15,7 @@ const LogLine = props => {
           {props.serverStatus}
         </div>
         <div className="log-line-column">
-          <Ansi>{props.expectedAction}</Ansi>
+          {props.expectedAction}
         </div>
       </div>
     </div>

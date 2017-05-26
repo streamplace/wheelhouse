@@ -62,24 +62,28 @@ class Dashboard extends Component {
           </div>
           <div className="left-middle-container">
             <div className="left-middle-top left-middle">
-              <Link to="/pods">Pods</Link>
+              <Link className="main-dashboard-link" to="/pods">Pods</Link>
               {podImage}
               {notReady.length > 0 ? notReady : <p>All pods are ready.</p>}
             </div>
             <div className="left-middle-bottom left-middle">
-              <Link to="/development">Active Applications</Link>
+              <Link className="main-dashboard-link" to="/development">
+                Active Applications
+              </Link>
               <ul>
                 {appStatuses}
               </ul>
             </div>
           </div>
           <div className="left-bottom-container">
-            <Link to="/environment-variables">Environment Variables</Link>
+            <Link className="main-dashboard-link" to="/environment-variables">
+              Environment Variables
+            </Link>
             <EnvironmentsDashboard labels={labels} />
           </div>
         </div>
         <div className="right-column-container">
-          <Link to="/logs">Logs</Link>
+          <Link className="main-dashboard-link" to="/logs">Logs</Link>
           <LogContainer showAll customStyles={logStyles} />
         </div>
       </div>
