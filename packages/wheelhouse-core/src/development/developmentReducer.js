@@ -13,8 +13,7 @@ import { CONFIG_LOADED } from "../config/configConstants";
 
 const initialState = {
   packages: [],
-  logs: [],
-  env: {}
+  logs: []
 };
 
 export default function(state = initialState, action) {

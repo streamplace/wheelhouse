@@ -118,3 +118,7 @@
   padding: 0;
   display: block;
 }
+
+.wrap {
+  word-break: break-all;
+}
