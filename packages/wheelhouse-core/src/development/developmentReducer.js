@@ -13,17 +13,7 @@ import { CONFIG_LOADED } from "../config/configConstants";
 
 const initialState = {
   packages: [],
-  logs: [
-    {
-      appName: "fake-meteor",
-      color: "#F25F24",
-      date: 1495735954241,
-      serverStatus: "",
-      uid: 3000,
-      expectedAction: "startingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstartingstarting",
-      env: {}
-    }
-  ]
+  logs: []
 };
 
 export default function(state = initialState, action) {
