@@ -6,7 +6,8 @@ import { store } from "./store";
 import {
   developmentStart,
   developmentBuild,
-  developmentInstall
+  developmentInstall,
+  developmentLint
 } from "./developmentActions";
 import debug from "debug";
 
@@ -59,6 +60,13 @@ const runCli = async function(inputArgv) {
       describe: "install all necessary dependencies in all packages",
       handler: argv => {
         attemptAction(developmentInstall);
+      }
+    })
+    .command({
+      command: "lint",
+      describe: "Check that package.json and Chart.yaml are in sync",
+      handler: argv => {
+        attemptAction(developmentLint);
       }
     })
     .help()

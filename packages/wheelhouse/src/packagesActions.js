@@ -107,6 +107,7 @@ export const packagesRun = (pkgName, status) => async (dispatch, getState) => {
   } else {
     dispatch(developmentLog(pkgName, "starting"));
   }
+
   // Refresh package.json, in case they changed the dev script or something
   await dispatch(packagesLoad(pkg.path));
   pkg = getState().packages[pkgName];

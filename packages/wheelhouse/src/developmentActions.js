@@ -70,3 +70,27 @@ export const developmentLog = (pkgName, text) => dispatch => {
 export const developmentBuild = () => async (dispatch, getState) => {
   await dispatch(configLoad());
 };
+
+export const developmentLint = () => async (dispatch, getState) => {
+  await dispatch(configLoad());
+  const { packages } = getState();
+  let errored = "";
+  for (let key in packages) {
+    for (let lintingKey in packages[key].linting) {
+      if (packages[key].linting[lintingKey]) {
+        if (lintingKey === "chartAndPackageMatch" && !errored.length) {
+          errored += "package.json and Chart.yaml are not in sync in:";
+        }
+        if (lintingKey === "chartAndPackageMatch") {
+          errored += ` ${key}`;
+        }
+      }
+    }
+  }
+
+  if (errored.length > 0) {
+    throw new Error(`${errored}`);
+  } else {
+    dispatch(developmentLog("wheelhouse", "👍"));
+  }
+};
