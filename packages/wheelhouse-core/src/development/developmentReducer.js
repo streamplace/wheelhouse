@@ -34,7 +34,9 @@ export default function(state = initialState, action) {
           status: "STOPPED",
           active: false
         }
-      ]
+      ].sort((a, b) => {
+        return a.name > b.name ? 1 : -1;
+      })
     };
   }
 
