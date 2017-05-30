@@ -80,7 +80,7 @@ export const serverStart = () => async (dispatch, getState) => {
     defer: false
   });
 
-  if (!(getState().config.openBrowserOnStartup !== false)) {
+  if (getState().config.openBrowserOnStartup !== false) {
     const port = getState().config.port;
     opn(`http://localhost:${port}/#/`);
   }
