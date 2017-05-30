@@ -13,6 +13,7 @@ import { run } from "./util/run";
 import { pkgForEach } from "./util/graph";
 import path from "path";
 import Glob from "glob-fs";
+import semver from "semver";
 
 const glob = Glob({ gitignore: true });
 const SHOULD_RETRY = 1000; // wait at least this long before auto-rebooting an app, prevent thrash
@@ -63,7 +64,25 @@ export const packagesLoad = pkgPath => async (dispatch, getState) => {
   );
 };
 
+// Idempotent function to block once on checking npm version
+const MIN_NPM_VER = "5.0.0";
+let checkNpmProm;
+let checkNpmOnce = async () => {
+  if (!checkNpmProm) {
+    checkNpmProm = run("npm", ["--version"]);
+    const ver = await checkNpmProm;
+    if (semver.lt(ver, MIN_NPM_VER)) {
+      throw new Error(
+        `wheelhouse requires npm >= ${MIN_NPM_VER}, you have ${ver}, please run npm install -g npm@next`
+      );
+    }
+  } else {
+    await checkNpmProm;
+  }
+};
+
 export const packagesInstall = () => async (dispatch, getState) => {
+  await checkNpmOnce();
   const { packages } = getState();
   await pkgForEach(packages, async pkg => {
     await run("npm", ["install"], {
