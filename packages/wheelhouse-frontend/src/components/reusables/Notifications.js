@@ -13,16 +13,7 @@ class Notifications extends Component {
 
   componentDidMount() {
     this._notificationSystem = this.refs.notificationSystem;
-    if (this.props.notifications) {
-      this.props.notifications.forEach(notification => {
-        this._notificationSystem.addNotification({
-          message: notification.message,
-          level: notification.level,
-          position: notification.position,
-          autoDismiss: Number(notification.autoDismiss)
-        });
-      });
-    }
+    this.componentWillReceiveProps(this.props);
   }
 
   componentWillReceiveProps(props) {
@@ -35,9 +26,14 @@ class Notifications extends Component {
             uid: notification.uid
           });
           const message = `${notification.date}: ${notification.message}`;
+          const dismiss = typeof notification.autoDismiss === "number"
+            ? notification.autoDismiss
+            : 1000;
           this._notificationSystem.addNotification({
             message: message,
-            level: notification.level
+            level: notification.level,
+            position: notification.position || "tr",
+            autoDismiss: dismiss
           });
         }
       });
