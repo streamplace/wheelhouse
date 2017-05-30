@@ -4,10 +4,11 @@
 import yargs from "yargs";
 import { store } from "./store";
 import {
-  developmentStart,
-  developmentBuild,
-  developmentInstall
-} from "./developmentActions";
+  wheelhouseInstall,
+  wheelhouseLink,
+  wheelhouseStart,
+  wheelhouseBuild
+} from "./wheelhouseActions";
 import debug from "debug";
 
 const log = debug("wheelhouse:cli");
@@ -27,7 +28,7 @@ if (!global._babelPolyfill) {
 }
 
 const runCli = async function(inputArgv) {
-  // If they do "wheelhouse run" we want all of the following arguments to be passed to the script
+  // #hack for C-SATS run/stage script
   const argv = [];
   while (inputArgv.length > 0) {
     const str = inputArgv.shift();
@@ -44,25 +45,33 @@ const runCli = async function(inputArgv) {
       describe: "Run your local development with Wheelhouse",
       aliases: "dev",
       handler: argv => {
-        attemptAction(developmentStart, script);
-      }
-    })
-    .command({
-      command: "build",
-      describe: "Build your app!",
-      handler: argv => {
-        attemptAction(developmentBuild);
+        attemptAction(wheelhouseStart, script);
       }
     })
     .command({
       command: "install",
-      describe: "install all necessary dependencies in all packages",
+      describe: "install all necessary dependencies of all packages",
       handler: argv => {
-        attemptAction(developmentInstall);
+        attemptAction(wheelhouseInstall);
+      }
+    })
+    .command({
+      command: "link",
+      describe: "Run your local development with Wheelhouse",
+      aliases: "dev",
+      handler: argv => {
+        attemptAction(wheelhouseLink);
+      }
+    })
+    .command({
+      command: "build",
+      describe: "Use Wheelhouse to build your npm packages, Docker images, and Helm charts",
+      handler: argv => {
+        attemptAction(wheelhouseBuild);
       }
     })
     .help()
-    // .strict()
+    .version()
     .exitProcess(false)
     .parse(argv);
 };

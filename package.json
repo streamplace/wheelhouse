@@ -1,15 +1,18 @@
 {
-  "name": "wheelhouse",
+  "name": "wheelhouse-dev",
   "version": "0.0.1",
   "description": "Swiss Army knife for Javascript + Kubernetes",
   "main": "package.json",
   "scripts": {
     "test": "npm run lint && lerna run test",
-    "postinstall": "lerna bootstrap",
+    "postinstall": "lerna bootstrap && npm link --ignore-scripts",
     "lint": "eslint .",
     "precommit": "lint-staged",
-    "dev": "DEBUG='wheelhouse:*' lerna exec --concurrency=999 --no-sort yarn run dev",
+    "dev": "DEBUG='wheelhouse:*' lerna exec --concurrency=999 --no-sort npm run dev",
     "publish": "lerna publish --exact --force-publish"
+  },
+  "bin": {
+    "wh-dev": "packages/wheelhouse/dist/wheelhouse.js"
   },
   "lint-staged": {
     "*.js": [
@@ -31,7 +34,7 @@
     "url": "https://github.com/streamplace/wheelhouse/issues"
   },
   "homepage": "https://github.com/streamplace/wheelhouse#readme",
-  "devDependencies": {
+  "dependencies": {
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
     "babel-preset-env": "^1.4.0",
@@ -41,12 +44,8 @@
     "husky": "^0.13.3",
     "lerna": "^2.0.0-rc.4",
     "lint-staged": "^3.4.0",
-    "prettier": "^1.3.1"
-  },
-  "dependencies": {
-    "eslint-plugin-prettier": "^2.0.1",
-    "milligram": "^1.3.0",
     "prettier": "^1.3.1",
+    "milligram": "^1.3.0",
     "update-notifier": "^2.1.0"
   }
 }

@@ -13,6 +13,7 @@ import path from "path";
 import updateNotifier from "update-notifier";
 import { generateUid } from "./util/uid";
 import pkg from "../package.json";
+import opn from "opn";
 
 const log = debug("wheelhouse:serverActions");
 
@@ -78,6 +79,11 @@ export const serverStart = () => async (dispatch, getState) => {
   notifier.notify({
     defer: false
   });
+
+  if (!(getState().config.openBrowserOnStartup !== false)) {
+    const port = getState().config.port;
+    opn(`http://localhost:${port}/#/`);
+  }
 
   const websocketServer = http.createServer();
   const wss = new WebSocket.Server({ server: websocketServer });
