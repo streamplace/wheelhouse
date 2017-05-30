@@ -74,6 +74,7 @@ with any global versions of Wheelhouse.
 * Added `wheelhouse link`
 * Removed yarn dependency, added npm5 dependency
 * Added `--disable-kube` flag
+* Tabs with the frontend open now auto-reconnect when the server comes back
 
 ### 0.1
 
