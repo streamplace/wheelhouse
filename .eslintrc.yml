@@ -35,9 +35,6 @@ rules:
   quotes:
     - error
     - double
-  semi:
-    - error
-    - always
   no-unused-vars:
     - error
     - vars: 'local'

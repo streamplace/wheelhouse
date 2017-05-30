@@ -13,6 +13,7 @@ import path from "path";
 import updateNotifier from "update-notifier";
 import { generateUid } from "./util/uid";
 import pkg from "../package.json";
+import opn from "opn";
 
 const log = debug("wheelhouse:serverActions");
 
@@ -79,6 +80,11 @@ export const serverStart = () => async (dispatch, getState) => {
     defer: false
   });
 
+  if (getState().config.openBrowserOnStartup !== false) {
+    const port = getState().config.port;
+    opn(`http://localhost:${port}/#/`);
+  }
+
   const websocketServer = http.createServer();
   const wss = new WebSocket.Server({ server: websocketServer });
   wss.on("connection", function connection(ws) {
@@ -128,6 +134,10 @@ export const serverStart = () => async (dispatch, getState) => {
     staticServerUrl = `http://localhost:${staticPort}`;
     log(`Static wheelhouse-frontend listening at ${staticServerUrl}`);
   }
+
+  // Why "healthz"? I don't really know, but kubernetes people seem to use that name for health
+  // check endpoints a lot. The client uses this to detect we're back up and reconnect.
+  app.get("/healthz", (req, res) => res.sendStatus(200));
 
   app.use(
     proxy(staticServerUrl, {

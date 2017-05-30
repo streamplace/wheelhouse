@@ -11,9 +11,47 @@ import split from "split";
 import { developmentLog } from "./developmentActions";
 import { run } from "./util/run";
 import { pkgForEach } from "./util/graph";
+import path from "path";
+import Glob from "glob-fs";
+import semver from "semver";
 
+const glob = Glob({ gitignore: true });
 const SHOULD_RETRY = 1000; // wait at least this long before auto-rebooting an app, prevent thrash
 const log = debug("wheelhouse:packagesActions");
+
+export const packagesInit = () => async (dispatch, getState) => {
+  const { config } = getState();
+  let packages = [];
+  for (const pkgName of config.packages) {
+    const resolved = path.resolve(config.rootDir, pkgName);
+    if (pkgName.indexOf("*") === -1) {
+      packages.push([resolved]);
+      continue;
+    }
+    packages.push(
+      await glob.readdirPromise(path.relative(process.cwd(), resolved))
+    );
+  }
+  packages = packages
+    .reduce((arr1, arr2) => arr1.concat(arr2), [])
+    .map(pkg => {
+      return path.resolve(pkg);
+    })
+    .filter(pkg => pkg.split("/").pop()[0] !== ".");
+  await Promise.all(packages.map(p => dispatch(packagesLoad(p))));
+};
+
+export const packagesStart = startApps => async (dispatch, getState) => {
+  const { packages } = getState();
+  Object.keys(packages).forEach(pkgName => {
+    if (
+      packages[pkgName].packageJson.wheelhouse.autostart ||
+      startApps.includes(pkgName)
+    ) {
+      dispatch(packagesRun(pkgName, true));
+    }
+  });
+};
 
 export const packagesLoad = pkgPath => async (dispatch, getState) => {
   log(`Loading ${pkgPath}`);
@@ -29,10 +67,28 @@ export const packagesLoad = pkgPath => async (dispatch, getState) => {
   );
 };
 
+// Idempotent function to block once on checking npm version
+const MIN_NPM_VER = "5.0.0";
+let checkNpmProm;
+let checkNpmOnce = async () => {
+  if (!checkNpmProm) {
+    checkNpmProm = run("npm", ["--version"]);
+    const ver = await checkNpmProm;
+    if (semver.lt(ver, MIN_NPM_VER)) {
+      throw new Error(
+        `wheelhouse requires npm >= ${MIN_NPM_VER}, you have ${ver}, please run npm install -g npm@next`
+      );
+    }
+  } else {
+    await checkNpmProm;
+  }
+};
+
 export const packagesInstall = () => async (dispatch, getState) => {
+  await checkNpmOnce();
   const { packages } = getState();
   await pkgForEach(packages, async pkg => {
-    await run("yarn", ["install", "--no-lockfile", "--mutex", "network"], {
+    await run("npm", ["install"], {
       stdout: line => dispatch(developmentLog(pkg.name, line)),
       stderr: line => dispatch(developmentLog(pkg.name, line)),
       cwd: pkg.path

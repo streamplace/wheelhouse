@@ -44,9 +44,24 @@ export default new Promise((resolve, reject) => {
   });
 
   socket.addEventListener("close", function() {
+    // Hack for this totally-local action. Lie and say we got it from the server.
     store.dispatch({
       type: SERVER_DISCONNECT,
       _fromServer: true
     });
+    // Now, poll with a small timeout and refresh if the time comes.
+    let interval = setInterval(() => {
+      fetch(`http://${window.location.host}/healthz`)
+        .then(() => {
+          // We're back! Hard refresh, please.
+          if (interval) {
+            clearInterval(interval);
+            interval = null;
+            window.location.reload();
+          }
+        })
+        // Don't care.
+        .catch(() => {});
+    }, 500);
   });
 });

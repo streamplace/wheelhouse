@@ -4,10 +4,11 @@
 import yargs from "yargs";
 import { store } from "./store";
 import {
-  developmentStart,
-  developmentBuild,
-  developmentInstall
-} from "./developmentActions";
+  wheelhouseInstall,
+  wheelhouseLink,
+  wheelhouseStart,
+  wheelhouseBuild
+} from "./wheelhouseActions";
 import debug from "debug";
 
 const log = debug("wheelhouse:cli");
@@ -26,43 +27,58 @@ if (!global._babelPolyfill) {
   require("babel-polyfill");
 }
 
-const runCli = async function(inputArgv) {
-  // If they do "wheelhouse run" we want all of the following arguments to be passed to the script
-  const argv = [];
-  while (inputArgv.length > 0) {
-    const str = inputArgv.shift();
-    argv.push(str);
-    if (str === "run") {
-      break;
-    }
-  }
-  const script = inputArgv.join(" ");
-
+const runCli = async function(argv) {
   yargs
     .command({
-      command: "run",
+      command: "start [script..]",
       describe: "Run your local development with Wheelhouse",
-      aliases: "dev",
+      aliases: ["dev", "run"],
+      builder: yargs => {
+        return yargs.options({
+          app: {
+            alias: "a",
+            type: "array",
+            describe: "'wheelhouse start -a [my-app]' will boot this non-autorun app on startup"
+          },
+          "disable-kube": {
+            type: "boolean",
+            describe: "Disable Kubernetes polling. Try this if you're having performance issues."
+          }
+        });
+      },
       handler: argv => {
-        attemptAction(developmentStart, script);
-      }
-    })
-    .command({
-      command: "build",
-      describe: "Build your app!",
-      handler: argv => {
-        attemptAction(developmentBuild);
+        const script = argv.script.slice(2).join(" ");
+        attemptAction(wheelhouseStart, {
+          script: script,
+          startApps: argv.app || [],
+          disableKube: argv.disableKube
+        });
       }
     })
     .command({
       command: "install",
-      describe: "install all necessary dependencies in all packages",
+      describe: "install all necessary dependencies of all packages",
       handler: argv => {
-        attemptAction(developmentInstall);
+        attemptAction(wheelhouseInstall);
+      }
+    })
+    .command({
+      command: "link",
+      describe: "Run your local development with Wheelhouse",
+      aliases: "dev",
+      handler: argv => {
+        attemptAction(wheelhouseLink);
+      }
+    })
+    .command({
+      command: "build",
+      describe: "Use Wheelhouse to build your npm packages, Docker images, and Helm charts",
+      handler: argv => {
+        attemptAction(wheelhouseBuild);
       }
     })
     .help()
-    // .strict()
+    .version()
     .exitProcess(false)
     .parse(argv);
 };
