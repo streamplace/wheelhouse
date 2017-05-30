@@ -42,6 +42,8 @@ Link local `node_modules` dependencies together. Usually you don't need to run t
 
 Boots up your local development environment.
 
+You can run certain apps on startup with `-a`, e.g. `wheelhouse start -a example-app`
+
 ### wheelhouse lint
 
 NYI
@@ -70,6 +72,7 @@ with any global versions of Wheelhouse.
 
 ### 0.2.0
 
+* Run packages on startup with `-a`
 * Added `wheelhouse --version`
 * Added `wheelhouse link`
 * Removed yarn dependency, added npm5 dependency
