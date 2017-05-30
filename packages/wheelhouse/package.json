@@ -1,6 +1,6 @@
 {
   "name": "wheelhouse",
-  "version": "0.1.16",
+  "version": "0.2.0",
   "description": "Wheelhouse command line interface and all that",
   "main": "dist/wheelhouse.js",
   "scripts": {
@@ -51,8 +51,8 @@
     "split": "^1.0.0",
     "terminal-kit": "^1.7.1",
     "update-notifier": "^2.1.0",
-    "wheelhouse-core": "0.1.16",
-    "wheelhouse-frontend": "0.1.16",
+    "wheelhouse-core": "0.2.0",
+    "wheelhouse-frontend": "0.2.0",
     "ws": "^2.3.1",
     "yargs": "^7.1.0"
   },
