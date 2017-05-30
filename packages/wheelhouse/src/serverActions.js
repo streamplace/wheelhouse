@@ -135,6 +135,10 @@ export const serverStart = () => async (dispatch, getState) => {
     log(`Static wheelhouse-frontend listening at ${staticServerUrl}`);
   }
 
+  // Why "healthz"? I don't really know, but kubernetes people seem to use that name for health
+  // check endpoints a lot. The client uses this to detect we're back up and reconnect.
+  app.get("/healthz", (req, res) => res.sendStatus(200));
+
   app.use(
     proxy(staticServerUrl, {
       logLevel: "warn",
