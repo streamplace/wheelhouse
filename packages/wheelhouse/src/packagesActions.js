@@ -41,10 +41,13 @@ export const packagesInit = () => async (dispatch, getState) => {
   await Promise.all(packages.map(p => dispatch(packagesLoad(p))));
 };
 
-export const packagesStart = () => async (dispatch, getState) => {
+export const packagesStart = startApps => async (dispatch, getState) => {
   const { packages } = getState();
   Object.keys(packages).forEach(pkgName => {
-    if (packages[pkgName].packageJson.wheelhouse.autostart) {
+    if (
+      packages[pkgName].packageJson.wheelhouse.autostart ||
+      startApps.includes(pkgName)
+    ) {
       dispatch(packagesRun(pkgName, true));
     }
   });

@@ -43,7 +43,7 @@ export const wheelhouseLink = () => async (dispatch, getState) => {
  * wheelhouse start/run/dev
  */
 export const wheelhouseStart = opts => async (dispatch, getState) => {
-  const { script, disableKube } = opts;
+  const { script, disableKube, startApps } = opts;
   await dispatch(wheelhouseInit());
   // Start implies link.
   await dispatch(wheelhouseLink());
@@ -56,7 +56,7 @@ export const wheelhouseStart = opts => async (dispatch, getState) => {
     dispatch(wheelhouseStartupScript(script));
   }
 
-  await dispatch(packagesStart());
+  await dispatch(packagesStart(startApps));
 
   if (!disableKube) {
     dispatch(kubernetesStartPullingData());

@@ -27,25 +27,19 @@ if (!global._babelPolyfill) {
   require("babel-polyfill");
 }
 
-const runCli = async function(inputArgv) {
-  // #hack for C-SATS run/stage script
-  const argv = [];
-  while (inputArgv.length > 0) {
-    const str = inputArgv.shift();
-    argv.push(str);
-    if (str === "run") {
-      break;
-    }
-  }
-  const script = inputArgv.join(" ");
-
+const runCli = async function(argv) {
   yargs
     .command({
-      command: "start",
+      command: "start [script..]",
       describe: "Run your local development with Wheelhouse",
       aliases: ["dev", "run"],
       builder: yargs => {
         return yargs.options({
+          app: {
+            alias: "a",
+            type: "array",
+            describe: "'wheelhouse start -a [my-app]' will boot this non-autorun app on startup"
+          },
           "disable-kube": {
             type: "boolean",
             describe: "Disable Kubernetes polling. Try this if you're having performance issues."
@@ -53,8 +47,10 @@ const runCli = async function(inputArgv) {
         });
       },
       handler: argv => {
+        const script = argv.script.slice(2).join(" ");
         attemptAction(wheelhouseStart, {
           script: script,
+          startApps: argv.app || [],
           disableKube: argv.disableKube
         });
       }
