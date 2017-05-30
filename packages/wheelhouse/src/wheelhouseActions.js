@@ -42,7 +42,8 @@ export const wheelhouseLink = () => async (dispatch, getState) => {
 /**
  * wheelhouse start/run/dev
  */
-export const wheelhouseStart = script => async (dispatch, getState) => {
+export const wheelhouseStart = opts => async (dispatch, getState) => {
+  const { script, disableKube } = opts;
   await dispatch(wheelhouseInit());
   // Start implies link.
   await dispatch(wheelhouseLink());
@@ -57,7 +58,9 @@ export const wheelhouseStart = script => async (dispatch, getState) => {
 
   await dispatch(packagesStart());
 
-  dispatch(kubernetesStartPullingData());
+  if (!disableKube) {
+    dispatch(kubernetesStartPullingData());
+  }
 };
 
 // #hack for C-SATS `run/stage` script to run on start. should have a better way to do "run this

@@ -41,11 +41,22 @@ const runCli = async function(inputArgv) {
 
   yargs
     .command({
-      command: "run",
+      command: "start",
       describe: "Run your local development with Wheelhouse",
-      aliases: "dev",
+      aliases: ["dev", "run"],
+      builder: yargs => {
+        return yargs.options({
+          "disable-kube": {
+            type: "boolean",
+            describe: "Disable Kubernetes polling. Try this if you're having performance issues."
+          }
+        });
+      },
       handler: argv => {
-        attemptAction(wheelhouseStart, script);
+        attemptAction(wheelhouseStart, {
+          script: script,
+          disableKube: argv.disableKube
+        });
       }
     })
     .command({

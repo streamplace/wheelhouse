@@ -68,11 +68,12 @@ with any global versions of Wheelhouse.
 
 ## Changelog
 
-### 0.2
+### 0.2.0
 
 * Added `wheelhouse --version`
 * Added `wheelhouse link`
-* Removed yarn dependency (but you should get npm5)
+* Removed yarn dependency, added npm5 dependency
+* Added `--disable-kube` flag
 
 ### 0.1
 
