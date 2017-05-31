@@ -76,7 +76,7 @@ let checkNpmOnce = async () => {
     const ver = await checkNpmProm;
     if (semver.lt(ver, MIN_NPM_VER)) {
       throw new Error(
-        `wheelhouse requires npm >= ${MIN_NPM_VER}, you have ${ver}, please run npm install -g npm@next`
+        `wheelhouse requires npm >= ${MIN_NPM_VER}, you have ${ver}, please run npm install -g npm`
       );
     }
   } else {

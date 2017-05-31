@@ -20,7 +20,7 @@ It draws heavy inspiration from the one-command development processes in project
 You need:
 
 * node 4+
-* npm 5+ (`npm install -g npm@next`)
+* npm 5+ (`npm install -g npm`)
 * Docker (tested on Ubuntu 14.04 and macOS 10.11)
 
 ```
