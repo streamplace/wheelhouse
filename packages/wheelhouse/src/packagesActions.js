@@ -12,7 +12,7 @@ import { developmentLog } from "./developmentActions";
 import { run } from "./util/run";
 import { pkgForEach } from "./util/graph";
 import path from "path";
-import Glob from "glob-fs";
+import Glob from "@iameli/glob-fs";
 import semver from "semver";
 
 const glob = Glob({ gitignore: true });
