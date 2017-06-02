@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 /*eslint-disable no-console*/
 
 import yargs from "yargs";
@@ -38,11 +37,13 @@ const runCli = async function(argv) {
           app: {
             alias: "a",
             type: "array",
-            describe: "'wheelhouse start -a [my-app]' will boot this non-autorun app on startup"
+            describe:
+              "'wheelhouse start -a [my-app]' will boot this non-autorun app on startup"
           },
           "disable-kube": {
             type: "boolean",
-            describe: "Disable Kubernetes polling. Try this if you're having performance issues."
+            describe:
+              "Disable Kubernetes polling. Try this if you're having performance issues."
           }
         });
       },
@@ -72,7 +73,8 @@ const runCli = async function(argv) {
     })
     .command({
       command: "build",
-      describe: "Use Wheelhouse to build your npm packages, Docker images, and Helm charts",
+      describe:
+        "Use Wheelhouse to build your npm packages, Docker images, and Helm charts",
       handler: argv => {
         attemptAction(wheelhouseBuild);
       }
