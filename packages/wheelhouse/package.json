@@ -1,6 +1,6 @@
 {
   "name": "wheelhouse",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Wheelhouse command line interface and all that",
   "main": "dist/wheelhouse.js",
   "scripts": {
@@ -33,12 +33,12 @@
   },
   "homepage": "https://github.com/streamplace/wheelhouse#readme",
   "dependencies": {
+    "@iameli/glob-fs": "^0.1.6",
     "babel-polyfill": "^6.23.0",
     "debug": "^2.6.6",
     "express": "^4.15.2",
     "find-up": "^2.1.0",
     "fs-extra": "^3.0.1",
-    "@iameli/glob-fs": "^0.1.6",
     "http-proxy-middleware": "^0.17.4",
     "js-yaml": "^3.8.3",
     "kubectl-cli": "^1.6.3",
@@ -51,8 +51,8 @@
     "split": "^1.0.0",
     "terminal-kit": "^1.7.1",
     "update-notifier": "^2.1.0",
-    "wheelhouse-core": "0.2.0",
-    "wheelhouse-frontend": "0.2.0",
+    "wheelhouse-core": "0.2.1",
+    "wheelhouse-frontend": "0.2.1",
     "ws": "^2.3.1",
     "yargs": "^7.1.0"
   },
