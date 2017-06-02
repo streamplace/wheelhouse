@@ -1,9 +1,15 @@
 import React, { Component } from "react";
 import LogContainer from "../reusables/LogContainer";
 import EnvironmentsDashboard from "./EnvironmentsDashboard";
-import { createLabels } from "../../handlers/component-handlers/environment-handlers";
-import { notReadyContainers } from "../../handlers/component-handlers/pod-handlers";
-import { activeApps } from "../../handlers/component-handlers/development-handlers";
+import {
+  createLabels
+} from "../../handlers/component-handlers/environment-handlers";
+import {
+  notReadyContainers
+} from "../../handlers/component-handlers/pod-handlers";
+import {
+  activeApps
+} from "../../handlers/component-handlers/development-handlers";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import wheel from "../../../public/assets/wheel.png";
