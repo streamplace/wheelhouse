@@ -4,7 +4,7 @@
   "description": "Swiss Army knife for Javascript + Kubernetes",
   "main": "package.json",
   "scripts": {
-    "test": "npm run lint && lerna run test",
+    "test": "npm run lint && lerna run test && packages/wheelhouse/dist/wheelhouse.js --version",
     "postinstall": "lerna bootstrap && npm link --ignore-scripts",
     "lint": "eslint .",
     "precommit": "lint-staged",
