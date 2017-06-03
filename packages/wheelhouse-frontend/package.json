@@ -30,5 +30,8 @@
     "test": "CI=true react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "dev": "BROWSER=none PORT=3942 react-scripts start --color=always | cat"
+  },
+  "dependencies": {
+    "font-awesome": "^4.7.0"
   }
 }
