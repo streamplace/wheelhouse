@@ -63,7 +63,8 @@ export const serverStart = () => async (dispatch, getState) => {
   });
 
   if (notifier.update) {
-    const message = `Update available ${notifier.update.current} → ${notifier.update.latest}
+    const message = `Update available ${notifier.update.current} → ${notifier
+      .update.latest}
       Run npm i -g ${notifier.update.name} to update`;
     dispatch({
       type: SERVER_UPDATE,

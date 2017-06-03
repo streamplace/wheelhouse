@@ -21,7 +21,7 @@
 }
 
 .green, .green:hover, .green:focus, .red, .red:hover, .red:focus {
-  min-width:  105px;
+  min-width: 105px;
 }
 
 .hide {
@@ -49,4 +49,3 @@
 .text-column {
   padding-top: 10px !important;
 }
-
