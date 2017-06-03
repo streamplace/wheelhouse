@@ -12,7 +12,7 @@
     "publish": "lerna publish --exact --force-publish"
   },
   "bin": {
-    "wh-dev": "packages/wheelhouse/dist/wheelhouse.js"
+    "wh-dev": "run/wh-dev.js"
   },
   "lint-staged": {
     "*.js": [
@@ -35,9 +35,11 @@
   },
   "homepage": "https://github.com/streamplace/wheelhouse#readme",
   "dependencies": {
+    "axios": "^0.16.2",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
     "babel-preset-env": "^1.4.0",
+    "debug": "^2.6.8",
     "eslint": "^3.19.0",
     "eslint-plugin-prettier": "^2.1.0",
     "eslint-plugin-react": "^6.10.3",
@@ -46,6 +48,7 @@
     "lerna": "^2.0.0-rc.4",
     "lint-staged": "^3.4.0",
     "milligram": "^1.3.0",
+    "nodemon": "^1.11.0",
     "prettier": "1.3.1",
     "update-notifier": "^2.1.0"
   }
