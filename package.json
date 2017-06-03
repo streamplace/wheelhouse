@@ -21,7 +21,8 @@
       "eslint"
     ],
     "*.css": [
-      "prettier --write"
+      "prettier --write",
+      "git add"
     ]
   },
   "repository": {
