@@ -56,6 +56,11 @@ Build all of your Javascript modules, Docker containers, and Helm charts.
 
 Deploy all your Helm charts to a Kubernetes cluster.
 
+## Known Issues
+
+* On occasion `wheelhouse install` will run into a cache corruption issue that manifests as `TypeError: Cannot read property 'find' of undefined`. This is a known npm issue: [npm/npm#16677](https://github.com/npm/npm/issues/16677)
+    * Workaround: `npm cache verify`.
+
 ## Development
 
 Clone the repo, and then:
