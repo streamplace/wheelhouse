@@ -49,11 +49,11 @@ axios.get("http://localhost:3942").catch(fail).then(() => {
     })
     .on("quit", function(code) {
       debug("wheelhouse crashed");
-      process.exit(1);
+      // process.exit(1);
     })
     .on("exit", function() {
       debug("wheelhouse exited cleanly");
-      process.exit(0);
+      // process.exit(0);
     })
     .on("restart", function(files) {
       console.error("App restarted due to: ", files);

@@ -1,8 +1,7 @@
 import findUp from "find-up";
 import debug from "debug";
-import { safeLoad as parseYaml } from "js-yaml";
 import path from "path";
-import fs from "mz/fs";
+import { fileLoad } from "./fileActions";
 import { CONFIG_LOADED, CONFIG_ROOT_FOUND } from "wheelhouse-core";
 
 const CONFIG_NAME = "wheelhouse.yaml";
@@ -24,9 +23,8 @@ export const configInit = () => async dispatch => {
   const rootPath = path.dirname(configPath);
   await dispatch(configRootFound(rootPath));
 
-  const yamlStr = await fs.readFile(configPath, "utf8");
-  const configData = parseYaml(yamlStr);
-  await dispatch(configLoaded(configData));
+  const { data } = await dispatch(fileLoad(configPath));
+  await dispatch(configLoaded(data));
 };
 
 export const configRootFound = rootDir => ({
