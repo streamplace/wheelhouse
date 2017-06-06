@@ -1,8 +1,6 @@
 #!/usr/bin/env node
 /* eslint-disable no-console */
 
-// xxx does not work good yet xxx
-
 // This is the wrapper around the `wh-dev` script we use for development. It auto-restarts
 // wheelhouse commands if the code changes.
 // This file doesn't get transpiled, so it should be executable by vanilla node 4.
