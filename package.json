@@ -12,7 +12,7 @@
     "publish": "lerna publish --exact --force-publish"
   },
   "bin": {
-    "wh-dev": "run/wh-dev.js"
+    "wh-dev": "packages/wheelhouse/dist/wheelhouse.js"
   },
   "lint-staged": {
     "*.js": [
