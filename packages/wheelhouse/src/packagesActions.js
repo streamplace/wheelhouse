@@ -11,35 +11,15 @@ import split from "split";
 import { developmentLog } from "./developmentActions";
 import { run } from "./util/run";
 import { pkgForEach } from "./util/graph";
-import path from "path";
-import Glob from "@iameli/glob-fs";
 import semver from "semver";
 import { fileLoad } from "./fileActions";
 
-const glob = Glob({ gitignore: true });
 const SHOULD_RETRY = 1000; // wait at least this long before auto-rebooting an app, prevent thrash
 const log = debug("wheelhouse:packagesActions");
 
 export const packagesInit = () => async (dispatch, getState) => {
-  const { config } = getState();
-  let packages = [];
-  for (const pkgName of config.packages) {
-    const resolved = path.resolve(config.rootDir, pkgName);
-    if (pkgName.indexOf("*") === -1) {
-      packages.push([resolved]);
-      continue;
-    }
-    packages.push(
-      await glob.readdirPromise(path.relative(process.cwd(), resolved))
-    );
-  }
-  packages = packages
-    .reduce((arr1, arr2) => arr1.concat(arr2), [])
-    .map(pkg => {
-      return path.resolve(pkg);
-    })
-    .filter(pkg => pkg.split("/").pop()[0] !== ".");
-  await Promise.all(packages.map(p => dispatch(packagesLoad(p))));
+  const { packageDirs } = getState().config;
+  await Promise.all(packageDirs.map(p => dispatch(packagesLoad(p))));
 };
 
 export const packagesStart = startApps => async (dispatch, getState) => {
