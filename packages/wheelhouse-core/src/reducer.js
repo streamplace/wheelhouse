@@ -5,6 +5,7 @@ import { default as packages } from "./packages/packagesReducer";
 import { default as kubernetes } from "./kubernetes/kubernetesReducer";
 import { default as server } from "./server/serverReducer";
 import { default as file } from "./file/fileReducer";
+import { default as docker } from "./docker/dockerReducer";
 
 export default combineReducers({
   config,
@@ -12,5 +13,6 @@ export default combineReducers({
   packages,
   kubernetes,
   server,
-  file
+  file,
+  docker
 });

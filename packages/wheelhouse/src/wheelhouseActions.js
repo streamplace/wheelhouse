@@ -11,6 +11,7 @@ import {
   packagesInstall,
   packagesStart
 } from "./packagesActions";
+import { dockerInit } from "./dockerActions";
 import { developmentLog } from "./developmentActions";
 import { kubernetesStartPullingData } from "./kubernetesActions";
 import { run } from "./util/run";
@@ -21,6 +22,7 @@ import { run } from "./util/run";
 export const wheelhouseInit = () => async (dispatch, getState) => {
   await dispatch(configInit());
   await dispatch(packagesInit());
+  await dispatch(dockerInit());
 };
 
 /**

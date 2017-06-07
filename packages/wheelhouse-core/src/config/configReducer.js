@@ -6,7 +6,8 @@ import {
 
 const initialState = {
   port: 3333,
-  packageDirs: []
+  packageDirs: [],
+  openBrowserOnStartup: false
 };
 
 export default function(state = initialState, action) {
