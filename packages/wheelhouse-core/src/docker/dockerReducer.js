@@ -3,8 +3,7 @@ import { FILE_LOADED } from "../file/fileConstants";
 import parser from "docker-file-parser";
 
 const initialState = {
-  packages: {},
-  orphaned: {}
+  packages: {}
 };
 
 export default function(state = initialState, action) {

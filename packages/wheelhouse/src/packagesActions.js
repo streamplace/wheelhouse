@@ -76,6 +76,21 @@ export const packagesInstall = () => async (dispatch, getState) => {
   });
 };
 
+export const packagesBuild = () => async (dispatch, getState) => {
+  await checkNpmOnce();
+  const { packages } = getState();
+  await pkgForEach(packages, async pkg => {
+    if (!pkg.packageJson.scripts || !pkg.packageJson.scripts.build) {
+      return;
+    }
+    await run("npm", ["run", "build"], {
+      stdout: line => dispatch(developmentLog(pkg.name, line)),
+      stderr: line => dispatch(developmentLog(pkg.name, line)),
+      cwd: pkg.path
+    });
+  });
+};
+
 export const packagesLink = () => async (dispatch, getState) => {
   const { packages } = getState();
   const links = [];
