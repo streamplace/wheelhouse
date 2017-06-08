@@ -7,6 +7,7 @@ export * from "./server/serverConstants";
 export * from "./development/developmentConstants";
 export * from "./packages/packagesConstants";
 export * from "./kubernetes/kubernetesConstants";
+export * from "./file/fileConstants";
 
 export * from "./util/colors";
 export * from "./util/time";

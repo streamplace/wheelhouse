@@ -14,6 +14,7 @@ import { pkgForEach } from "./util/graph";
 import path from "path";
 import Glob from "@iameli/glob-fs";
 import semver from "semver";
+import { fileLoad } from "./fileActions";
 
 const glob = Glob({ gitignore: true });
 const SHOULD_RETRY = 1000; // wait at least this long before auto-rebooting an app, prevent thrash
@@ -57,11 +58,10 @@ export const packagesLoad = pkgPath => async (dispatch, getState) => {
   log(`Loading ${pkgPath}`);
   const { rootDir } = getState().config;
   const pkgJsonPath = resolve(rootDir, pkgPath, "package.json");
-  const pkgJson = await fs.readFile(pkgJsonPath, "utf8");
-  const pkg = JSON.parse(pkgJson);
+  const { data } = await dispatch(fileLoad(pkgJsonPath));
   dispatch(
     packagesLoaded({
-      packageJson: pkg,
+      packageJson: data,
       path: resolve(pkgPath)
     })
   );

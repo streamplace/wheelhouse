@@ -1,8 +1,6 @@
 #!/usr/bin/env node
 /* eslint-disable no-console */
 
-// xxx does not work good yet xxx
-
 // This is the wrapper around the `wh-dev` script we use for development. It auto-restarts
 // wheelhouse commands if the code changes.
 // This file doesn't get transpiled, so it should be executable by vanilla node 4.
@@ -51,11 +49,11 @@ axios.get("http://localhost:3942").catch(fail).then(() => {
     })
     .on("quit", function(code) {
       debug("wheelhouse crashed");
-      process.exit(1);
+      // process.exit(1);
     })
     .on("exit", function() {
       debug("wheelhouse exited cleanly");
-      process.exit(0);
+      // process.exit(0);
     })
     .on("restart", function(files) {
       console.error("App restarted due to: ", files);
