@@ -24,6 +24,7 @@ export const configInit = () => async dispatch => {
   await dispatch(configRootFound(rootPath));
 
   const { data } = await dispatch(fileLoad(configPath));
+  await dispatch(fileLoad(path.resolve(rootPath, "package.json")));
   await dispatch(configLoaded(data));
 };
 
