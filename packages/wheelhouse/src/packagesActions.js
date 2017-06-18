@@ -24,7 +24,7 @@ export const packagesInit = () => async (dispatch, getState) => {
 
 export const packagesStart = startApps => async (dispatch, getState) => {
   const { packages, file, config } = getState();
-  const rootJson = file[path.resolve(config.rootDir, "package.json")];
+  const rootJson = file[resolve(config.rootDir, "package.json")];
   if (rootJson && rootJson.data.scripts && rootJson.data.scripts.prestart) {
     await run("npm", ["run", "prestart"], {
       stdout: line => dispatch(developmentLog("wheelhouse", line)),
