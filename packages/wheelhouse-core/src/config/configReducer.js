@@ -1,7 +1,13 @@
-import { CONFIG_LOADED, CONFIG_ROOT_FOUND } from "./configConstants";
+import {
+  CONFIG_LOADED,
+  CONFIG_ROOT_FOUND,
+  CONFIG_PACKAGE_FOUND
+} from "./configConstants";
 
 const initialState = {
-  port: 3333
+  port: 3333,
+  packageDirs: [],
+  openBrowserOnStartup: false
 };
 
 export default function(state = initialState, action) {
@@ -16,6 +22,13 @@ export default function(state = initialState, action) {
     return {
       ...state,
       ...action.configData
+    };
+  }
+
+  if (action.type === CONFIG_PACKAGE_FOUND) {
+    return {
+      ...state,
+      packageDirs: [...state.packageDirs, action.dir]
     };
   }
 

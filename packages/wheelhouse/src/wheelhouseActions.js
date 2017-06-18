@@ -9,8 +9,10 @@ import {
   packagesInit,
   packagesLink,
   packagesInstall,
-  packagesStart
+  packagesStart,
+  packagesBuild
 } from "./packagesActions";
+import { dockerInit, dockerBuild } from "./dockerActions";
 import { developmentLog } from "./developmentActions";
 import { kubernetesStartPullingData } from "./kubernetesActions";
 import { run } from "./util/run";
@@ -21,6 +23,7 @@ import { run } from "./util/run";
 export const wheelhouseInit = () => async (dispatch, getState) => {
   await dispatch(configInit());
   await dispatch(packagesInit());
+  await dispatch(dockerInit());
 };
 
 /**
@@ -80,4 +83,6 @@ export const wheelhouseStartupScript = script => async (dispatch, getState) => {
  */
 export const wheelhouseBuild = () => async (dispatch, getState) => {
   await dispatch(wheelhouseInit());
+  await dispatch(packagesBuild());
+  await dispatch(dockerBuild());
 };

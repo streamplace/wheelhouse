@@ -8,6 +8,7 @@ export * from "./development/developmentConstants";
 export * from "./packages/packagesConstants";
 export * from "./kubernetes/kubernetesConstants";
 export * from "./file/fileConstants";
+export * from "./docker/dockerConstants";
 
 export * from "./util/colors";
 export * from "./util/time";

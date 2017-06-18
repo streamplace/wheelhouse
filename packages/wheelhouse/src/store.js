@@ -35,7 +35,11 @@ const receiveFromClient = otherStore => next => action => {
   return next(action);
 };
 
-export const store = createStore(
-  reducer,
-  compose(applyMiddleware(thunk), applyMiddleware(receiveFromClient))
-);
+export const createWheelhouseStore = () => {
+  return createStore(
+    reducer,
+    compose(applyMiddleware(thunk), applyMiddleware(receiveFromClient))
+  );
+};
+
+export const store = createWheelhouseStore();

@@ -1,9 +1,13 @@
 #!/usr/bin/env node
 /* eslint-disable no-console */
 
-// This is the wrapper around the `wh-dev` script we use for development. It auto-restarts
-// wheelhouse commands if the code changes.
-// This file doesn't get transpiled, so it should be executable by vanilla node 4.
+// This is the wrapper around the `wh-dev` script we use for development. It
+// auto-restarts wheelhouse commands if the code changes. This file doesn't get
+// transpiled, so it should be executable by vanilla node 4.
+
+/** Commands that we want to auto-reboot-on-changes */
+const STAY_RUNNING = ["start", "run", "dev"];
+const stayRunning = process.argv[2].includes(STAY_RUNNING);
 
 const axios = require("axios");
 const resolve = require("path").resolve;
@@ -14,7 +18,8 @@ const log = debug("wheelhouse:wh-dev");
 
 const fail = () => {
   console.error(
-    "couldn't find wheelhouse dev server at localhost:3942. Is `npm run dev` running?"
+    `couldn't find wheelhouse dev server at localhost:3942. Is
+     \`npm run dev\` running?`
   );
   process.exit(1);
 };
@@ -48,12 +53,20 @@ axios.get("http://localhost:3942").catch(fail).then(() => {
       log("start");
     })
     .on("quit", function(code) {
-      debug("wheelhouse crashed");
-      // process.exit(1);
+      console.error("wheelhouse crashed");
+      if (!stayRunning) {
+        process.exit(1);
+      } else {
+        console.error("Waiting for changes");
+      }
     })
     .on("exit", function() {
-      debug("wheelhouse exited cleanly");
-      // process.exit(0);
+      console.error("wheelhouse exited cleanly");
+      if (!stayRunning) {
+        process.exit(0);
+      } else {
+        console.error("Waiting for changes");
+      }
     })
     .on("restart", function(files) {
       console.error("App restarted due to: ", files);
