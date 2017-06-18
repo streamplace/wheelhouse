@@ -7,7 +7,7 @@
 
 /** Commands that we want to auto-reboot-on-changes */
 const STAY_RUNNING = ["start", "run", "dev"];
-const stayRunning = process.argv[2].includes(STAY_RUNNING);
+const stayRunning = STAY_RUNNING.includes(process.argv[2]);
 
 const axios = require("axios");
 const resolve = require("path").resolve;
@@ -26,6 +26,8 @@ const fail = () => {
 
 // There's no circumstances where localhost takes a second, right?
 const handle = setTimeout(fail, 1000);
+
+let closing = false;
 
 axios.get("http://localhost:3942").catch(fail).then(() => {
   clearTimeout(handle);
@@ -53,6 +55,10 @@ axios.get("http://localhost:3942").catch(fail).then(() => {
       log("start");
     })
     .on("quit", function(code) {
+      if (closing) {
+        process.exit(0);
+        return;
+      }
       console.error("wheelhouse crashed");
       if (!stayRunning) {
         process.exit(1);
@@ -61,6 +67,10 @@ axios.get("http://localhost:3942").catch(fail).then(() => {
       }
     })
     .on("exit", function() {
+      if (closing) {
+        process.exit(0);
+        return;
+      }
       console.error("wheelhouse exited cleanly");
       if (!stayRunning) {
         process.exit(0);
@@ -72,3 +82,12 @@ axios.get("http://localhost:3942").catch(fail).then(() => {
       console.error("App restarted due to: ", files);
     });
 });
+
+const cleanup = () => {
+  console.error("Exiting...");
+  closing = true;
+  nodemon.emit("quit");
+};
+
+process.on("SIGTERM", cleanup);
+process.on("SIGINT", cleanup);
