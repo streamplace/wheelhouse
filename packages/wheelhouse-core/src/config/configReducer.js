@@ -1,7 +1,8 @@
 import {
   CONFIG_LOADED,
   CONFIG_ROOT_FOUND,
-  CONFIG_PACKAGE_FOUND
+  CONFIG_PACKAGE_FOUND,
+  CONFIG_VERSION
 } from "./configConstants";
 
 const initialState = {
@@ -15,6 +16,13 @@ export default function(state = initialState, action) {
     return {
       ...state,
       rootDir: action.rootDir
+    };
+  }
+
+  if (action.type === CONFIG_VERSION) {
+    return {
+      ...state,
+      version: action.version
     };
   }
 

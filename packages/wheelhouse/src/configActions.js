@@ -5,9 +5,11 @@ import { fileLoad } from "./fileActions";
 import {
   CONFIG_LOADED,
   CONFIG_ROOT_FOUND,
-  CONFIG_PACKAGE_FOUND
+  CONFIG_PACKAGE_FOUND,
+  CONFIG_VERSION
 } from "wheelhouse-core";
 import Glob from "@iameli/glob-fs";
+import { run } from "./util/run";
 
 const glob = Glob({ gitignore: true });
 const CONFIG_NAME = "wheelhouse.yaml";
@@ -45,6 +47,20 @@ export const configInit = () => async (dispatch, getState) => {
       await glob.readdirPromise(path.relative(process.cwd(), resolved))
     );
   }
+
+  try {
+    const version = await run("git", ["describe", "--tags"]);
+    await dispatch({
+      type: CONFIG_VERSION,
+      version
+    });
+  } catch (e) {
+    await dispatch({
+      type: CONFIG_VERSION,
+      version: "0.0.0"
+    });
+  }
+
   packages = packages
     .reduce((arr1, arr2) => arr1.concat(arr2), [])
     .map(pkg => {

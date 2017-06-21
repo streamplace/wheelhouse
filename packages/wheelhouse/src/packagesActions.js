@@ -13,8 +13,8 @@ import { run } from "./util/run";
 import { pkgForEach } from "./util/graph";
 import semver from "semver";
 import { fileLoad } from "./fileActions";
-
-const SHOULD_RETRY = 1000; // wait at least this long before auto-rebooting an app, prevent thrash
+// wait at least this long before auto-rebooting an app, prevent thrash
+const SHOULD_RETRY = 1000;
 const log = debug("wheelhouse:packagesActions");
 
 export const packagesInit = () => async (dispatch, getState) => {
@@ -64,7 +64,8 @@ let checkNpmOnce = async () => {
     const ver = await checkNpmProm;
     if (semver.lt(ver, MIN_NPM_VER)) {
       throw new Error(
-        `wheelhouse requires npm >= ${MIN_NPM_VER}, you have ${ver}, please run npm install -g npm`
+        `wheelhouse requires npm >= ${MIN_NPM_VER}, you have ${ver},
+        please run npm install -g npm`
       );
     }
   } else {
@@ -268,7 +269,8 @@ const cleanup = () => {
       // It's already gone. That's great!
     }
   });
-  // Ugh at this, but it appears to be necessary to give the process.kill a minute to go out.
+  // Ugh at this, but it appears to be necessary to give
+  // the process.kill a minute to go out.
   setTimeout(function() {
     process.exit(0);
   }, 100);
