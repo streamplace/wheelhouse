@@ -5,7 +5,7 @@
   "main": "package.json",
   "scripts": {
     "test": "npm run lint && lerna run test && packages/wheelhouse/dist/wheelhouse.js --version",
-    "postinstall": "lerna bootstrap && npm link --ignore-scripts",
+    "postinstall": "lerna bootstrap",
     "lint": "eslint .",
     "precommit": "lint-staged",
     "dev": "DEBUG='wheelhouse:*' lerna exec --concurrency=999 --no-sort npm run dev",
