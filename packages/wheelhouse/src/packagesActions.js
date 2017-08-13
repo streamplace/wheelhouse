@@ -13,6 +13,7 @@ import { run } from "./util/run";
 import { pkgForEach } from "./util/graph";
 import semver from "semver";
 import { fileLoad } from "./fileActions";
+import { procRun } from "./procActions";
 // wait at least this long before auto-rebooting an app, prevent thrash
 const SHOULD_RETRY = 1000;
 const log = debug("wheelhouse:packagesActions");
@@ -77,11 +78,11 @@ export const packagesInstall = () => async (dispatch, getState) => {
   await checkNpmOnce();
   const { packages } = getState();
   await pkgForEach(packages, async pkg => {
-    await run("npm", ["install"], {
-      stdout: line => dispatch(developmentLog(pkg.name, line)),
-      stderr: line => dispatch(developmentLog(pkg.name, line)),
-      cwd: pkg.path
-    });
+    await dispatch(
+      procRun("npm", ["install"], {
+        cwd: pkg.path
+      })
+    );
   });
 };
 
@@ -89,14 +90,11 @@ export const packagesBuild = () => async (dispatch, getState) => {
   await checkNpmOnce();
   const { packages } = getState();
   await pkgForEach(packages, async pkg => {
-    if (!pkg.packageJson.scripts || !pkg.packageJson.scripts.build) {
-      return;
-    }
-    await run("npm", ["run", "build"], {
-      stdout: line => dispatch(developmentLog(pkg.name, line)),
-      stderr: line => dispatch(developmentLog(pkg.name, line)),
-      cwd: pkg.path
-    });
+    await dispatch(
+      procRun("npm", ["pack"], {
+        cwd: pkg.path
+      })
+    );
   });
 };
 

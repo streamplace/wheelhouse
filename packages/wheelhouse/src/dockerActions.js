@@ -2,8 +2,7 @@ import { resolve } from "path";
 import { fileLoad } from "./fileActions";
 import fs from "fs-extra";
 import { pkgForEach } from "./util/graph";
-import { run } from "./util/run";
-import { developmentLog } from "./developmentActions";
+import { procRun } from "./procActions";
 import debug from "debug";
 
 const log = debug("wheelhouse:dockerActions");
@@ -27,11 +26,11 @@ export const dockerBuild = () => async (dispatch, getState) => {
     log(`searching for ${resolve(pkg.path, "Dockerfile")}`);
     if (await fs.pathExists(resolve(pkg.path, "Dockerfile"))) {
       const tag = `${config.docker.prefix}/${pkg.name}`;
-      await run("docker", ["build", "-t", tag, "."], {
-        stdout: line => dispatch(developmentLog(pkg.name, line)),
-        stderr: line => dispatch(developmentLog(pkg.name, line)),
-        cwd: pkg.path
-      });
+      await dispatch(
+        procRun("docker", ["build", "-t", tag, "."], {
+          cwd: pkg.path
+        })
+      );
     }
   });
 };
