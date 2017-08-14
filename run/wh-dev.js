@@ -13,6 +13,8 @@ const axios = require("axios");
 const resolve = require("path").resolve;
 const nodemon = require("nodemon");
 const debug = require("debug");
+const realpath = require("fs").realpathSync;
+const spawnSync = require("child_process").spawnSync;
 
 const log = debug("wheelhouse:wh-dev");
 
@@ -31,14 +33,18 @@ let closing = false;
 
 axios.get("http://localhost:3942").catch(fail).then(() => {
   clearTimeout(handle);
-  const whRoot = resolve(__dirname, "..");
-  const whExec = resolve(
-    whRoot,
-    "packages",
-    "wheelhouse",
-    "dist",
-    "wheelhouse.js"
+  const whRoot = realpath(resolve(__dirname, ".."));
+  const whExec = realpath(
+    resolve(whRoot, "packages", "wheelhouse", "dist", "wheelhouse.js")
   );
+
+  if (!stayRunning) {
+    const { code } = spawnSync(whExec, process.argv.slice(2), {
+      env: Object.assign({ WH_LOCAL_DEV: "true" }, process.env),
+      stdio: "inherit"
+    });
+    process.exit(code);
+  }
 
   nodemon({
     script: whExec,

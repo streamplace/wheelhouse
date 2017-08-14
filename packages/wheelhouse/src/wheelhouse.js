@@ -7,7 +7,8 @@ import {
   wheelhouseInstall,
   wheelhouseLink,
   wheelhouseStart,
-  wheelhouseBuild
+  wheelhouseBuild,
+  wheelhouseSetVersion
 } from "./wheelhouseActions";
 import debug from "debug";
 
@@ -80,15 +81,26 @@ const runCli = async function(argv) {
         attemptAction(wheelhouseBuild);
       }
     })
+    .command({
+      command: "set-version [version-tag]",
+      usage: "$0 set-version [version-tag]",
+      describe:
+        "Update the version numbers in all of your package.json and Chart.yaml files. defaults to $(git describe --tags)",
+      handler: argv => {
+        attemptAction(wheelhouseSetVersion(argv.versionTag));
+      }
+    })
     .help()
     .version()
     .exitProcess(false)
-    .parse(argv);
+    .parse(argv.slice(2));
 };
 
 export default runCli;
 
 if (!module.parent) {
+  console.log("no parent");
+  console.log(process.argv);
   runCli(process.argv).catch(err => {
     log(err);
   });

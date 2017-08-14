@@ -4,7 +4,9 @@ import { resolve } from "path";
 import {
   PACKAGES_LOADED,
   PACKAGES_START,
-  PACKAGES_STOP
+  PACKAGES_STOP,
+  PACKAGES_UPLOADED,
+  PACKAGES_DEPENDENCY_NAMES
 } from "wheelhouse-core";
 import { spawn } from "child_process";
 import split from "split";
@@ -12,7 +14,8 @@ import { developmentLog } from "./developmentActions";
 import { run } from "./util/run";
 import { pkgForEach } from "./util/graph";
 import semver from "semver";
-import { fileLoad } from "./fileActions";
+import { fileLoad, fileWrite } from "./fileActions";
+import { s3PutFile } from "./s3Actions";
 import { procRun } from "./procActions";
 // wait at least this long before auto-rebooting an app, prevent thrash
 const SHOULD_RETRY = 1000;
@@ -90,11 +93,51 @@ export const packagesBuild = () => async (dispatch, getState) => {
   await checkNpmOnce();
   const { packages } = getState();
   await pkgForEach(packages, async pkg => {
+    const newPackageJson = {
+      ...pkg.packageJson,
+      version: "0.0.0-wheelhouse-build" // Set all the versions to the same so everything caches,
+    };
+    const { packages } = getState();
+    pkg.localDependencies.forEach(depName => {
+      const depUrl = packages[depName].buildUrl;
+      if (!depUrl) {
+        throw new Error(`${depName} doesn't appear to be uploaded`);
+      }
+      PACKAGES_DEPENDENCY_NAMES.filter(
+        field => pkg.packageJson[field]
+      ).forEach(field => {
+        // This is dependencies, devDependencies, optionalDependencies
+        if (Object.keys(pkg.packageJson[field]).includes(depName)) {
+          newPackageJson[field] = {
+            ...pkg.packageJson[field],
+            [depName]: depUrl
+          };
+        }
+      });
+    });
     await dispatch(
+      fileWrite(resolve(pkg.path, "package.json"), newPackageJson)
+    );
+    const stdout = await dispatch(
       procRun("npm", ["pack"], {
         cwd: pkg.path
       })
     );
+    const tarballPath = stdout.split("\n").pop();
+    const file = await dispatch(fileLoad(resolve(pkg.path, tarballPath)));
+    const pkgPath = `packages/${pkg.name}-${file.hash.slice(0, 10)}.tgz`;
+    const { url } = await dispatch(
+      s3PutFile({
+        filePath: file.path,
+        objectName: pkgPath
+      })
+    );
+    dispatch(developmentLog(pkg.name, `uploaded ${url}`));
+    dispatch({
+      type: PACKAGES_UPLOADED,
+      name: pkg.name,
+      url: url
+    });
   });
 };
 

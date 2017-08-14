@@ -18,5 +18,5 @@ export const procRun = (prog, args, opts = {}) => async dispatch => {
     stderr: line => dispatch(developmentLog(name, line)),
     ...opts
   };
-  await run(prog, args, opts);
+  return await run(prog, args, opts);
 };

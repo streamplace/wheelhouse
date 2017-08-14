@@ -18,7 +18,8 @@ export default function(state = initialState, action) {
         path: action.path,
         content: action.content,
         name: action.name,
-        data: action.data
+        data: action.data,
+        hash: action.hash
       }
     };
   }

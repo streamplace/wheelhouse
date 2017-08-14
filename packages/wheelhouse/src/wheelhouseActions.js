@@ -86,3 +86,12 @@ export const wheelhouseBuild = () => async (dispatch, getState) => {
   await dispatch(packagesBuild());
   await dispatch(dockerBuild());
 };
+
+/**
+ * wheelhouse set-version
+ */
+// export const wheelhouseBuild = () => async (dispatch, getState) => {
+//   await dispatch(wheelhouseInit());
+//   await dispatch(packagesBuild());
+//   await dispatch(dockerBuild());
+// };

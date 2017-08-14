@@ -18,19 +18,19 @@ export const run = (cmd, args, opts = {}) => {
 
   runningProcs.push(proc);
 
-  let stdout = "";
-  let stderr = "";
+  let stdout = [];
+  let stderr = [];
 
   proc.stdout.pipe(split()).on("data", data => {
-    stdout += data;
     if (data.trim() !== "") {
+      stdout.push(data);
       logStdout(data);
     }
   });
 
   proc.stderr.pipe(split()).on("data", data => {
-    stderr += data;
     if (data.trim() !== "") {
+      stderr.push(data);
       logStderr(data);
     }
   });
@@ -45,9 +45,9 @@ export const run = (cmd, args, opts = {}) => {
       dead = true;
       runningProcs = runningProcs.filter(p => p !== proc);
       if (code === 0) {
-        resolve(stdout);
+        resolve(stdout.join("\n"));
       } else {
-        reject(stderr);
+        reject(stderr.join("\n"));
       }
     });
   });
