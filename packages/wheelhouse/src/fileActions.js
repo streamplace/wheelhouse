@@ -1,14 +1,16 @@
 import fs from "mz/fs";
-import { FILE_LOADED, FILE_WRITTEN } from "wheelhouse-core";
+import { FILE_LOADED, FILE_WRITTEN, FILE_DELETED } from "wheelhouse-core";
 import { basename } from "path";
 import { safeLoad as parseYaml, safeDump as stringifyYaml } from "js-yaml";
 import { dirname } from "path";
 import { createHash } from "crypto";
+import tar from "tar";
 
-const BINARY_EXTENSIONS = [".gz", ".tgz"];
+const TARBALL_EXTENSIONS = [".gz", ".tgz"];
 
-const checkBinary = filePath =>
-  BINARY_EXTENSIONS.some(ext => filePath.endsWith(ext));
+const checkBinary = filePath => {
+  return TARBALL_EXTENSIONS.some(ext => filePath.endsWith(ext));
+};
 
 /**
  * Read a file from the system. Every single time that happens, it should go through this method.
@@ -22,9 +24,7 @@ export const fileLoad = filePath => async (dispatch, getState) => {
   } else {
     content = await fs.readFile(filePath, "utf8");
   }
-  const hasher = createHash("sha256");
-  hasher.update(content);
-  const hash = hasher.digest("hex");
+  const hash = await getHash(filePath, content);
   const action = {
     type: FILE_LOADED,
     path: filePath,
@@ -47,6 +47,39 @@ export const fileLoad = filePath => async (dispatch, getState) => {
   }
   dispatch(action);
   return action;
+};
+
+/**
+ * So tarballs can be subtly different for hashing purposes. But when we're trying to lock package
+ * versions, we want the same one to be the same. So this function gets the proper hash of a
+ * tarball by deterministically comparing its contents.
+ * @param {String} filePath
+ */
+const getHash = async (filePath, content) => {
+  const hasher = createHash("sha256");
+  if (!checkBinary(filePath)) {
+    hasher.update(content);
+    return hasher.digest("hex");
+  }
+  let files = {};
+  await tar.t({
+    file: filePath,
+    onentry: entry => {
+      files[entry.path] = [];
+      entry.on("data", chunk => {
+        files[entry.path].push(chunk);
+      });
+    }
+  });
+  // Sort the filenames every time so it's deterministic
+  const sortedFiles = Object.keys(files).sort();
+  for (const path of sortedFiles) {
+    hasher.update(path);
+    files[path].forEach(chunk => {
+      hasher.update(chunk);
+    });
+  }
+  return hasher.digest("hex");
 };
 
 /**
@@ -75,12 +108,21 @@ export const fileWrite = (filePath, content) => async (dispatch, getState) => {
   }
   const isBinary = checkBinary(filePath);
   action.content = isBinary ? null : content;
-  const hasher = createHash("sha256");
-  hasher.update(content);
-  const hash = hasher.digest("hex");
-  action.hash = hash;
 
   await fs.writeFile(filePath, content);
   dispatch(action);
   return action;
+};
+
+/**
+ * Write a file to the system. This function is "smart" about properly writing JSON and YAML files
+ * -- otherwise you better be passing me a string or Buffer.
+ */
+export const fileDelete = filePath => async (dispatch, getState) => {
+  // Streaming API could optimize this a bit. Quick win here if wheelhouse is slow.
+  await fs.unlink(filePath);
+  dispatch({
+    type: FILE_DELETED,
+    path: filePath
+  });
 };

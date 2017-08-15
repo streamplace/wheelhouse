@@ -51,6 +51,7 @@
     "redux-thunk": "^2.2.0",
     "semver": "^5.3.0",
     "split": "^1.0.0",
+    "tar": "^3.1.9",
     "terminal-kit": "^1.7.1",
     "update-notifier": "^2.1.0",
     "wheelhouse-core": "0.2.3",

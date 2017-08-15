@@ -14,7 +14,7 @@ import { developmentLog } from "./developmentActions";
 import { run } from "./util/run";
 import { pkgForEach } from "./util/graph";
 import semver from "semver";
-import { fileLoad, fileWrite } from "./fileActions";
+import { fileLoad, fileWrite, fileDelete } from "./fileActions";
 import { s3PutFile } from "./s3Actions";
 import { procRun } from "./procActions";
 // wait at least this long before auto-rebooting an app, prevent thrash
@@ -133,6 +133,7 @@ export const packagesBuild = () => async (dispatch, getState) => {
       })
     );
     dispatch(developmentLog(pkg.name, `uploaded ${url}`));
+    await dispatch(fileDelete(file.path));
     dispatch({
       type: PACKAGES_UPLOADED,
       name: pkg.name,

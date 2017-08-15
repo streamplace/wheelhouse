@@ -6,7 +6,7 @@
  *  data: if this is a file we know how to read (e.g. JSON, YAML), the file's data
  */
 
-import { FILE_LOADED } from "./fileConstants";
+import { FILE_LOADED, FILE_DELETED } from "./fileConstants";
 
 const initialState = {};
 
@@ -21,6 +21,13 @@ export default function(state = initialState, action) {
         data: action.data,
         hash: action.hash
       }
+    };
+  }
+
+  if (action.type === FILE_DELETED) {
+    return {
+      ...state,
+      [action.path]: undefined
     };
   }
 
