@@ -9,8 +9,13 @@ import split from "split";
 let runningProcs = [];
 
 export const run = (cmd, args, opts = {}) => {
+  const env = opts.env || {};
   const proc = spawn(cmd, args, {
-    cwd: opts.cwd
+    cwd: opts.cwd,
+    env: {
+      ...process.env,
+      ...env
+    }
   });
 
   const logStdout = opts.stdout || function() {};

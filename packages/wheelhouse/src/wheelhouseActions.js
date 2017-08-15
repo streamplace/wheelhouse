@@ -12,7 +12,8 @@ import {
   packagesStart,
   packagesBuild
 } from "./packagesActions";
-import { dockerInit, dockerBuild } from "./dockerActions";
+import { dockerInit, dockerBuild, dockerPush } from "./dockerActions";
+import { s3Init } from "./s3Actions";
 import { developmentLog } from "./developmentActions";
 import { kubernetesStartPullingData } from "./kubernetesActions";
 import { run } from "./util/run";
@@ -81,10 +82,16 @@ export const wheelhouseStartupScript = script => async (dispatch, getState) => {
 /**
  * wheelhouse build
  */
-export const wheelhouseBuild = () => async (dispatch, getState) => {
+export const wheelhouseBuild = () => async dispatch => {
   await dispatch(wheelhouseInit());
+  await dispatch(s3Init());
   await dispatch(packagesBuild());
   await dispatch(dockerBuild());
+};
+
+export const wheelhousePush = () => async dispatch => {
+  await dispatch(wheelhouseInit());
+  await dispatch(dockerPush());
 };
 
 /**

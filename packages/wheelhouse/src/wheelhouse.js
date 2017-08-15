@@ -8,6 +8,7 @@ import {
   wheelhouseLink,
   wheelhouseStart,
   wheelhouseBuild,
+  wheelhousePush,
   wheelhouseSetVersion
 } from "./wheelhouseActions";
 import debug from "debug";
@@ -79,6 +80,13 @@ const runCli = async function(argv) {
         "Use Wheelhouse to build your npm packages, Docker images, and Helm charts",
       handler: argv => {
         attemptAction(wheelhouseBuild);
+      }
+    })
+    .command({
+      command: "push",
+      describe: "Push all your Docker images and Helm charts",
+      handler: argv => {
+        attemptAction(wheelhousePush);
       }
     })
     .command({

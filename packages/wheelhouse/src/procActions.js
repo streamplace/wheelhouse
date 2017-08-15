@@ -13,6 +13,7 @@ import { basename } from "path";
 export const procRun = (prog, args, opts = {}) => async dispatch => {
   const wd = opts.cwd || process.cwd();
   const name = opts.name || basename(wd);
+  dispatch(developmentLog(name, `> ${prog} ${args.join(" ")}`));
   opts = {
     stdout: line => dispatch(developmentLog(name, line)),
     stderr: line => dispatch(developmentLog(name, line)),

@@ -3,3 +3,8 @@ s3:
   accessKeyId: null
   secretAccessKey: null
   url: null
+
+docker:
+  prefix: null
+  pushPrefix: null
+  auth: null

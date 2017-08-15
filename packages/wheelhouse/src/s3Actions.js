@@ -8,7 +8,12 @@ let externalHost;
 let client;
 let bucket;
 let prefix;
-const initMinio = () => async (dispatch, getState) => {
+
+/**
+ * Unlike the other init functions that are called every time, this one gets called manually by
+ * actions that use S3, so we don't complain about missing credentials unless we're using it.
+ */
+export const s3Init = () => async (dispatch, getState) => {
   if (minioProm) {
     return await minioProm;
   }
@@ -38,7 +43,7 @@ const initMinio = () => async (dispatch, getState) => {
 };
 
 export const s3PutFile = ({ filePath, objectName }) => async dispatch => {
-  await dispatch(initMinio());
+  await dispatch(s3Init());
   const fullPath = path.join(prefix, objectName);
   const etag = await client.putObject(
     bucket,

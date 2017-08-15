@@ -16,9 +16,16 @@
     "url": "git+ssh://git@github.com/streamplace/wheelhouse.git"
   },
   "jest": {
-    "testPathIgnorePatterns": ["/node_modules/", "/dist/"]
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/dist/"
+    ]
   },
-  "keywords": ["Streamplace", "Kubernetes", "Wheelhouse"],
+  "keywords": [
+    "Streamplace",
+    "Kubernetes",
+    "Wheelhouse"
+  ],
   "author": "Streamplace",
   "license": "MIT",
   "bugs": {
@@ -47,6 +54,8 @@
     "split": "^1.0.0",
     "tar": "^3.1.9",
     "terminal-kit": "^1.7.1",
+    "tmp": "0.0.33",
+    "tmp-promise": "^1.0.3",
     "update-notifier": "^2.1.0",
     "wheelhouse-core": "0.2.3",
     "wheelhouse-frontend": "0.2.3",
