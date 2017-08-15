@@ -10,6 +10,9 @@ import {
 } from "wheelhouse-core";
 import Glob from "@iameli/glob-fs";
 import { run } from "./util/run";
+import dot from "dot-object";
+import fs from "fs-extra";
+import { safeLoad as yamlParse } from "js-yaml";
 
 const glob = Glob({ gitignore: true });
 const CONFIG_NAME = "wheelhouse.yaml";
@@ -30,9 +33,31 @@ export const configInit = () => async (dispatch, getState) => {
   const rootPath = path.dirname(configPath);
   await dispatch(configRootFound(rootPath));
 
+  // Data gets extended from our default YAML
+  const defaultContent = await fs.readFile(
+    path.resolve(__dirname, "defaultConfig.yaml")
+  );
+  const defaultData = yamlParse(defaultContent);
   const { data } = await dispatch(fileLoad(configPath));
+  // dot-object to do a deep merge of our objects
+  const defaultFlat = dot.dot(defaultData);
+  const dataFlat = dot.dot(data);
+  const combinedFlat = {
+    ...defaultFlat,
+    ...dataFlat
+  };
+  // Allow any of these variables to be overriden by environment variables...
+  Object.keys(combinedFlat).forEach(key => {
+    // rewrites "s3.accessKeyId" to "WH_S3_ACCESS_KEY_ID"
+    const envKey =
+      "WH_" + key.replace(/([A-Z])/g, "_$1").toUpperCase().replace(/\./g, "_");
+    if (process.env[envKey]) {
+      combinedFlat[key] = process.env[envKey];
+    }
+  });
+  const combinedData = dot.object(combinedFlat);
   await dispatch(fileLoad(path.resolve(rootPath, "package.json")));
-  await dispatch(configLoaded(data));
+  await dispatch(configLoaded(combinedData));
 
   const { config } = getState();
 

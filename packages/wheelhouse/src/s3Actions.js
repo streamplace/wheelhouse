@@ -3,25 +3,22 @@ import url from "url";
 import fs from "fs";
 import path from "path";
 
-const ENV = ["WHEELHOUSE_S3_URL", "AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY"];
-
 let minioProm;
 let externalHost;
 let client;
 let bucket;
 let prefix;
-const initMinio = async () => {
+const initMinio = () => async (dispatch, getState) => {
   if (minioProm) {
     return await minioProm;
   }
-  let env = {};
-  ENV.forEach(key => {
-    if (!process.env[key]) {
-      throw new Error(`Missing environment variable ${key}`);
+  const { s3 } = getState().config;
+  ["accessKeyId", "secretAccessKey", "url"].forEach(key => {
+    if (!s3[key]) {
+      throw new Error(`Missing required config variable s3.${key}`);
     }
-    env[key] = process.env[key];
   });
-  let { hostname, path, protocol } = url.parse(env.WHEELHOUSE_S3_URL);
+  let { hostname, path, protocol } = url.parse(s3.url);
   externalHost = `${protocol}//${hostname}`;
   const [_bucket, ...rest] = path.split("/").filter(str => str !== "");
   bucket = _bucket;
@@ -32,8 +29,8 @@ const initMinio = async () => {
   prefix = rest.join("/");
   client = new Client({
     endPoint: hostname,
-    accessKey: env.AWS_ACCESS_KEY_ID,
-    secretKey: env.AWS_SECRET_ACCESS_KEY,
+    accessKey: s3.accessKeyId,
+    secretKey: s3.secretAccessKey,
     secure: protocol === "https:"
   });
   minioProm = client.bucketExists(bucket);
@@ -41,7 +38,7 @@ const initMinio = async () => {
 };
 
 export const s3PutFile = ({ filePath, objectName }) => async dispatch => {
-  await initMinio();
+  await dispatch(initMinio());
   const fullPath = path.join(prefix, objectName);
   const etag = await client.putObject(
     bucket,

@@ -99,8 +99,6 @@ const runCli = async function(argv) {
 export default runCli;
 
 if (!module.parent) {
-  console.log("no parent");
-  console.log(process.argv);
   runCli(process.argv).catch(err => {
     log(err);
   });

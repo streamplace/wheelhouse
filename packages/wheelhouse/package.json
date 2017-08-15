@@ -5,8 +5,8 @@
   "main": "dist/wheelhouse.js",
   "scripts": {
     "test": "jest",
-    "prepublish": "babel -d dist src",
-    "dev": "WH_LOCAL_DEV=true babel --retain-lines -w -s -d dist src"
+    "prepublish": "babel -d --copy-files dist src",
+    "dev": "WH_LOCAL_DEV=true babel --copy-files --retain-lines -w -s -d dist src"
   },
   "bin": {
     "wheelhouse": "dist/wheelhouse.js"
@@ -16,16 +16,9 @@
     "url": "git+ssh://git@github.com/streamplace/wheelhouse.git"
   },
   "jest": {
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      "/dist/"
-    ]
+    "testPathIgnorePatterns": ["/node_modules/", "/dist/"]
   },
-  "keywords": [
-    "Streamplace",
-    "Kubernetes",
-    "Wheelhouse"
-  ],
+  "keywords": ["Streamplace", "Kubernetes", "Wheelhouse"],
   "author": "Streamplace",
   "license": "MIT",
   "bugs": {
@@ -38,6 +31,7 @@
     "babel-polyfill": "^6.23.0",
     "debug": "^2.6.6",
     "docker-file-parser": "^1.0.2",
+    "dot-object": "^1.6.0",
     "express": "^4.15.2",
     "find-up": "^2.1.0",
     "fs-extra": "^3.0.1",

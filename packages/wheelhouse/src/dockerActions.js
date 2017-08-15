@@ -25,7 +25,7 @@ export const dockerBuild = () => async (dispatch, getState) => {
   await pkgForEach(packages, async pkg => {
     log(`searching for ${resolve(pkg.path, "Dockerfile")}`);
     if (await fs.pathExists(resolve(pkg.path, "Dockerfile"))) {
-      const tag = `${config.docker.prefix}/${pkg.name}`;
+      const tag = `${config.docker.prefix}/${pkg.name}:v${config.version}`;
       await dispatch(
         procRun("docker", ["build", "-t", tag, "."], {
           cwd: pkg.path
