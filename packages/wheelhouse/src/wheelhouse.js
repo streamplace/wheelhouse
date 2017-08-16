@@ -9,7 +9,8 @@ import {
   wheelhouseStart,
   wheelhouseBuild,
   wheelhousePush,
-  wheelhouseSetVersion
+  wheelhouseSetVersion,
+  wheelhouseBootstrap
 } from "./wheelhouseActions";
 import debug from "debug";
 
@@ -57,6 +58,13 @@ const runCli = async function(argv) {
           startApps: argv.app || [],
           disableKube: argv.disableKube
         });
+      }
+    })
+    .command({
+      command: "bootstrap",
+      describe: "initalize a new S3 bucket to host your Helm charts",
+      handler: argv => {
+        attemptAction(wheelhouseBootstrap);
       }
     })
     .command({

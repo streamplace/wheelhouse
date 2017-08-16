@@ -1,13 +1,18 @@
 import { Client } from "@streamplace/minio";
 import url from "url";
-import fs from "fs";
+import fs from "fs-extra";
 import path from "path";
+import { fileLoad } from "./fileActions";
+import debug from "debug";
+import stream from "stream";
 
 let minioProm;
 let externalHost;
 let client;
 let bucket;
 let prefix;
+
+const log = debug("wheelhouse:s3Actions");
 
 /**
  * Unlike the other init functions that are called every time, this one gets called manually by
@@ -38,21 +43,39 @@ export const s3Init = () => async (dispatch, getState) => {
     secretKey: s3.secretAccessKey,
     secure: protocol === "https:"
   });
+  const logger = new stream.PassThrough();
+  client.logStream = logger;
+  logger.on("data", buf => {
+    const str = buf.toString().trim();
+    if (str !== "") {
+      log(str);
+    }
+  });
   minioProm = client.bucketExists(bucket);
   await minioProm;
 };
 
 export const s3PutFile = ({ filePath, objectName }) => async dispatch => {
   await dispatch(s3Init());
+  if (!await fs.pathExists(filePath)) {
+    throw new Error(`${filePath} doesn't exist, can't upload`);
+  }
   const fullPath = path.join(prefix, objectName);
-  const etag = await client.putObject(
+  const etag = await client.fPutObject(
     bucket,
     path.join(prefix, objectName),
-    fs.createReadStream(filePath)
+    filePath
   );
 
   return {
     url: [externalHost, bucket, fullPath].join("/"),
     etag: etag
   };
+};
+
+export const s3GetFile = ({ filePath, objectName }) => async dispatch => {
+  await dispatch(s3Init());
+  const fullPath = path.join(prefix, objectName);
+  await client.fGetObject(bucket, fullPath, filePath);
+  return await dispatch(fileLoad(filePath));
 };

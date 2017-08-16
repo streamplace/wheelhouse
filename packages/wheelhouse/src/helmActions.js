@@ -5,6 +5,9 @@ import fs from "fs-extra";
 import { procRun } from "./procActions";
 import { fileLoad, fileWrite, fileRevert } from "./fileActions";
 import { HELM_BUILT } from "wheelhouse-core";
+import { s3GetFile, s3PutFile } from "./s3Actions";
+import { developmentLog } from "./developmentActions";
+import tmp from "tmp-promise";
 
 const log = debug("wheelhouse:helmActions");
 
@@ -58,4 +61,92 @@ export const helmBuild = () => async (dispatch, getState) => {
     });
     await dispatch(fileRevert(chartPath));
   });
+};
+
+export const helmGetIndex = () => async (dispatch, getState) => {
+  const { config } = getState();
+  const indexPath = resolve(
+    config.rootDir,
+    ".wheelhouse",
+    "charts",
+    "index.yaml"
+  );
+  return await dispatch(
+    s3GetFile({ objectName: "index.yaml", filePath: indexPath })
+  );
+};
+
+export const helmBootstrap = () => async (dispatch, getState) => {
+  const { config } = getState();
+  // We're expecting a 404 when we try and get the index.
+  let errored = false;
+  try {
+    await dispatch(helmGetIndex());
+  } catch (e) {
+    errored = true;
+  }
+  if (!errored) {
+    throw new Error(`${config.s3.url}/index.yaml exists, can't bootstrap."`);
+  }
+  const emptyFile = await tmp.file();
+  await fs.writeFile(emptyFile.path, "apiVersion: v1");
+  await dispatch(
+    s3PutFile({
+      filePath: emptyFile.path,
+      objectName: "index.yaml"
+    })
+  );
+  dispatch(developmentLog("helm", `${config.s3.url}/index.yaml created`));
+};
+
+// #!/bin/bash
+
+// set -o errexit
+// set -o nounset
+// set -o pipefail
+
+// ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
+// source "$ROOT/run/common.sh"
+
+// if [[ "${AWS_ACCESS_KEY_ID:-}" == "" ]]; then
+//   echo "No AWS_ACCESS_KEY_ID found, not pushing charts."
+//   exit 0
+// fi
+
+// cd "$ROOT"
+// npm install
+// mkdir -p "$ROOT/build_chart"
+// rm -rf "$ROOT/build_chart/*"
+// cd "$ROOT/build_chart"
+// mv "$ROOT"/packages/*/*.tgz .
+// oldIndex=$(mktemp).yaml
+// curl -o $oldIndex "https://charts.stream.place/index.yaml"
+// helm repo index --url https://charts.stream.place --merge $oldIndex .
+// rm $oldIndex
+// aws s3 --region us-west-2 sync . s3://charts.stream.place
+
+export const helmPush = () => async (dispatch, getState) => {
+  await dispatch(helmGetIndex());
+  const { config } = getState();
+  const chartsPath = resolve(config.rootDir, ".wheelhouse", "charts");
+  const indexPath = resolve(chartsPath, "index.yaml");
+  await dispatch(
+    procRun(
+      "helm",
+      ["repo", "index", "--url", config.s3.url, "--merge", indexPath, "."],
+      {
+        cwd: chartsPath
+      }
+    )
+  );
+  // Now sync the entire directory!
+  for (const filename of await fs.readdir(chartsPath)) {
+    const { url } = await dispatch(
+      s3PutFile({
+        objectName: filename,
+        filePath: resolve(chartsPath, filename)
+      })
+    );
+    dispatch(developmentLog("helm", `uploaded ${url}`));
+  }
 };
