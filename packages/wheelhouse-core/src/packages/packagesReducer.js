@@ -40,6 +40,17 @@ export default function(state = initialState, action) {
       }
     }
 
+    // Store the first load of package.json so we can restore it later if we wanna
+    let originalContent;
+    if (
+      state[action.packageJson.name] &&
+      state[action.packageJson.name].originalContent
+    ) {
+      originalContent = state[action.packageJson.name].originalContent;
+    } else {
+      originalContent = action.content;
+    }
+
     return {
       ...state,
       ...otherPackages,
@@ -48,7 +59,8 @@ export default function(state = initialState, action) {
         packageJson: action.packageJson,
         path: action.path,
         allDependencies: [...allDependencies],
-        localDependencies
+        localDependencies,
+        originalContent
       }
     };
   }

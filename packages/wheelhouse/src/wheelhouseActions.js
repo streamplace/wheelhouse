@@ -10,7 +10,8 @@ import {
   packagesLink,
   packagesInstall,
   packagesStart,
-  packagesBuild
+  packagesBuild,
+  packagesCleanup
 } from "./packagesActions";
 import { dockerInit, dockerBuild, dockerPush } from "./dockerActions";
 import { s3Init } from "./s3Actions";
@@ -87,6 +88,7 @@ export const wheelhouseBuild = () => async dispatch => {
   await dispatch(s3Init());
   await dispatch(packagesBuild());
   await dispatch(dockerBuild());
+  await dispatch(packagesCleanup());
 };
 
 export const wheelhousePush = () => async dispatch => {

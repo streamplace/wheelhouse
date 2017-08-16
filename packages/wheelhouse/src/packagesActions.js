@@ -50,9 +50,10 @@ export const packagesLoad = pkgPath => async (dispatch, getState) => {
   log(`Loading ${pkgPath}`);
   const { rootDir } = getState().config;
   const pkgJsonPath = resolve(rootDir, pkgPath, "package.json");
-  const { data } = await dispatch(fileLoad(pkgJsonPath));
+  const { data, content } = await dispatch(fileLoad(pkgJsonPath));
   dispatch(
     packagesLoaded({
+      content: content,
       packageJson: data,
       path: resolve(pkgPath)
     })
@@ -142,6 +143,14 @@ export const packagesBuild = () => async (dispatch, getState) => {
   });
 };
 
+export const packagesCleanup = () => async (dispatch, getState) => {
+  await checkNpmOnce();
+  const { packages } = getState();
+  await pkgForEach(packages, async pkg => {
+    await fs.writeFile(resolve(pkg.path, "package.json"), pkg.originalContent);
+  });
+};
+
 export const packagesLink = () => async (dispatch, getState) => {
   const { packages } = getState();
   const links = [];
@@ -173,8 +182,8 @@ export const packagesLink = () => async (dispatch, getState) => {
   await Promise.all(proms);
 };
 
-export const packagesLoaded = ({ packageJson, path }) => {
-  return { type: PACKAGES_LOADED, packageJson, path };
+export const packagesLoaded = ({ packageJson, path, content }) => {
+  return { type: PACKAGES_LOADED, packageJson, path, content };
 };
 
 const procs = {};
