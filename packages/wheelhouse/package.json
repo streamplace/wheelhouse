@@ -5,7 +5,7 @@
   "main": "dist/wheelhouse.js",
   "scripts": {
     "test": "jest",
-    "prepublish": "babel -d --copy-files dist src",
+    "prepublish": "babel --copy-files -d dist src",
     "dev": "WH_LOCAL_DEV=true babel --copy-files --retain-lines -w -s -d dist src"
   },
   "bin": {
