@@ -10,6 +10,8 @@ const log = debug("wheelhouse:helmActions");
 
 export const helmBuild = () => async (dispatch, getState) => {
   const { packages, config } = getState();
+  // We stash the built charts in a different directory b/c
+  // https://twitter.com/elimallon/status/896834495520714752
   const chartDir = resolve(config.rootDir, ".wheelhouse", "charts");
   await fs.ensureDir(chartDir);
   await pkgForEach(packages, async pkg => {
