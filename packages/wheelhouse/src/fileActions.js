@@ -115,6 +115,18 @@ export const fileWrite = (filePath, content) => async (dispatch, getState) => {
 };
 
 /**
+ * Revert a file to its original state the first time we saw it. Useful for package.json and
+ * Chart.yaml tweaks.
+ */
+export const fileRevert = filePath => async (dispatch, getState) => {
+  const file = getState().file[filePath];
+  if (!file || !file.originalContent) {
+    throw new Error(`can't revert ${filePath}, we don't have that file`);
+  }
+  await fs.writeFile(filePath, file.originalContent);
+};
+
+/**
  * Write a file to the system. This function is "smart" about properly writing JSON and YAML files
  * -- otherwise you better be passing me a string or Buffer.
  */

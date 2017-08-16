@@ -12,6 +12,12 @@ const initialState = {};
 
 export default function(state = initialState, action) {
   if (action.type === FILE_LOADED) {
+    let originalContent;
+    if (state[action.path]) {
+      originalContent = state[action.path].originalContent;
+    } else {
+      originalContent = action.content;
+    }
     return {
       ...state,
       [action.path]: {
@@ -19,7 +25,8 @@ export default function(state = initialState, action) {
         content: action.content,
         name: action.name,
         data: action.data,
-        hash: action.hash
+        hash: action.hash,
+        originalContent: originalContent
       }
     };
   }

@@ -14,7 +14,7 @@ import { developmentLog } from "./developmentActions";
 import { run } from "./util/run";
 import { pkgForEach } from "./util/graph";
 import semver from "semver";
-import { fileLoad, fileWrite, fileDelete } from "./fileActions";
+import { fileLoad, fileWrite, fileDelete, fileRevert } from "./fileActions";
 import { s3PutFile } from "./s3Actions";
 import { procRun } from "./procActions";
 // wait at least this long before auto-rebooting an app, prevent thrash
@@ -147,7 +147,7 @@ export const packagesCleanup = () => async (dispatch, getState) => {
   await checkNpmOnce();
   const { packages } = getState();
   await pkgForEach(packages, async pkg => {
-    await fs.writeFile(resolve(pkg.path, "package.json"), pkg.originalContent);
+    await dispatch(fileRevert(resolve(pkg.path, "package.json")));
   });
 };
 
