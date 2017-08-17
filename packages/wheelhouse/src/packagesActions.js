@@ -110,7 +110,7 @@ export const packagesBuild = () => async (dispatch, getState) => {
         // This is dependencies, devDependencies, optionalDependencies
         if (Object.keys(pkg.packageJson[field]).includes(depName)) {
           newPackageJson[field] = {
-            ...pkg.packageJson[field],
+            ...newPackageJson[field],
             [depName]: depUrl
           };
         }
