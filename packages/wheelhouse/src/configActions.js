@@ -13,6 +13,7 @@ import { run } from "./util/run";
 import dot from "dot-object";
 import fs from "fs-extra";
 import { safeLoad as yamlParse } from "js-yaml";
+import semver from "semver";
 
 const glob = Glob({ gitignore: true });
 const CONFIG_NAME = "wheelhouse.yaml";
@@ -56,7 +57,9 @@ export const configInit = () => async (dispatch, getState) => {
     }
   });
   const combinedData = dot.object(combinedFlat);
-  await dispatch(fileLoad(path.resolve(rootPath, "package.json")));
+  const rootPackage = await dispatch(
+    fileLoad(path.resolve(rootPath, "package.json"))
+  );
   await dispatch(configLoaded(combinedData));
 
   const { config } = getState();
@@ -73,18 +76,14 @@ export const configInit = () => async (dispatch, getState) => {
     );
   }
 
-  try {
-    const version = await run("git", ["describe", "--tags"]);
-    await dispatch({
-      type: CONFIG_VERSION,
-      version
-    });
-  } catch (e) {
-    await dispatch({
-      type: CONFIG_VERSION,
-      version: "0.0.0"
-    });
-  }
+  const stdout = await run("git", ["rev-parse", "HEAD"]);
+  const hash = stdout.slice(0, 8);
+  const { major, minor, patch } = semver.parse(rootPackage.data.version);
+  // For now our assumed version is one up from our current version plus hash
+  await dispatch({
+    type: CONFIG_VERSION,
+    version: `${major}.${minor}.${patch + 1}-${hash}`
+  });
 
   packages = packages
     .reduce((arr1, arr2) => arr1.concat(arr2), [])
