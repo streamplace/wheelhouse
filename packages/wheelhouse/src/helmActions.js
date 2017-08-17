@@ -50,9 +50,13 @@ export const helmBuild = () => async (dispatch, getState) => {
       })
     );
     await dispatch(
-      procRun("helm", ["package", "--debug", "-d", chartDir, "."], {
-        cwd: pkg.path
-      })
+      procRun(
+        "helm",
+        ["package", "--save=false", "--debug", "-d", chartDir, "."],
+        {
+          cwd: pkg.path
+        }
+      )
     );
     dispatch({
       type: HELM_BUILT,
