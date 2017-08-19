@@ -1,4 +1,4 @@
-import { PACKAGES_LOADED } from "./packagesConstants";
+import { PACKAGES_LOADED, PACKAGES_UPLOADED } from "./packagesConstants";
 
 const initialState = {};
 
@@ -49,6 +49,16 @@ export default function(state = initialState, action) {
         path: action.path,
         allDependencies: [...allDependencies],
         localDependencies
+      }
+    };
+  }
+
+  if (action.type === PACKAGES_UPLOADED) {
+    return {
+      ...state,
+      [action.name]: {
+        ...state[action.name],
+        buildUrl: action.url
       }
     };
   }

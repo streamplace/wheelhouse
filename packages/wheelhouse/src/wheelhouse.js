@@ -7,7 +7,10 @@ import {
   wheelhouseInstall,
   wheelhouseLink,
   wheelhouseStart,
-  wheelhouseBuild
+  wheelhouseBuild,
+  wheelhousePush,
+  wheelhouseSetVersion,
+  wheelhouseBootstrap
 } from "./wheelhouseActions";
 import debug from "debug";
 
@@ -58,6 +61,13 @@ const runCli = async function(argv) {
       }
     })
     .command({
+      command: "bootstrap",
+      describe: "initalize a new S3 bucket to host your Helm charts",
+      handler: argv => {
+        attemptAction(wheelhouseBootstrap);
+      }
+    })
+    .command({
       command: "install",
       describe: "install all necessary dependencies of all packages",
       handler: argv => {
@@ -80,10 +90,26 @@ const runCli = async function(argv) {
         attemptAction(wheelhouseBuild);
       }
     })
+    .command({
+      command: "push",
+      describe: "Push all your Docker images and Helm charts",
+      handler: argv => {
+        attemptAction(wheelhousePush);
+      }
+    })
+    .command({
+      command: "set-version [version-tag]",
+      usage: "$0 set-version [version-tag]",
+      describe:
+        "Update the version numbers in all of your package.json and Chart.yaml files. defaults to $(git describe --tags)",
+      handler: argv => {
+        attemptAction(wheelhouseSetVersion(argv.versionTag));
+      }
+    })
     .help()
     .version()
     .exitProcess(false)
-    .parse(argv);
+    .parse(argv.slice(2));
 };
 
 export default runCli;

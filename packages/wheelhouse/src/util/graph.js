@@ -28,6 +28,8 @@ export const pkgForEach = async (packages, cb, visited = new Set()) => {
     }
     visited.add(pkgName);
     exec.push(pkg);
+    // Uncommenting this line makes everything run one at a time. Useful for debugging.
+    // break;
   }
 
   await Promise.all(exec.map(async pkg => cb(pkg)));
