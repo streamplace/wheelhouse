@@ -83,11 +83,14 @@ const runCli = async function(argv) {
       }
     })
     .command({
-      command: "build",
+      command: "build [systems...]",
       describe:
         "Use Wheelhouse to build your npm packages, Docker images, and Helm charts",
-      handler: argv => {
-        attemptAction(wheelhouseBuild);
+      handler: ({ systems }) => {
+        if (systems.length === 0) {
+          systems = ["packages", "docker", "helm"];
+        }
+        attemptAction(wheelhouseBuild, systems);
       }
     })
     .command({

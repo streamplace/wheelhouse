@@ -84,14 +84,17 @@ export const wheelhouseStartupScript = script => async (dispatch, getState) => {
 /**
  * wheelhouse build
  */
-export const wheelhouseBuild = () => async dispatch => {
+export const wheelhouseBuild = systems => async dispatch => {
   await dispatch(wheelhouseInit());
-  await dispatch(s3Init());
-  await dispatch(packagesBuild());
-  await dispatch(dockerBuild());
-  await dispatch(helmBuild());
-  await dispatch(packagesCleanup());
-  await dispatch(s3Cleanup());
+  let [packages, docker, helm] = ["packages", "docker", "helm"].map(sys =>
+    systems.includes(sys)
+  );
+  packages && (await dispatch(s3Init()));
+  packages && (await dispatch(packagesBuild()));
+  docker && (await dispatch(dockerBuild()));
+  helm && (await dispatch(helmBuild()));
+  packages && (await dispatch(packagesCleanup()));
+  packages && (await dispatch(s3Cleanup()));
 };
 
 export const wheelhousePush = () => async dispatch => {
