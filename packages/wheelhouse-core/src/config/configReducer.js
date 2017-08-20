@@ -15,7 +15,8 @@ export default function(state = initialState, action) {
   if (action.type === CONFIG_ROOT_FOUND) {
     return {
       ...state,
-      rootDir: action.rootDir
+      rootDir: action.rootDir,
+      rootName: action.rootName
     };
   }
 

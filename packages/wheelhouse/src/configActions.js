@@ -99,10 +99,13 @@ export const configInit = () => async (dispatch, getState) => {
     });
 };
 
-export const configRootFound = rootDir => ({
-  type: CONFIG_ROOT_FOUND,
-  rootDir
-});
+export const configRootFound = rootDir => {
+  return {
+    type: CONFIG_ROOT_FOUND,
+    rootDir,
+    rootName: path.basename(rootDir)
+  };
+};
 
 /**
  * Fires when the config file is loaded.

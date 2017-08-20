@@ -15,7 +15,7 @@ import {
   packagesCleanup
 } from "./packagesActions";
 import { dockerInit, dockerBuild, dockerPush } from "./dockerActions";
-import { s3Init } from "./s3Actions";
+import { s3Init, s3Cleanup } from "./s3Actions";
 import { developmentLog } from "./developmentActions";
 import { kubernetesStartPullingData } from "./kubernetesActions";
 import { run } from "./util/run";
@@ -91,6 +91,7 @@ export const wheelhouseBuild = () => async dispatch => {
   await dispatch(dockerBuild());
   await dispatch(helmBuild());
   await dispatch(packagesCleanup());
+  await dispatch(s3Cleanup());
 };
 
 export const wheelhousePush = () => async dispatch => {

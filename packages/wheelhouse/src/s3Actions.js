@@ -4,16 +4,33 @@ import fs from "fs-extra";
 import path from "path";
 import { fileLoad } from "./fileActions";
 import debug from "debug";
+import os from "os";
 import stream from "stream";
 import { developmentLog } from "./developmentActions";
+import { procRun } from "./procActions";
+import axios from "axios";
+import {
+  S3_CREDENTIALS,
+  S3_MINIO_ACCESS_KEY_ID,
+  S3_MINIO_SECRET_ACCESS_KEY,
+  S3_MINIO_PORT,
+  S3_MINIO_BUCKET
+} from "wheelhouse-core";
 
 let minioProm;
 let externalHost;
 let client;
 let bucket;
 let prefix;
+let minioContainer;
 
 const log = debug("wheelhouse:s3Actions");
+
+const wait = ms => {
+  return new Promise((resolve, reject) => {
+    setTimeout(resolve, ms);
+  });
+};
 
 export const s3Init = () => async dispatch => {
   if (!minioProm) {
@@ -22,18 +39,101 @@ export const s3Init = () => async dispatch => {
   return await minioProm;
 };
 
+export const s3GetExternalIP = () => async (dispatch, getState) => {
+  const ifaces = os.networkInterfaces();
+  const addresses = [];
+  Object.keys(ifaces).forEach(ifaceName => {
+    ifaces[ifaceName].forEach(address => {
+      if (address.family !== "IPv4") {
+        return;
+      }
+      if (address.address === "127.0.0.1") {
+        return;
+      }
+      addresses.push(address.address);
+    });
+  });
+  if (addresses.length > 1) {
+    throw new Error(
+      `Not sure which of these I should use: ${addresses.join(" ,")}`
+    );
+  }
+  return addresses[0];
+};
+
+export const s3InitMinio = () => async (dispatch, getState) => {
+  const { config } = getState();
+  minioContainer = `${config.rootName}-minio`;
+  dispatch(developmentLog("s3", "starting local minio s3 server"));
+  // Delete it in case it already exists.
+  await dispatch(
+    procRun("docker", ["rm", "-f", minioContainer])
+  ).catch(() => {});
+  const externalIP = await dispatch(s3GetExternalIP());
+  dispatch(
+    procRun(
+      "docker",
+      [
+        "run",
+        "--rm",
+        "--name",
+        minioContainer,
+        "-p",
+        `${S3_MINIO_PORT}:9000`,
+        "-v",
+        `${config.rootDir}/.wheelhouse/minio:/data`,
+        "-e",
+        `MINIO_ACCESS_KEY=${S3_MINIO_ACCESS_KEY_ID}`,
+        "-e",
+        `MINIO_SECRET_KEY=${S3_MINIO_SECRET_ACCESS_KEY}`,
+        "minio/minio",
+        "server",
+        "/data"
+      ],
+      { name: "minio" }
+    )
+  );
+  const host = `http://${externalIP}:${S3_MINIO_PORT}`;
+  dispatch({
+    type: S3_CREDENTIALS,
+    accessKeyId: S3_MINIO_ACCESS_KEY_ID,
+    secretAccessKey: S3_MINIO_SECRET_ACCESS_KEY,
+    url: `${host}/${S3_MINIO_BUCKET}`
+  });
+  let attempts = 0;
+  while (attempts < 10) {
+    try {
+      log(`Trying OPTIONS ${host}`);
+      await axios.options(host);
+      return;
+    } catch (e) {
+      log(e);
+      attempts += 1;
+      await wait(500);
+    }
+  }
+  throw new Error("Started minio, but unable to get at it within 5000ms");
+};
+
 /**
  * Unlike the other init functions that are called every time, this one gets called manually by
  * actions that use S3, so we don't complain about missing credentials unless we're using it.
  */
 export const _s3Init = () => async (dispatch, getState) => {
-  const { s3 } = getState().config;
+  let { credentials } = getState().s3;
+  let startMinio = false;
   ["accessKeyId", "secretAccessKey", "url"].forEach(key => {
-    if (!s3[key]) {
-      throw new Error(`Missing required config variable s3.${key}`);
+    if (!credentials[key]) {
+      startMinio = true;
     }
   });
-  let { hostname, path, protocol, port } = url.parse(s3.url);
+  if (startMinio) {
+    await dispatch(s3InitMinio());
+  }
+  credentials = getState().s3.credentials;
+  log("got", credentials.url);
+  let { hostname, path, protocol, port } = url.parse(credentials.url);
+  log("parsed", { hostname, path, protocol, port });
   const secure = protocol === "https:";
   externalHost = `${protocol}//${hostname}`;
   if (!port) {
@@ -49,10 +149,11 @@ export const _s3Init = () => async (dispatch, getState) => {
     hostname = "s3.amazonaws.com";
   }
   prefix = rest.join("/");
+  log(`init S3 client for ${JSON.stringify({ hostname, port })}`);
   client = new Client({
     endPoint: hostname,
-    accessKey: s3.accessKeyId,
-    secretKey: s3.secretAccessKey,
+    accessKey: credentials.accessKeyId,
+    secretKey: credentials.secretAccessKey,
     secure: secure,
     port: port
   });
@@ -98,4 +199,10 @@ export const s3GetFile = ({ filePath, objectName }) => async dispatch => {
   const fullPath = path.join(prefix, objectName);
   await client.fGetObject(bucket, fullPath, filePath);
   return await dispatch(fileLoad(filePath));
+};
+
+export const s3Cleanup = () => async dispatch => {
+  if (minioContainer) {
+    await dispatch(procRun("docker", ["stop", minioContainer]));
+  }
 };

@@ -9,7 +9,6 @@ import { basename } from "path";
  * @param {Array} args
  * @param {Object} opts
  */
-
 export const procRun = (prog, args, opts = {}) => async dispatch => {
   const wd = opts.cwd || process.cwd();
   const name = opts.name || basename(wd);
