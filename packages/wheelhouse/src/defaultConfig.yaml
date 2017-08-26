@@ -8,3 +8,5 @@ docker:
   prefix: null
   pushPrefix: null
   auth: null
+
+externalIp: null

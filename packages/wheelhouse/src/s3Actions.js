@@ -40,6 +40,10 @@ export const s3Init = () => async dispatch => {
 };
 
 export const s3GetExternalIP = () => async (dispatch, getState) => {
+  const { config } = getState();
+  if (config.externalIp) {
+    return config.externalIp;
+  }
   const ifaces = os.networkInterfaces();
   const addresses = [];
   Object.keys(ifaces).forEach(ifaceName => {
@@ -55,7 +59,10 @@ export const s3GetExternalIP = () => async (dispatch, getState) => {
   });
   if (addresses.length > 1) {
     throw new Error(
-      `Not sure which of these I should use: ${addresses.join(" ,")}`
+      [
+        `Not sure which of these I should use: ${addresses.join(", ")}`,
+        "Please set the environment variable WH_EXTERNAL_IP."
+      ].join("\n")
     );
   }
   return addresses[0];
