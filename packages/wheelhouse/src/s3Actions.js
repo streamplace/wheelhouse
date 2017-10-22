@@ -77,6 +77,20 @@ export const s3InitMinio = () => async (dispatch, getState) => {
     procRun("docker", ["rm", "-f", minioContainer])
   ).catch(() => {});
   const externalIP = await dispatch(s3GetExternalIP());
+  const minioDataDir = path.join(
+    config.rootDir,
+    ".wheelhouse",
+    "minio",
+    "data"
+  );
+  const minioConfigDir = path.join(
+    config.rootDir,
+    ".wheelhouse",
+    "minio",
+    "config"
+  );
+  await fs.ensureDir(minioDataDir);
+  await fs.ensureDir(minioConfigDir);
   dispatch(
     procRun(
       "docker",
@@ -85,10 +99,14 @@ export const s3InitMinio = () => async (dispatch, getState) => {
         "--rm",
         "--name",
         minioContainer,
+        "-u",
+        `${process.getuid()}`,
         "-p",
         `${S3_MINIO_PORT}:9000`,
         "-v",
-        `${config.rootDir}/.wheelhouse/minio:/data`,
+        `${minioDataDir}:/data`,
+        "-v",
+        `${minioConfigDir}:/.minio`,
         "-e",
         `MINIO_ACCESS_KEY=${S3_MINIO_ACCESS_KEY_ID}`,
         "-e",
