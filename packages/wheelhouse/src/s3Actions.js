@@ -9,6 +9,7 @@ import stream from "stream";
 import { developmentLog } from "./developmentActions";
 import { procRun } from "./procActions";
 import axios from "axios";
+import AWS from "aws-sdk";
 import {
   S3_CREDENTIALS,
   S3_MINIO_ACCESS_KEY_ID,
@@ -23,6 +24,7 @@ let client;
 let bucket;
 let prefix;
 let minioContainer;
+let s3;
 
 const log = debug("wheelhouse:s3Actions");
 
@@ -182,6 +184,11 @@ export const _s3Init = () => async (dispatch, getState) => {
     secure: secure,
     port: port
   });
+  s3 = new AWS.S3({
+    endpoint: `${protocol}//${hostname}`,
+    accessKeyId: credentials.accessKeyId,
+    secretKey: credentials.secretAccessKey
+  });
   const logger = new stream.PassThrough();
   client.logStream = logger;
   logger.on("data", buf => {
@@ -207,15 +214,23 @@ export const s3PutFile = ({ filePath, objectName }) => async dispatch => {
     throw new Error(`${filePath} doesn't exist, can't upload`);
   }
   const fullPath = path.join(prefix, objectName);
-  const etag = await client.fPutObject(
-    bucket,
-    path.join(prefix, objectName),
-    filePath
-  );
+  const data = await fs.readFile(filePath, "utf8");
+  const res = await s3
+    .putObject({
+      ACL: "public-read", // xx hack, set everything as public-read
+      Bucket: bucket,
+      Key: fullPath,
+      Body: data
+    })
+    .promise();
+
+  // const etag = await client.fPutObject(bucket, fullPath, filePath);
+
+  // const res = await client.setBucketPolicy(bucket, fullPath, Policy.READONLY);
 
   return {
     url: [externalHost, bucket, fullPath].join("/"),
-    etag: etag
+    etag: res.ETag
   };
 };
 
