@@ -184,10 +184,13 @@ export const _s3Init = () => async (dispatch, getState) => {
     secure: secure,
     port: port
   });
+  AWS.config = new AWS.Config();
+  AWS.config.accessKeyId = credentials.accessKeyId;
+  AWS.config.secretAccessKey = credentials.secretAccessKey;
   s3 = new AWS.S3({
     endpoint: `${protocol}//${hostname}`,
     accessKeyId: credentials.accessKeyId,
-    secretKey: credentials.secretAccessKey
+    secretAccessKey: credentials.secretAccessKey
   });
   const logger = new stream.PassThrough();
   client.logStream = logger;
