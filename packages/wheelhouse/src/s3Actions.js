@@ -217,7 +217,7 @@ export const s3PutFile = ({ filePath, objectName }) => async dispatch => {
     throw new Error(`${filePath} doesn't exist, can't upload`);
   }
   const fullPath = path.join(prefix, objectName);
-  const data = await fs.readFile(filePath, "utf8");
+  const data = await fs.readFile(filePath);
   const res = await s3
     .putObject({
       ACL: "public-read", // xx hack, set everything as public-read
