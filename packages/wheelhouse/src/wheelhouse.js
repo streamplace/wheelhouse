@@ -10,7 +10,8 @@ import {
   wheelhouseBuild,
   wheelhousePush,
   wheelhouseSetVersion,
-  wheelhouseBootstrap
+  wheelhouseBootstrap,
+  wheelhouseClean
 } from "./wheelhouseActions";
 import debug from "debug";
 
@@ -19,6 +20,8 @@ const log = debug("wheelhouse:cli");
 const attemptAction = async function(action, ...args) {
   try {
     await store.dispatch(action(...args));
+    // xxx hack but there are outstanding tcp sockets somewhere
+    process.exit(0);
   } catch (e) {
     console.error("Fatal error!");
     console.error(e);
@@ -80,6 +83,13 @@ const runCli = async function(argv) {
       aliases: "dev",
       handler: argv => {
         attemptAction(wheelhouseLink);
+      }
+    })
+    .command({
+      command: "clean",
+      describe: "Clean up locally-built helm charts",
+      handler: argv => {
+        attemptAction(wheelhouseClean);
       }
     })
     .command({

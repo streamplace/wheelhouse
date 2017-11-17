@@ -5,7 +5,7 @@
 
 import { configInit } from "./configActions";
 import { serverStart } from "./serverActions";
-import { helmBuild, helmPush, helmBootstrap } from "./helmActions";
+import { helmBuild, helmPush, helmBootstrap, helmCleanup } from "./helmActions";
 import {
   packagesInit,
   packagesLink,
@@ -102,6 +102,11 @@ export const wheelhousePush = () => async dispatch => {
   await dispatch(s3Init());
   await dispatch(dockerPush());
   await dispatch(helmPush());
+};
+
+export const wheelhouseClean = () => async dispatch => {
+  await dispatch(wheelhouseInit());
+  await dispatch(helmCleanup());
 };
 
 export const wheelhouseBootstrap = () => async dispatch => {

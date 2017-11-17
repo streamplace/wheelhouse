@@ -128,3 +128,15 @@ export const helmPush = () => async (dispatch, getState) => {
     dispatch(developmentLog("helm", `uploaded ${url}`));
   }
 };
+
+export const helmCleanup = () => async (dispatch, getState) => {
+  const { config } = getState();
+  // We stash the built charts in a different directory b/c
+  // https://twitter.com/elimallon/status/896834495520714752
+  const chartDir = resolve(config.rootDir, ".wheelhouse", "charts");
+  if (!await fs.pathExists(chartDir)) {
+    return;
+  }
+  dispatch(developmentLog("helm", `removing ${chartDir}`));
+  await fs.remove(chartDir);
+};
