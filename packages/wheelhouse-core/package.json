@@ -1,6 +1,6 @@
 {
   "name": "wheelhouse-core",
-  "version": "0.3.0-12",
+  "version": "0.3.0-13",
   "description": "The brains of Wheelhouse live here",
   "main": "dist/wheelhouse-core.js",
   "scripts": {
