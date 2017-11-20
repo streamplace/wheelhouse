@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "precommit": "lint-staged",
     "dev": "DEBUG='wheelhouse:*' lerna exec --concurrency=999 --no-sort npm run dev",
-    "publish": "lerna publish --exact --force-publish"
+    "publish-prerelase": "npx lerna publish --exact --force-publish --npm-tag next --cd-version prerelease"
   },
   "bin": {
     "wh-dev": "run/wh-dev.js"
