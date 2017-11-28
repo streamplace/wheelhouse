@@ -82,10 +82,33 @@ export const packagesInstall = () => async (dispatch, getState) => {
   await checkNpmOnce();
   const { packages } = getState();
   await pkgForEach(packages, async pkg => {
+    // Remove any local dependencies so we can have local dependencies
+    const oldPackageJson = { ...pkg.packageJson };
+    delete oldPackageJson.wheelhouse;
+    const newPackageJson = { ...pkg.packageJson };
+    // duplicate all the fields so we can just ""
+    for (const fieldName of PACKAGES_DEPENDENCY_NAMES) {
+      if (!newPackageJson[fieldName]) {
+        continue;
+      }
+      const newField = { ...newPackageJson[fieldName] };
+      newPackageJson[fieldName] = newField;
+      Object.keys(newField).forEach(pkgName => {
+        if (pkg.localDependencies.includes(pkgName)) {
+          newField[pkgName] = resolve(packages[pkgName].path);
+        }
+      });
+    }
+    await dispatch(
+      fileWrite(resolve(pkg.path, "package.json"), newPackageJson)
+    );
     await dispatch(
       procRun("npm", ["install"], {
         cwd: pkg.path
       })
+    );
+    await dispatch(
+      fileWrite(resolve(pkg.path, "package.json"), oldPackageJson)
     );
   });
 };
