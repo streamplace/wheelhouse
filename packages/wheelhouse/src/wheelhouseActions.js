@@ -116,6 +116,15 @@ export const wheelhouseBootstrap = () => async dispatch => {
 };
 
 /**
+ * wheelhouse repo-version
+ */
+export const wheelhouseRepoVersion = () => async (dispatch, getState) => {
+  await dispatch(wheelhouseInit());
+  const state = getState();
+  process.stdout.write(state.config.version);
+};
+
+/**
  * wheelhouse set-version
  */
 // export const wheelhouseBuild = () => async (dispatch, getState) => {

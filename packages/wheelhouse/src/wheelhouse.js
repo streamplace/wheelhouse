@@ -11,7 +11,8 @@ import {
   wheelhousePush,
   wheelhouseSetVersion,
   wheelhouseBootstrap,
-  wheelhouseClean
+  wheelhouseClean,
+  wheelhouseRepoVersion
 } from "./wheelhouseActions";
 import debug from "debug";
 
@@ -109,6 +110,13 @@ const runCli = async function(argv) {
       describe: "Push all your Docker images and Helm charts",
       handler: argv => {
         attemptAction(wheelhousePush);
+      }
+    })
+    .command({
+      command: "repo-version",
+      describe: "Print out the current Wheelhouse version of the repo",
+      handler: argv => {
+        attemptAction(wheelhouseRepoVersion);
       }
     })
     .command({
