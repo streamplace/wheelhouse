@@ -2,6 +2,7 @@ import findUp from "find-up";
 import debug from "debug";
 import path from "path";
 import { fileLoad } from "./fileActions";
+import { developmentLog } from "./developmentActions";
 import {
   CONFIG_LOADED,
   CONFIG_ROOT_FOUND,
@@ -90,13 +91,23 @@ export const configInit = () => async (dispatch, getState) => {
     .map(pkg => {
       return path.resolve(pkg);
     })
-    .filter(pkg => pkg.split("/").pop()[0] !== ".")
-    .forEach(pkg => {
+    .filter(pkg => pkg.split("/").pop()[0] !== ".");
+
+  for (const pkg of packages) {
+    if (await fs.pathExists(path.resolve(pkg, "package.json"))) {
       dispatch({
         type: CONFIG_PACKAGE_FOUND,
         dir: pkg
       });
-    });
+    } else {
+      await dispatch(
+        developmentLog(
+          "wheelhouse",
+          `Couldn't find package.json in ${pkg}, ignoring.`
+        )
+      );
+    }
+  }
 };
 
 export const configRootFound = rootDir => {
