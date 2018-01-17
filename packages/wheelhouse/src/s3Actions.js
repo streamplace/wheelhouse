@@ -216,7 +216,24 @@ export const _s3Init = () => async (dispatch, getState) => {
     if (e.code !== "NoSuchBucket") {
       throw e;
     }
-    await s3.createBucket({ Bucket: bucket }).promise();
+    await s3.createBucket({ Bucket: bucket, ACL: "public-read" }).promise();
+    await s3
+      .putBucketPolicy({
+        Bucket: bucket,
+        Policy: `{
+          "Version":"2012-10-17",
+          "Statement":[
+            {
+              "Sid":"AddPerm",
+              "Effect":"Allow",
+              "Principal": {"AWS":["*"]},
+              "Action":["s3:GetObject"],
+              "Resource":["arn:aws:s3:::${bucket}/*"]
+            }
+          ]
+        }`
+      })
+      .promise();
   }
   return client;
 };
