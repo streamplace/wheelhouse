@@ -89,12 +89,21 @@ export const wheelhouseBuild = systems => async dispatch => {
   let [packages, docker, helm] = ["packages", "docker", "helm"].map(sys =>
     systems.includes(sys)
   );
-  packages && (await dispatch(s3Init()));
-  packages && (await dispatch(packagesBuild()));
-  docker && (await dispatch(dockerBuild()));
-  helm && (await dispatch(helmBuild()));
+  let err;
+  try {
+    // If any of this fails, we want to clean up our files before crashing, thus try/catch
+    packages && (await dispatch(s3Init()));
+    packages && (await dispatch(packagesBuild()));
+    docker && (await dispatch(dockerBuild()));
+    helm && (await dispatch(helmBuild()));
+  } catch (e) {
+    err = e;
+  }
   packages && (await dispatch(packagesCleanup()));
   packages && (await dispatch(s3Cleanup()));
+  if (err) {
+    throw err;
+  }
 };
 
 export const wheelhousePush = () => async dispatch => {
