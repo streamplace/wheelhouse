@@ -188,9 +188,11 @@ export const _s3Init = () => async (dispatch, getState) => {
   AWS.config.accessKeyId = credentials.accessKeyId;
   AWS.config.secretAccessKey = credentials.secretAccessKey;
   s3 = new AWS.S3({
-    endpoint: `${protocol}//${hostname}`,
+    endpoint: `${protocol}//${hostname}:${port}/${bucket}`,
     accessKeyId: credentials.accessKeyId,
-    secretAccessKey: credentials.secretAccessKey
+    secretAccessKey: credentials.secretAccessKey,
+    s3BucketEndpoint: true,
+    region: "us-west-2"
   });
   const logger = new stream.PassThrough();
   client.logStream = logger;
@@ -201,12 +203,20 @@ export const _s3Init = () => async (dispatch, getState) => {
     }
   });
   try {
-    await client.bucketExists(bucket);
+    await s3
+      .putObject({
+        ACL: "public-read",
+        Bucket: bucket,
+        Key: "check-bucket-exists",
+        Body: "test"
+      })
+      .promise();
   } catch (e) {
-    // Hmm, bucket doesn't exist. May as well try and create it in my favorite region!
-    await client.makeBucket(bucket, "us-west-2");
-    await client.setBucketPolicy(bucket, "", "readonly");
-    dispatch(developmentLog("s3", `created bucket ${bucket}`));
+    // Hmm, bucket not found? Let's try and make it I guess.
+    if (e.code !== "NoSuchBucket") {
+      throw e;
+    }
+    await s3.createBucket({ Bucket: bucket }).promise();
   }
   return client;
 };
