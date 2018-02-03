@@ -77,14 +77,28 @@ export const configInit = () => async (dispatch, getState) => {
     );
   }
 
-  const stdout = await run("git", ["rev-parse", "HEAD"]);
-  const hash = stdout.slice(0, 8);
+  const commitHash = await run("git", ["rev-parse", "HEAD"]);
+  const hash = commitHash.slice(0, 8);
   const { major, minor, patch } = semver.parse(rootPackage.data.version);
-  // For now our assumed version is one up from our current version plus hash
-  await dispatch({
-    type: CONFIG_VERSION,
-    version: `${major}.${minor}.${patch + 1}-${hash}`
-  });
+  const currentTag = (await run("git", [
+    "tag",
+    "-l",
+    "--points-at",
+    "HEAD"
+  ])).trim();
+  // Hey, look! We're a mainline version! That's exciting.
+  if (currentTag === `v${major}.${minor}.${patch}`) {
+    await dispatch({
+      type: CONFIG_VERSION,
+      version: `${major}.${minor}.${patch}`
+    });
+  } else {
+    // Cool, we're a prerelease version of the next patch
+    await dispatch({
+      type: CONFIG_VERSION,
+      version: `${major}.${minor}.${patch + 1}-${hash}`
+    });
+  }
 
   packages = packages
     .reduce((arr1, arr2) => arr1.concat(arr2), [])
