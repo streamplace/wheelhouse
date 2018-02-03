@@ -9,7 +9,6 @@ import { helmBuild, helmPush, helmBootstrap, helmCleanup } from "./helmActions";
 import {
   packagesInit,
   packagesLink,
-  packagesInstall,
   packagesStart,
   packagesBuild,
   packagesCleanup
@@ -34,7 +33,10 @@ export const wheelhouseInit = () => async (dispatch, getState) => {
  */
 export const wheelhouseInstall = () => async (dispatch, getState) => {
   await dispatch(wheelhouseInit());
-  await dispatch(packagesInstall());
+  await dispatch(s3Init());
+  await dispatch(packagesBuild({ install: true }));
+  await dispatch(packagesCleanup());
+  await dispatch(s3Cleanup());
 };
 
 /**

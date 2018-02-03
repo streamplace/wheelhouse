@@ -78,19 +78,10 @@ let checkNpmOnce = async () => {
   }
 };
 
-export const packagesInstall = () => async (dispatch, getState) => {
-  await checkNpmOnce();
-  const { packages } = getState();
-  await pkgForEach(packages, async pkg => {
-    await dispatch(
-      procRun("npm", ["install"], {
-        cwd: pkg.path
-      })
-    );
-  });
-};
-
-export const packagesBuild = () => async (dispatch, getState) => {
+export const packagesBuild = ({ install = false } = {}) => async (
+  dispatch,
+  getState
+) => {
   await checkNpmOnce();
   const { packages } = getState();
   await pkgForEach(packages, async pkg => {
@@ -119,6 +110,13 @@ export const packagesBuild = () => async (dispatch, getState) => {
     await dispatch(
       fileWrite(resolve(pkg.path, "package.json"), newPackageJson)
     );
+    if (install) {
+      await dispatch(
+        procRun("npm", ["install"], {
+          cwd: pkg.path
+        })
+      );
+    }
     const stdout = await dispatch(
       procRun("npm", ["pack"], {
         cwd: pkg.path
