@@ -38,7 +38,7 @@ export const dockerBuild = () => async (dispatch, getState) => {
   });
 };
 
-export const dockerPush = () => async (dispatch, getState) => {
+export const dockerPush = ({ distTag } = {}) => async (dispatch, getState) => {
   const { packages, config, docker } = getState();
   const env = {};
   let tmpdir;
@@ -55,11 +55,16 @@ export const dockerPush = () => async (dispatch, getState) => {
       return;
     }
     const latestTag = `${docker.prefix}/${pkg.name}:latest`;
-    const pushTag = `${docker.pushPrefix}/${pkg.name}:${config.version}`;
-    await dispatch(
-      procRun("docker", ["tag", latestTag, pushTag], { name, env })
-    );
-    await dispatch(procRun("docker", ["push", pushTag], { name, env }));
+    const pushTags = [`${docker.pushPrefix}/${pkg.name}:${config.version}`];
+    if (distTag) {
+      pushTags.push(`${docker.pushPrefix}/${pkg.name}:${distTag}`);
+    }
+    for (const pushTag of pushTags) {
+      await dispatch(
+        procRun("docker", ["tag", latestTag, pushTag], { name, env })
+      );
+      await dispatch(procRun("docker", ["push", pushTag], { name, env }));
+    }
   });
   if (config.docker.auth) {
     await fs.remove(tmpdir.path);

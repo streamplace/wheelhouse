@@ -109,7 +109,16 @@ const runCli = async function(argv) {
       command: "push",
       describe: "Push all your Docker images and Helm charts",
       handler: argv => {
-        attemptAction(wheelhousePush);
+        attemptAction(wheelhousePush, { distTag: argv.distTag });
+      },
+      builder: yargs => {
+        return yargs.options({
+          "dist-tag": {
+            type: "string",
+            describe:
+              "If you'd like to push npm packages and Docker images with an additional tag (e.g. 'latest') that goes here."
+          }
+        });
       }
     })
     .command({

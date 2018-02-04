@@ -108,10 +108,10 @@ export const wheelhouseBuild = systems => async dispatch => {
   }
 };
 
-export const wheelhousePush = () => async dispatch => {
+export const wheelhousePush = (opts = {}) => async dispatch => {
   await dispatch(wheelhouseInit());
   await dispatch(s3Init());
-  await dispatch(dockerPush());
+  await dispatch(dockerPush(opts));
   await dispatch(helmPush());
 };
 
