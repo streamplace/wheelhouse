@@ -1,7 +1,7 @@
 FROM ubuntu:xenial
 
 RUN apt-get update \
-  && apt-get -y install docker.io curl software-properties-common python-software-properties
+  && apt-get -y install docker.io curl software-properties-common python-software-properties jq
 
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash \
   && apt-get install -y nodejs \
