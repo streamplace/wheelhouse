@@ -30,8 +30,16 @@ export const dockerBuild = () => async (dispatch, getState) => {
       return;
     }
     const latestTag = `${docker.prefix}/${pkg.name}:latest`;
+    const args = ["build", "-t", latestTag];
+    const buildVars = ["CI"];
+    for (const varName of buildVars) {
+      if (process.env[varName]) {
+        args.push("--build-arg", `${varName}=${process.env[varName]}`);
+      }
+    }
+    args.push(".");
     await dispatch(
-      procRun("docker", ["build", "-t", latestTag, "."], {
+      procRun("docker", args, {
         cwd: pkg.path
       })
     );

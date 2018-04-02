@@ -3,6 +3,10 @@
     "babel-preset-streamplace"
   ],
   "plugins": [
-    "babel-plugin-transform-inline-environment-variables"
+    ["babel-plugin-transform-inline-environment-variables", {
+      "exclude": [
+        "CI"
+      ]
+    }]
   ]
 }
